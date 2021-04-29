@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[hexo博客打开空白]]></title>
+    <url>%2F2021%2F04%2F29%2Fhexo%E5%8D%9A%E5%AE%A2%E6%89%93%E5%BC%80%E7%A9%BA%E7%99%BD%2F</url>
+    <content type="text"><![CDATA[写在前面： 由于每个人遇到的问题不一样，因此我会将查到的解决方案都放入参考文章，请自行查阅 参考文章： https://github.com/hexojs/hexo/issues/3525 https://blog.csdn.net/zhouzixin053/article/details/53038679 https://blog.csdn.net/qq_45698055/article/details/104353763 https://github.com/iissnan/hexo-theme-next/issues/1214 我的解决方法：将两个主题来回切换上传 上面的各种方式我都试了一下，并无用。但是，在 issue 讨论中看到有人提出了切换主题的想法 我先将 next 主题换为自带的 landscape ，上传一次，发现可以查看然后再将 landscape 切换为 next 重新上传 最终出现了我的博文]]></content>
+      <categories>
+        <category>解决方案</category>
+      </categories>
+      <tags>
+        <tag>原创</tag>
+        <tag>搭建博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[PyTorch之scatter()与scatter_()函数]]></title>
     <url>%2F2021%2F04%2F28%2FPyTorch%E4%B9%8Bscatter()%E4%B8%8Escatter_()%E5%87%BD%E6%95%B0%2F</url>
     <content type="text"><![CDATA[1. 参考文章： https://blog.csdn.net/weixin_45999482/article/details/115728139?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242 https://blog.csdn.net/ao1886/article/details/107749007?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-5&amp;spm=1001.2101.3001.4242 1.]]></content>
@@ -27,7 +39,7 @@
   <entry>
     <title><![CDATA[Pytorch之tensor个人总结]]></title>
     <url>%2F2021%2F04%2F26%2FPytorch%E4%B9%8Btensor%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93%2F</url>
-    <content type="text"><![CDATA[1. tensor 使用 onehot 编码 —-tensor的建立 2. tensor 进行维度扩展 —其中一维是奇数 3. 参考文章： 写在前面： 本文中的代码来自于我自己的项目，都是根据个人需要进行的编写 其中的调用函数可能也是自己的 如果有错，希望您能提出并给予一定的指导 1. tensor 使用 onehot 编码 —-tensor的建立123456789101112131415# label的权重矩阵 三维gt = np.random.randint(0, args.class_num, size=[args.embed_dim // 2, args.embed_dim // 2])# 先生成一个 （args.embed_dim // 2） * （args.embed_dim // 2） 的label，值在class_num以内，意思是class_num类分割任务gt = torch.LongTensor(gt)def get_one_hot(label, N): size = list(label.size()) label = label.view(-1) # reshape 为向量 ones = torch.sparse.torch.eye(N) ones = ones.index_select(0, label) # 用上面的办法转为换one hot size.append(N) # 把类别输目添到size的尾后，准备reshape回原来的尺寸 return ones.view(*size)args.label_weight = get_one_hot(gt, args.class_num) 2. tensor 进行维度扩展 —其中一维是奇数 我的期望值是进行0扩展朋友提出的思路是通过一次Liner虽然我觉得不对选择使用 torch.cat 实现 各种失败的尝试：expend label_att_2 = label_att_2.expand(128,128) # 报错 不为 1 的无法进行扩展 repeat label_att_2 = label_att_2.repeat(1,128.0/11.0) #报错 必须扩展为正数倍 reshape label_att_2 = label_att_2.reshape(128,128) # RuntimeError: shape ‘[128, 128]’ is invalid for input of size 1408 Linear1234# print(label_att_2.shape) # torch.Size([128, 11])connected_layer = nn.Linear(in_features=11,out_features=128)label_att_2 = connected_layer(label_att_2)# print(label_att_2.shape) # torch.Size([128, 128]) 123456789101112131415161718192021import torchimport numpy as nplabel = np.eye(11)label = torch.LongTensor(label)# print(label)# print(label.shape)zero = torch.zeros(11,(128-11))# print(zero)# print(zero.shape)res = torch.cat((label,zero),1)# print(res)# print(res.shape)zero1 = torch.zeros((128-11),128)# print(zero1.shape)res1 = torch.cat((res,zero1),0)print(res1.shape) 3.]]></content>
+    <content type="text"><![CDATA[1. tensor 使用 onehot 编码 —-tensor的建立 2. tensor 进行维度扩展 —其中一维是奇数 3. 写在前面： 本文中的代码来自于我自己的项目，都是根据个人需要进行的编写 其中的调用函数可能也是自己的 如果有错，希望您能提出并给予一定的指导 参考文章： 1. tensor 使用 onehot 编码 —-tensor的建立123456789101112131415# label的权重矩阵 三维gt = np.random.randint(0, args.class_num, size=[args.embed_dim // 2, args.embed_dim // 2])# 先生成一个 （args.embed_dim // 2） * （args.embed_dim // 2） 的label，值在class_num以内，意思是class_num类分割任务gt = torch.LongTensor(gt)def get_one_hot(label, N): size = list(label.size()) label = label.view(-1) # reshape 为向量 ones = torch.sparse.torch.eye(N) ones = ones.index_select(0, label) # 用上面的办法转为换one hot size.append(N) # 把类别输目添到size的尾后，准备reshape回原来的尺寸 return ones.view(*size)args.label_weight = get_one_hot(gt, args.class_num) 2. tensor 进行维度扩展 —其中一维是奇数 我的期望值是进行0扩展朋友提出的思路是通过一次Liner虽然我觉得不对选择使用 torch.cat 实现 各种失败的尝试：expend label_att_2 = label_att_2.expand(128,128) # 报错 不为 1 的无法进行扩展 repeat label_att_2 = label_att_2.repeat(1,128.0/11.0) #报错 必须扩展为正数倍 reshape label_att_2 = label_att_2.reshape(128,128) # RuntimeError: shape ‘[128, 128]’ is invalid for input of size 1408 Linear1234# print(label_att_2.shape) # torch.Size([128, 11])connected_layer = nn.Linear(in_features=11,out_features=128)label_att_2 = connected_layer(label_att_2)# print(label_att_2.shape) # torch.Size([128, 128]) 123456789101112131415161718192021import torchimport numpy as nplabel = np.eye(11)label = torch.LongTensor(label)# print(label)# print(label.shape)zero = torch.zeros(11,(128-11))# print(zero)# print(zero.shape)res = torch.cat((label,zero),1)# print(res)# print(res.shape)zero1 = torch.zeros((128-11),128)# print(zero1.shape)res1 = torch.cat((res,zero1),0)print(res1.shape) 3.]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
