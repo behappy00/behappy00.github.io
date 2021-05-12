@@ -58,13 +58,13 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="一、介绍 1.1 文章组织 1.2 情感分类任务 1.3 什么是LSTM和BiLSTM？ 1.4 为什么使用LSTM与BiLSTM？   二、BiLSTM原理简介 2.1 LSTM介绍 2.1.1 总体框架 2.1.2 详细介绍计算过程 计算遗忘门，选择要遗忘的信息。 计算记忆门，选择要记忆的信息。 计算当前时刻细胞状态 计算输出门和当前时刻隐层状态     2.2 BiLSTM介绍   三、B">
+  <meta name="description" content="一、介绍 1.1 文章组织 1.2 情感分类任务 1.3 什么是LSTM和BiLSTM？ 1.4 为什么使用LSTM与BiLSTM？   二、BiLSTM原理简介 2.1 LSTM介绍 2.1.1 总体框架 2.1.2 详细介绍计算过程 计算遗忘门，选择要遗忘的信息。 2. 计算记忆门，选择要记忆的信息。 3. 计算当前时刻细胞状态 计算输出门和当前时刻隐层状态     2.2 BiLSTM介绍">
 <meta name="keywords" content="转载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Bilstm">
 <meta property="og:url" content="https://behappy00.github.io/2021/04/20/Bilstm/index.html">
 <meta property="og:site_name" content="Snow">
-<meta property="og:description" content="一、介绍 1.1 文章组织 1.2 情感分类任务 1.3 什么是LSTM和BiLSTM？ 1.4 为什么使用LSTM与BiLSTM？   二、BiLSTM原理简介 2.1 LSTM介绍 2.1.1 总体框架 2.1.2 详细介绍计算过程 计算遗忘门，选择要遗忘的信息。 计算记忆门，选择要记忆的信息。 计算当前时刻细胞状态 计算输出门和当前时刻隐层状态     2.2 BiLSTM介绍   三、B">
+<meta property="og:description" content="一、介绍 1.1 文章组织 1.2 情感分类任务 1.3 什么是LSTM和BiLSTM？ 1.4 为什么使用LSTM与BiLSTM？   二、BiLSTM原理简介 2.1 LSTM介绍 2.1.1 总体框架 2.1.2 详细介绍计算过程 计算遗忘门，选择要遗忘的信息。 2. 计算记忆门，选择要记忆的信息。 3. 计算当前时刻细胞状态 计算输出门和当前时刻隐层状态     2.2 BiLSTM介绍">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://behappy00.github.io/2021/04/20/Bilstm/2021-04-19-16-56-30.png">
 <meta property="og:image" content="https://behappy00.github.io/2021/04/20/Bilstm/2021-04-19-17-10-33.png">
@@ -73,10 +73,10 @@
 <meta property="og:image" content="https://behappy00.github.io/2021/04/20/Bilstm/2021-04-19-17-21-56.png">
 <meta property="og:image" content="https://behappy00.github.io/2021/04/20/Bilstm/2021-04-19-17-22-22.png">
 <meta property="og:image" content="https://behappy00.github.io/2021/04/20/Bilstm/2021-04-19-17-28-42.png">
-<meta property="og:updated_time" content="2021-04-28T13:08:21.875Z">
+<meta property="og:updated_time" content="2021-05-06T07:51:25.978Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bilstm">
-<meta name="twitter:description" content="一、介绍 1.1 文章组织 1.2 情感分类任务 1.3 什么是LSTM和BiLSTM？ 1.4 为什么使用LSTM与BiLSTM？   二、BiLSTM原理简介 2.1 LSTM介绍 2.1.1 总体框架 2.1.2 详细介绍计算过程 计算遗忘门，选择要遗忘的信息。 计算记忆门，选择要记忆的信息。 计算当前时刻细胞状态 计算输出门和当前时刻隐层状态     2.2 BiLSTM介绍   三、B">
+<meta name="twitter:description" content="一、介绍 1.1 文章组织 1.2 情感分类任务 1.3 什么是LSTM和BiLSTM？ 1.4 为什么使用LSTM与BiLSTM？   二、BiLSTM原理简介 2.1 LSTM介绍 2.1.1 总体框架 2.1.2 详细介绍计算过程 计算遗忘门，选择要遗忘的信息。 2. 计算记忆门，选择要记忆的信息。 3. 计算当前时刻细胞状态 计算输出门和当前时刻隐层状态     2.2 BiLSTM介绍">
 <meta name="twitter:image" content="https://behappy00.github.io/2021/04/20/Bilstm/2021-04-19-16-56-30.png">
   <link rel="canonical" href="https://behappy00.github.io/2021/04/20/Bilstm/">
 
@@ -310,7 +310,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 21:08:21" itemprop="dateModified" datetime="2021-04-28T21:08:21+08:00">2021-04-28</time>
+                <time title="修改时间：2021-05-06 15:51:25" itemprop="dateModified" datetime="2021-05-06T15:51:25+08:00">2021-05-06</time>
               </span>
             
           
@@ -403,8 +403,8 @@
 <li><a href="#211-总体框架">2.1.1 总体框架</a></li>
 <li><a href="#212-详细介绍计算过程">2.1.2 详细介绍计算过程</a><ul>
 <li><a href="#计算遗忘门选择要遗忘的信息">计算遗忘门，选择要遗忘的信息。</a></li>
-<li><a href="#计算记忆门选择要记忆的信息">计算记忆门，选择要记忆的信息。</a></li>
-<li><a href="#计算当前时刻细胞状态">计算当前时刻细胞状态</a></li>
+<li><a href="#2-计算记忆门选择要记忆的信息">2. 计算记忆门，选择要记忆的信息。</a></li>
+<li><a href="#3-计算当前时刻细胞状态">3. 计算当前时刻细胞状态</a></li>
 <li><a href="#计算输出门和当前时刻隐层状态">计算输出门和当前时刻隐层状态</a></li>
 </ul>
 </li>
@@ -455,13 +455,13 @@
 <center>图2. 计算遗忘门</center>
 
 
-<h6 id="计算记忆门，选择要记忆的信息。"><a href="#计算记忆门，选择要记忆的信息。" class="headerlink" title="计算记忆门，选择要记忆的信息。"></a>计算记忆门，选择要记忆的信息。</h6><blockquote>
+<h6 id="2-计算记忆门，选择要记忆的信息。"><a href="#2-计算记忆门，选择要记忆的信息。" class="headerlink" title="2. 计算记忆门，选择要记忆的信息。"></a>2. 计算记忆门，选择要记忆的信息。</h6><blockquote>
 <p>输入：前一时刻的隐层状态 $h_{t-1}$，当前时刻的输入词 $X_t$<br>输出：记忆门的值$\dot{i_t}$，临时细胞状态$\tilde{C_t}$</p>
 </blockquote>
 <p><img src="/2021/04/20/Bilstm/2021-04-19-17-13-48.png" alt></p>
 <center>图3. 计算记忆门和临时细胞状态</center>
 
-<h6 id="计算当前时刻细胞状态"><a href="#计算当前时刻细胞状态" class="headerlink" title="计算当前时刻细胞状态"></a>计算当前时刻细胞状态</h6><blockquote>
+<h6 id="3-计算当前时刻细胞状态"><a href="#3-计算当前时刻细胞状态" class="headerlink" title="3. 计算当前时刻细胞状态"></a>3. 计算当前时刻细胞状态</h6><blockquote>
 <p>输入：记忆门的值$\dot{i_t}$，遗忘门的值$f_t$，临时细胞状态$\tilde{C_t}$，上一刻细胞状态$C_{t-1}$<br>输出：当前时刻细胞状态$C_t$</p>
 </blockquote>
 <p><img src="/2021/04/20/Bilstm/2021-04-19-17-17-37.png" alt></p>
@@ -584,7 +584,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-文章组织"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 文章组织</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-情感分类任务"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 情感分类任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-什么是LSTM和BiLSTM？"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 什么是LSTM和BiLSTM？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-为什么使用LSTM与BiLSTM？"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 为什么使用LSTM与BiLSTM？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、BiLSTM原理简介"><span class="nav-number">2.</span> <span class="nav-text">二、BiLSTM原理简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-LSTM介绍"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 LSTM介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-总体框架"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 总体框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-详细介绍计算过程"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 详细介绍计算过程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#计算遗忘门，选择要遗忘的信息。"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">计算遗忘门，选择要遗忘的信息。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#计算记忆门，选择要记忆的信息。"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">计算记忆门，选择要记忆的信息。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#计算当前时刻细胞状态"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">计算当前时刻细胞状态</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#计算输出门和当前时刻隐层状态"><span class="nav-number">2.1.2.4.</span> <span class="nav-text">计算输出门和当前时刻隐层状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-BiLSTM介绍"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 BiLSTM介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、BiLSTM代码实现样例"><span class="nav-number">3.</span> <span class="nav-text">三、BiLSTM代码实现样例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-模型搭建"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 模型搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-模型训练"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 模型训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-模型测试"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 模型测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、参考资料"><span class="nav-number">5.</span> <span class="nav-text">五、参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-文章组织"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 文章组织</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-情感分类任务"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 情感分类任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-什么是LSTM和BiLSTM？"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 什么是LSTM和BiLSTM？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-为什么使用LSTM与BiLSTM？"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 为什么使用LSTM与BiLSTM？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、BiLSTM原理简介"><span class="nav-number">2.</span> <span class="nav-text">二、BiLSTM原理简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-LSTM介绍"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 LSTM介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-总体框架"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 总体框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-详细介绍计算过程"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 详细介绍计算过程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#计算遗忘门，选择要遗忘的信息。"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">计算遗忘门，选择要遗忘的信息。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-计算记忆门，选择要记忆的信息。"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">2. 计算记忆门，选择要记忆的信息。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-计算当前时刻细胞状态"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">3. 计算当前时刻细胞状态</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#计算输出门和当前时刻隐层状态"><span class="nav-number">2.1.2.4.</span> <span class="nav-text">计算输出门和当前时刻隐层状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-BiLSTM介绍"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 BiLSTM介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、BiLSTM代码实现样例"><span class="nav-number">3.</span> <span class="nav-text">三、BiLSTM代码实现样例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-模型搭建"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 模型搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-模型训练"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 模型训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-模型测试"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 模型测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、参考资料"><span class="nav-number">5.</span> <span class="nav-text">五、参考资料</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -599,7 +599,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -612,7 +612,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -625,7 +625,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -653,23 +653,23 @@
 		   
 		   
 			 <li>
+			   <a href="/2021/05/12/深度学习/" title="深度学习" target="_blank">深度学习</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2021/05/03/miktex+vscode错误/" title="miktex+vscode错误" target="_blank">miktex+vscode错误</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2021/04/30/Pytorch之cat()函数/" title="20210430" target="_blank">20210430</a>
+			 </li>
+		   
+			 <li>
 			   <a href="/2021/04/29/hexo博客打开空白/" title="hexo博客打开空白" target="_blank">hexo博客打开空白</a>
 			 </li>
 		   
 			 <li>
 			   <a href="/2021/04/28/PyTorch之scatter()与scatter_()函数/" title="PyTorch之scatter()与scatter_()函数" target="_blank">PyTorch之scatter()与scatter_()函数</a>
-			 </li>
-		   
-			 <li>
-			   <a href="/2021/04/27/Pytorch错误集锦--那些年我们的血泪史/" title="Pytorch错误集锦--那些年我们的血泪史" target="_blank">Pytorch错误集锦--那些年我们的血泪史</a>
-			 </li>
-		   
-			 <li>
-			   <a href="/2021/04/26/Pytorch之tensor个人总结/" title="Pytorch之tensor个人总结" target="_blank">Pytorch之tensor个人总结</a>
-			 </li>
-		   
-			 <li>
-			   <a href="/2021/04/25/Pytorch之tensor的创建/" title="Pytorch之tensor的创建" target="_blank">Pytorch之tensor的创建</a>
 			 </li>
 		   
 		 </ul>
@@ -702,12 +702,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">212k</span>
+    <span title="站点总字数">224k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:13</span>
+    <span title="站点阅读时长">3:23</span>
 </div>
 
         
