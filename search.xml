@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[深度学习]]></title>
     <url>%2F2021%2F05%2F12%2F%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%2F</url>
-    <content type="text"><![CDATA[1. 文本分类模型论文阅读 2. pytorch 3. 卷积神经网络 写在前面： 自己写过或者转载的文章乱七八槽，整理一下 1. 文本分类模型论文阅读《Long Short-Term Memory》阅读BilstmBiGRU-Attention 模型Han 翻译论文阅读-label-wise-attention深度学习笔记——RNN（LSTM、GRU、双向RNN）学习总结HAN_pytorch版复现HAN_论文阅读HAN_学习指导_未完待续 2. pytorchPytorch之cat()函数Pytorch之tensor个人总结Pytorch之tensor的创建PyTorch之scatter()与scatter_()函数Pytorch错误集锦—那些年我们的血泪史Pytorch之tensor维度的扩展，挤压，扩张Pytorch之nn.init中实现的初始化函数Pytorch之matmul函数Pytorch之permute函数pytorch_torchtext学习笔记_2torch-nn学习-1python_torchtext学习笔记_1python_argparse学习Pytorch中Torch 工具包的数学操作汇总速查 3. 卷积神经网络卷积神经网络超详细介绍]]></content>
+    <content type="text"><![CDATA[1. 文本分类模型论文阅读 2. pytorch 3. 卷积神经网络 写在前面： 自己写过或者转载的文章乱七八槽，整理一下 1. 文本分类模型论文阅读《Long Short-Term Memory》阅读BilstmBiGRU-Attention 模型Han 翻译论文阅读-label-wise-attention深度学习笔记——RNN（LSTM、GRU、双向RNN）学习总结HAN_pytorch版复现HAN_论文阅读HAN_学习指导_未完待续 2. pytorchPytorch之cat()函数Pytorch之tensor个人总结Pytorch之tensor的创建PyTorch之scatter()与scatter_()函数%E4%B8%8Escatter_()%E5%87%BD%E6%95%B0/)Pytorch错误集锦—那些年我们的血泪史Pytorch之tensor维度的扩展，挤压，扩张Pytorch之nn.init中实现的初始化函数Pytorch之matmul函数Pytorch之permute函数pytorch_torchtext学习笔记_2torch-nn学习-1python_torchtext学习笔记_1python_argparse学习Pytorch中Torch 工具包的数学操作汇总速查 3. 卷积神经网络卷积神经网络超详细介绍]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
@@ -36,7 +36,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[20210430]]></title>
+    <title><![CDATA[Pytorch之cat()函数]]></title>
     <url>%2F2021%2F04%2F30%2FPytorch%E4%B9%8Bcat()%E5%87%BD%E6%95%B0%2F</url>
     <content type="text"><![CDATA[1. 写在前面： 参考文章： https://www.cnblogs.com/zhaoyingjie/p/14636468.html 1.]]></content>
       <categories>
