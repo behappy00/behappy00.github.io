@@ -58,18 +58,21 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="计算机 Hiter">
-<meta name="keywords" content="码农">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Snow">
-<meta property="og:url" content="https://behappy00.github.io/archives/2019/04/index.html">
+  <meta name="description" content="1. 概述 2. 算法思想 2.1 算法的组成部分 2.2. BiLSTM层的输出 2.3. Attention机制 2.4. 分类   参考文献">
+<meta name="keywords" content="文本分类模型,转载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BiLSTM-Attention-Based">
+<meta property="og:url" content="https://behappy00.github.io/2021/05/17/BiLSTM-Attention-Based/index.html">
 <meta property="og:site_name" content="Snow">
-<meta property="og:description" content="计算机 Hiter">
+<meta property="og:description" content="1. 概述 2. 算法思想 2.1 算法的组成部分 2.2. BiLSTM层的输出 2.3. Attention机制 2.4. 分类   参考文献">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200810231629623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dvb2dsZTE5ODkwMTAy,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2021-05-17T07:38:17.210Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Snow">
-<meta name="twitter:description" content="计算机 Hiter">
-  <link rel="canonical" href="https://behappy00.github.io/archives/2019/04/">
+<meta name="twitter:title" content="BiLSTM-Attention-Based">
+<meta name="twitter:description" content="1. 概述 2. 算法思想 2.1 算法的组成部分 2.2. BiLSTM层的输出 2.3. Attention机制 2.4. 分类   参考文献">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200810231629623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dvb2dsZTE5ODkwMTAy,size_16,color_FFFFFF,t_70#pic_center">
+  <link rel="canonical" href="https://behappy00.github.io/2021/05/17/BiLSTM-Attention-Based/">
 
 
 <script id="page-configurations">
@@ -77,13 +80,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>归档 | Snow</title>
+  <title>BiLSTM-Attention-Based | Snow</title>
   
 
 
@@ -253,93 +256,230 @@
         <div class="content-wrap">
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        
-        
-         
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2021/05/17/BiLSTM-Attention-Based/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">BiLSTM-Attention-Based
+
           
-        <span class="collection-header">不错! 目前共计 72 篇日志。 继续努力。</span>
-      </div>
-      
+        </h1>
 
-      
+        <div class="post-meta">
+		
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-  
-  
+              
+                
+              
 
+              <time title="创建时间：2021-05-17 15:11:39 / 修改时间：15:38:17" itemprop="dateCreated datePublished" datetime="2021-05-17T15:11:39+08:00">2021-05-17</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2021/05/17/BiLSTM-Attention-Based/" class="post-meta-item leancloud_visitors" data-flag-title="BiLSTM-Attention-Based" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
   
+  <span class="post-meta-item">
     
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/05/17/BiLSTM-Attention-Based/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2021/05/17/BiLSTM-Attention-Based/" itemprop="commentCount"></span></a>
+  </span>
   
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>1.6k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>1 分钟</span>
+            </span>
+          
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+        </div>
+      </header>
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/05/Eclipse中的3种弥补措施/" itemprop="url">
-            <span itemprop="name">Eclipse中的3种弥补措施</span>
-          </a>
-        
-      </h2>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-04-05T17:09:03+08:00"
-              content="2019-04-05">
-          04-05
-        </time>
-      </div>
+      
+        <hr><ul>
+<li><a href="#1-概述">1. 概述</a></li>
+<li><a href="#2-算法思想">2. 算法思想</a><ul>
+<li><a href="#21-算法的组成部分">2.1 算法的组成部分</a></li>
+<li><a href="#22-bilstm层的输出">2.2. BiLSTM层的输出</a></li>
+<li><a href="#23-attention机制">2.3. Attention机制</a></li>
+<li><a href="#24-分类">2.4. 分类</a></li>
+</ul>
+</li>
+<li><a href="#参考文献">参考文献</a></li>
+</ul><a id="more"></a>
+<!-- TOC -->
 
-    </header>
-  </article>
-
-
-
+<!-- /TOC -->
+<hr>
+<p>参考文章：</p>
+<ol>
+<li><a href="https://blog.csdn.net/google19890102/article/details/94412928" target="_blank" rel="noopener">https://blog.csdn.net/google19890102/article/details/94412928</a></li>
+</ol>
+<h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h3><p>随着神经网络，尤其是深度学习算法的发展，神经网络在文本分类任务中取得了很大的发展，提出了各种解决方案，如CNN在文本分类中的应用，RNN，LSTM等等，相比较于CNN以及RNN方法，LSTM可以学习长距离的语义信息。Attention-Based BiLSTM结合双向的LSTM（Bidirectional LSTM）以及Attention机制处理文本分类的相关问题，通过attention机制，该方法可以聚焦到最重要的词，从而捕获到句子中最重要的语义信息。</p>
+<h3 id="2-算法思想"><a href="#2-算法思想" class="headerlink" title="2. 算法思想"></a>2. 算法思想</h3><h4 id="2-1-算法的组成部分"><a href="#2-1-算法的组成部分" class="headerlink" title="2.1 算法的组成部分"></a>2.1 算法的组成部分</h4><p>Attention-Based BiLSTM算法的网络结构如下所示：<br><img src="https://img-blog.csdnimg.cn/20200810231629623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dvb2dsZTE5ODkwMTAy,size_16,color_FFFFFF,t_70#pic_center" alt><br>在Attention-Based BiLSTM网络中，主要由5个部分组成：</p>
+<ul>
+<li>输入层（Input layer）：指的是输入的句子，对于中文，指的是对句子分好的词；</li>
+<li>Embedding层：将句子中的每一个词映射成固定长度的向量；</li>
+<li>LSTM层：利用双向的LSTM对embedding向量计算，实际上是双向LSTM通过对词向量的计算，从而得到更高级别的句子的向量；</li>
+<li>Attention层：对双向LSTM的结果使用Attention加权；</li>
+<li>输出层（Output layer）：输出层，输出具体的结果。</li>
+</ul>
+<p><strong>注意点</strong>：</p>
+<ul>
+<li>Embedding通常有两种处理方法，一个是静态embedding，即通过事先训练好的词向量，另一种是动态embedding，即伴随着网络一起训练；</li>
+<li>双向LSTM的网络结构会在其他的文章中做进一步的介绍，这里就不详细展开。</li>
+</ul>
+<h4 id="2-2-BiLSTM层的输出"><a href="#2-2-BiLSTM层的输出" class="headerlink" title="2.2. BiLSTM层的输出"></a>2.2. BiLSTM层的输出</h4><p>假设句子通过分词算法后，得到的 T 个词为：\{ $x_1, x_2 , ⋯ , x_T$\}，每一个词 $x_i$ ​经过词向量的映射得到对应的词向量 $e_i$ ​，假设经过LSTM后正向的输出为 $\overrightarrow{h_i}$，逆向的输出为 $\overleftarrow{h_i}$，则第 i 个词经过BiLSTM后得到的向量为：</p>
+<p>$h_{i}=\left[\overrightarrow{h_{i}} \bigoplus \overleftarrow{h_{i}}\right]$</p>
+<p>式中   $\bigoplus$   表示对应元素相加。</p>
+<h4 id="2-3-Attention机制"><a href="#2-3-Attention机制" class="headerlink" title="2.3. Attention机制"></a>2.3. Attention机制</h4><p>假设 H 是所有 $T_w$个词经过BiLSTM后得到的向量的集合：[$h_1, h_2 , \cdot\cdot\cdot , h_T$]，那么Attention的的结果由公式求得：</p>
+<p>$M = tanh(H) \text{，} H \in R^{d^w \times T}$<br>$\alpha = softmax(w^T M)$<br>$r = H\alpha^T$<br>$h^{\ast}=tanh(r)$</p>
+<p>式中   $d^w$  表示向量的维度；$w^T$ 表示需要学习的参数。</p>
+<h4 id="2-4-分类"><a href="#2-4-分类" class="headerlink" title="2.4. 分类"></a>2.4. 分类</h4><p>针对句子 S，通过上述的BiLSTM以及Attention机制，得到了对应的表示矩阵：$h^{\ast}$，其维度为$d^w\times 1$。分类器以$h^{\ast}$为输入：</p>
+<p>$\hat{p}(y \mid S)=\operatorname{softmax}\left(W^{(S)} h^{*}+b^{(S)}\right)$</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ul>
+<li><a href="https://www.aclweb.org/anthology/P16-2034" target="_blank" rel="noopener">Attention-Based Bidirectional Long Short-Term Memory Networks for Relation Classification</a></li>
+<li><a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">Understanding LSTM Networks</a></li>
+</ul>
 
     </div>
+
+    
+    
+    
+
+	
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/文本分类模型/" rel="tag"># 文本分类模型</a>
+            
+              <a href="/tags/转载/" rel="tag"># 转载</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/05/17/TextCNN原理详解/" rel="next" title="TextCNN原理详解">
+                  <i class="fa fa-chevron-left"></i> TextCNN原理详解
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
   </div>
   
   
   
+  </article>
 
-  
-
+  </div>
 
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -355,6 +495,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -367,6 +512,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-算法思想"><span class="nav-number">2.</span> <span class="nav-text">2. 算法思想</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-算法的组成部分"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 算法的组成部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-BiLSTM层的输出"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. BiLSTM层的输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Attention机制"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. Attention机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-分类"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -568,6 +715,58 @@
 
   
 
+  
+    
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
   
 
   
