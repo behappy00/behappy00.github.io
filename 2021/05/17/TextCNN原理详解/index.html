@@ -75,7 +75,7 @@
 <meta property="og:image" content="https://behappy00.github.io/2021/05/17/TextCNN原理详解/2021-05-17-13-22-58.png">
 <meta property="og:image" content="https://behappy00.github.io/2021/05/17/TextCNN原理详解/2021-05-17-13-23-24.png">
 <meta property="og:image" content="https://behappy00.github.io/2021/05/17/TextCNN原理详解/2021-05-17-13-29-46.png">
-<meta property="og:updated_time" content="2021-05-17T05:35:33.466Z">
+<meta property="og:updated_time" content="2021-05-17T05:39:15.042Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TextCNN原理详解">
 <meta name="twitter:description" content="1. TextCNN 是什么 2. TextCNN 的优势 3. TextCNN 的流程 4. TextCNN 的总结">
@@ -301,7 +301,7 @@
                 
               
 
-              <time title="创建时间：2021-05-17 09:43:48 / 修改时间：13:35:33" itemprop="dateCreated datePublished" datetime="2021-05-17T09:43:48+08:00">2021-05-17</time>
+              <time title="创建时间：2021-05-17 09:43:48 / 修改时间：13:39:15" itemprop="dateCreated datePublished" datetime="2021-05-17T09:43:48+08:00">2021-05-17</time>
             </span>
           
             
@@ -400,7 +400,7 @@
 </ol>
 <p>今天主要讲TextCNN的基本原理和优劣势，包括网络结构、如何更新参数以及应用场景等。</p>
 <h3 id="1-TextCNN-是什么"><a href="#1-TextCNN-是什么" class="headerlink" title="1. TextCNN 是什么"></a>1. TextCNN 是什么</h3><p>我们之前提前CNN时，通常会认为是属于CV领域，用于计算机视觉方向的工作，但是在2014年，Yoon Kim针对CNN的输入层做了一些变形，提出了文本分类模型textCNN。与传统图像的CNN网络相比, textCNN 在网络结构上没有任何变化(甚至更加简单了), 从图一可以看出textCNN 其实只有一层卷积,一层max-pooling, 最后将输出外接softmax 来n分类。</p>
-<p><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-20-44.png" alt="图一 textCNN 架构"><br>与图像当中CNN的网络相比，textCNN 最大的不同便是在输入数据的不同：</p>
+<p><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-20-44.png" alt><br>与图像当中CNN的网络相比，textCNN 最大的不同便是在输入数据的不同：</p>
 <ol>
 <li>图像是二维数据, 图像的卷积核是从左到右, 从上到下进行滑动来进行特征抽取。</li>
 <li>自然语言是一维数据, 虽然经过word-embedding 生成了二维向量，但是对词向量做从左到右滑动来进行卷积没有意义. 比如 “今天” 对应的向量[0, 0, 0, 0, 1], 按窗口大小为 1* 2 从左到右滑动得到[0,0], [0,0], [0,0], [0, 1]这四个向量, 对应的都是”今天”这个词汇, 这种滑动没有帮助.</li>
@@ -412,10 +412,10 @@
 </ol>
 <h3 id="3-TextCNN-的流程"><a href="#3-TextCNN-的流程" class="headerlink" title="3. TextCNN 的流程"></a>3. TextCNN 的流程</h3><p><strong>1.Word Embedding 分词构建词向量</strong></p>
 <p>如图二所示, textCNN 首先将 “今天天气很好,出来玩” 分词成”今天/天气/很好/，/出来/玩, 通过word2vec或者GLOV 等embedding 方式将每个词成映射成一个5维(维数可以自己指定)词向量, 如 “今天” -&gt; [0,0,0,0,1], “天气” -&gt;[0,0,0,1,0], “很好” -&gt;[0,0,1,0,0]等等。</p>
-<p><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-19-56.png" alt="图二 Word Embedding"></p>
+<p><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-19-56.png" alt></p>
 <p>这样做的好处主要是将自然语言数值化，方便后续的处理。从这里也可以看出不同的映射方式对最后的结果是会产生巨大的影响, nlp 当中目前最火热的研究方向便是如何将自然语言映射成更好的词向量。我们构建完词向量后，将所有的词向量拼接起来构成一个6*5的二维矩阵，作为最初的输入</p>
 <p><strong>2. Convolution 卷积</strong></p>
-<p><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-21-12.png" alt="图三 卷积示意图"></p>
+<p><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-21-12.png" alt></p>
 <p>卷积是一种数学算子。我们用一个简单的例子来说明一下</p>
 <p><strong>step.1</strong>将 “今天”/“天气”/“很好”/“,” 对应的4*5 矩阵 与卷积核做一个point wise 的乘法然后求和, 便是卷积操作：</p>
 <p>feature_map[0] =0<em>1 + 0</em>0 + 0<em>1 + 0</em>0 + 1*0 + //(第一行)</p>
@@ -439,10 +439,10 @@
 <ol>
 <li>关于channel 的说明</li>
 </ol>
-<p><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-21-42.png" alt="图四 channel 说明"><br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-22-06.png" alt="图四 channel 说明"><br>在CNN 中常常会提到一个词channel, 图三 中 深红矩阵与 浅红矩阵 便构成了两个channel 统称一个卷积核, 从这个图中也可以看出每个channel 不必严格一样, 每个4*5 矩阵与输入矩阵做一次卷积操作得到一个feature map. 在计算机视觉中，由于彩色图像存在 R, G, B 三种颜色, 每个颜色便代表一种channel。</p>
+<p><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-21-42.png" alt><br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-22-06.png" alt><br>在CNN 中常常会提到一个词channel, 图三 中 深红矩阵与 浅红矩阵 便构成了两个channel 统称一个卷积核, 从这个图中也可以看出每个channel 不必严格一样, 每个4*5 矩阵与输入矩阵做一次卷积操作得到一个feature map. 在计算机视觉中，由于彩色图像存在 R, G, B 三种颜色, 每个颜色便代表一种channel。</p>
 <p>根据原论文作者的描述, 一开始引入channel 是希望防止过拟合(通过保证学习到的vectors 不要偏离输入太多)来在小数据集合获得比单channel更好的表现，后来发现其实直接使用正则化效果更好。</p>
 <p>不过使用多channel 相比与单channel, 每个channel 可以使用不同的word embedding, 比如可以在no-static(梯度可以反向传播) 的channel 来fine tune 词向量，让词向量更加适用于当前的训练。</p>
-<p>对于channel在textCNN 是否有用, 从论文的实验结果来看多channels <strong>并没有明显提升模型的分类能力</strong>, 七个数据集上的五个数据集 单channel 的textCNN 表现都要优于 多channels的textCNN。<br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-22-34.png" alt="图五 textCNN 实验"><br>我们在这里也介绍一下论文中四个model 的不同</p>
+<p>对于channel在textCNN 是否有用, 从论文的实验结果来看多channels <strong>并没有明显提升模型的分类能力</strong>, 七个数据集上的五个数据集 单channel 的textCNN 表现都要优于 多channels的textCNN。<br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-22-34.png" alt><br>我们在这里也介绍一下论文中四个model 的不同</p>
 <ul>
 <li><p>CNN-rand (单channel), 设计好 embedding_size 这个 Hyperparameter 后, 对不同单词的向量作随机初始化, 后续BP的时候作调整.</p>
 </li>
@@ -453,7 +453,7 @@
 <li><p>CNN-multiple channel(多channels), 类比于图像中的RGB通道, 这里也可以用 static 与 non-static 搭两个通道来做.</p>
 </li>
 </ul>
-<p>4.max-pooling<br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-22-58.png" alt="图六: max-pooling 说明"><br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-23-24.png" alt="图六: max-pooling 说明"></p>
+<p>4.max-pooling<br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-22-58.png" alt><br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-23-24.png" alt></p>
 <p>得到feamap = [1,1,2] 后, 从中选取一个最大值[2] 作为输出, 便是max-pooling。max-pooling 在保持主要特征的情况下, 大大降低了参数的数目, 从图五中可以看出 feature map 从 三维变成了一维, 好处有如下两点:</p>
 <ol>
 <li>降低了过拟合的风险, feature map = [1, 1, 2] 或者[1, 0, 2] 最后的输出都是[2], 表明开始的输入即使有轻微变形, 也不影响最后的识别。</li>
@@ -461,7 +461,7 @@
 </ol>
 <p>pooling 本身无法带来平移不变性(图片有个字母A, 这个字母A 无论出现在图片的哪个位置, 在CNN的网络中都可以识别出来)，卷积核的权值共享才能.</p>
 <p>max-pooling的原理主要是从多个值中取一个最大值，做不到这一点。cnn 能够做到平移不变性，是因为在滑动卷积核的时候，使用的卷积核权值是保持固定的(权值共享), 假设这个卷积核被训练的就能识别字母A, 当这个卷积核在整张图片上滑动的时候，当然可以把整张图片的A都识别出来。</p>
-<p>5.使用softmax k分类<br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-29-46.png" alt="图六:softmax 示意图"></p>
+<p>5.使用softmax k分类<br><img src="/2021/05/17/TextCNN原理详解/2021-05-17-13-29-46.png" alt></p>
 <p>如图六所示, 我们将 max-pooling的结果拼接起来, 送入到softmax当中, 得到各个类别比如 label 为1 的概率以及label 为-1的概率。如果是预测的话，到这里整个textCNN的流程遍结束了。</p>
 <p>如果是训练的话，此时便会根据预测label以及实际label来计算损失函数, 计算出softmax 函数,max-pooling 函数, 激活函数以及卷积核函数 四个函数当中参数需要更新的梯度, 来依次更新这四个函数中的参数，完成一轮训练 。</p>
 <h3 id="4-TextCNN-的总结"><a href="#4-TextCNN-的总结" class="headerlink" title="4. TextCNN 的总结"></a>4. TextCNN 的总结</h3><p>本次我们介绍的textCNN是一个应用了CNN网络的文本分类模型。</p>
