@@ -68,7 +68,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://behappy00.github.io/2021/01/11/Han%20翻译/2021-01-12-19-03-10.png">
 <meta property="og:image" content="https://behappy00.github.io/2021/01/11/Han%20翻译/2021-01-12-21-22-06.png">
-<meta property="og:updated_time" content="2021-05-18T06:51:13.840Z">
+<meta property="og:updated_time" content="2021-05-18T07:19:42.998Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Han 翻译">
 <meta name="twitter:description" content="Hierarchical Attention Networks for Document Classification">
@@ -306,7 +306,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-18 14:51:13" itemprop="dateModified" datetime="2021-05-18T14:51:13+08:00">2021-05-18</time>
+                <time title="修改时间：2021-05-18 15:19:42" itemprop="dateModified" datetime="2021-05-18T15:19:42+08:00">2021-05-18</time>
               </span>
             
           
@@ -540,16 +540,17 @@
 <p>$ r_t $是复位门，它控制过去状态对候选状态的贡献量。 如果$ r_t $为零，则它将忘记先前的状态。 重置门更新如下：<br>$r_t = \sigma(W_r x_t + U_r h_{t-1} + b_r)\qquad (4)$</p>
 </blockquote>
 <h3 id="2-2-Hierarchical-Attention"><a href="#2-2-Hierarchical-Attention" class="headerlink" title="2.2 Hierarchical Attention"></a>2.2 Hierarchical Attention</h3><font color="violet" size="4"> paragraph 1 </font>
-We focus on document-level classification in this work. Assume that a document has $ \it L$ sentences $s_i$ and each sentence contains $T_i$ words. $w_{it}$ with t $\in$  $[0,T]$ represents the words in the $\it i$ th sentence. The proposed model projects the raw document into a vector representation, on which we build a classifier to perform document classification. In the following, we will present how we build the document level vector progressively from word vectors by using the hierarchical structure.
 
-> 在这项工作中，我们专注于文档级分类。 假设一个文档有$ \it L $个句子$ s_i $，每个句子包含$ T_i $个单词。 $ w_{it} $表示第i个句子中的单词,其中 t $\in$  $[0,T]$。 提出的模型将原始文档投影到矢量表示中，我们在其上构建分类器以执行文档分类。 在下面，我们将介绍如何使用层次结构从单词向量逐步构建文档级别向量。
-
+<p>We focus on document-level classification in this work. Assume that a document has $ \it L$ sentences $s_i$ and each sentence contains $T_i$ words. $w_{it}$ with t $\in$  $[0,T]$ represents the words in the $\it i$ th sentence. The proposed model projects the raw document into a vector representation, on which we build a classifier to perform document classification. In the following, we will present how we build the document level vector progressively from word vectors by using the hierarchical structure.</p>
+<blockquote>
+<p>在这项工作中，我们专注于文档级分类。 假设一个文档有$ \it L $个句子$ s_i $，每个句子包含$ T_i $个单词。 $ w_{it} $表示第i个句子中的单词,其中 t $\in$  $[0,T]$。 提出的模型将原始文档投影到矢量表示中，我们在其上构建分类器以执行文档分类。 在下面，我们将介绍如何使用层次结构从单词向量逐步构建文档级别向量。</p>
+</blockquote>
 <font color="violet" size="4"> paragraph 2 </font>
 
-<p>$\bf Word \ \  Encoder$ Given a sentence with words $ w_{it} $,t $\in$  $[0,T]$, we first embed the words to vectors through an embedding matrix $W_e$, $x_{ij}$ = $W_ew_{ij}$. We use a bidirectional GRU (Bahdanau et al., 2014) to get annotations of words by summarizing information from both directions for words, and therefore incorporate the contextual information in the annotation.<br>The bidirectional GRU contains the forward GRU $\overrightarrow{f}$ which reads the sentence $s_i$ from $w_{i1}$ to {w_iT} and a backward GRU $\overleftarrow{f}$ which reads from $w_{iT}$ to $w_{i1}$:</p>
+<p>$\bf Word \ \  Encoder$ Given a sentence with words $ w_{it} $,t $\in$  $[0,T]$, we first embed the words to vectors through an embedding matrix $W_e$, $x_{ij}$ = $W_ew_{ij}$. We use a bidirectional GRU (Bahdanau et al., 2014) to get annotations of words by summarizing information from both directions for words, and therefore incorporate the contextual information in the annotation.<br>The bidirectional GRU contains the forward GRU $\overrightarrow{f}$ which reads the sentence $s_i$ from $w_{i1}$ to ${w_iT}$ and a backward GRU $\overleftarrow{f}$ which reads from $w_{iT}$ to $w_{i1}$:</p>
 <p>$x_{it} = W_ew{it},\ t \in$  $[1,T],$<br>$\overrightarrow{h}_{it} = \overleftarrow{GRU}(x_{it}) ,\ t \in$  $[1,T],$<br>$\overleftarrow{h}_{it} = \overrightarrow{GRU}(x_{it}) ,\ t \in$  $[T,1],$</p>
 <blockquote>
-<p>$\bf Word \ \  Encoder$ 给定包含单词$ w_ {it} $，t $ \in $ $ [0，T] $的句子，我们首先通过嵌入矩阵$ W_e $将单词嵌入向量中，$ x_{ij} $ = $ W_ew_{ij} $。 我们使用双向GRU（Bahdanau等人，2014）通过汇总来自两个方向的单词信息来获取单词注释，因此将上下文信息合并到注释中。<br>双向GRU包含前向GRU $ \overrightarrow {f} $，将句子$ s_i $从$ w_{i1} $读到{w_iT}；向后GRU $ \overleftarrow {f} $，从$ w_{iT} $读取到$ w_ {i1} $：<br>$x_{it} = W_ew{it},\ t \in$  $[1,T],$<br>$\overrightarrow{h}_{it} = \overleftarrow{GRU}(x_{it}) ,\ t \in$  $[1,T],$<br>$\overleftarrow{h}_{it} = \overrightarrow{GRU}(x_{it}) ,\ t \in$  $[T,1],$</p>
+<p>$\bf Word \ \  Encoder$ 给定包含单词$ w_ {it} $，t $ \in $ $ [0，T] $的句子，我们首先通过嵌入矩阵$ W_e $将单词嵌入向量中，$ x_{ij} $ = $ W_ew_{ij} $。 我们使用双向GRU（Bahdanau等人，2014）通过汇总来自两个方向的单词信息来获取单词注释，因此将上下文信息合并到注释中。<br>双向GRU包含前向GRU $ \overrightarrow {f} $，将句子$ s_i $从$ w_{i1} $读到${w_iT}$；向后GRU $ \overleftarrow {f} $，从$ w_{iT} $读取到$ w_ {i1} $：<br>$x_{it} = W_ew{it},\ t \in$  $[1,T],$<br>$\overrightarrow{h}_{it} = \overleftarrow{GRU}(x_{it}) ,\ t \in$  $[1,T],$<br>$\overleftarrow{h}_{it} = \overrightarrow{GRU}(x_{it}) ,\ t \in$  $[T,1],$</p>
 </blockquote>
 <p>We obtain an annotation for a given word $ w_{iT} $ by concatenating the forward hidden state  $\overrightarrow{h}_{it}$ and backward hidden state $\overleftarrow{h}_{it}$, i.e., ${h}_{it}$ = [ $\overrightarrow{h}_{it} , \overleftarrow{h}_{it} ]$, which summarizes the information of the whole sentence centered around $ w_{iT} $.</p>
 <blockquote>
