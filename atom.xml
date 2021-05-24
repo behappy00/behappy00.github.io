@@ -6,7 +6,7 @@
   <link href="https://behappy00.github.io/atom.xml" rel="self"/>
   
   <link href="https://behappy00.github.io/"/>
-  <updated>2021-05-19T02:52:17.680Z</updated>
+  <updated>2021-05-20T02:31:23.163Z</updated>
   <id>https://behappy00.github.io/</id>
   
   <author>
@@ -15,6 +15,44 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>20210520</title>
+    <link href="https://behappy00.github.io/2021/05/20/20210520/"/>
+    <id>https://behappy00.github.io/2021/05/20/20210520/</id>
+    <published>2021-05-20T02:31:23.000Z</published>
+    <updated>2021-05-20T02:31:23.163Z</updated>
+    
+    <content type="html"><![CDATA[<hr><!-- TOC --><ul><li><a href="#1">1.</a></li></ul><!-- /TOC --><hr><p>写在前面：</p><blockquote></blockquote><p>参考文章：</p><ol><li><h3 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h3></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;!-- TOC --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1&quot;&gt;1.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /TOC --&gt;
+&lt;hr&gt;
+&lt;p&gt;写在前面：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;参考文章：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="学习笔记 or 解决方案 or 编程 or 美好生活" scheme="https://behappy00.github.io/categories/学习笔记-or-解决方案-or-编程-or-美好生活/"/>
+    
+    
+    <category term="[object Object]" scheme="https://behappy00.github.io/tags/object-Object/"/>
+    
+    <category term="原创 or 转载" scheme="https://behappy00.github.io/tags/原创-or-转载/"/>
+    
+  </entry>
   
   <entry>
     <title>错误Non-UTF-8 code starting with ‘\xe7‘解决办法</title>
@@ -565,40 +603,6 @@
     <summary type="html">&lt;hr&gt;&lt;hr&gt;&lt;p&gt;参考文章：&lt;/p&gt;&lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/ganxiwu9686/article/details/95204013&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://blog.csdn.net/ganxiwu9686/article/details/95204013&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</summary>
-    
-    
-    
-    <category term="学习笔记" scheme="https://behappy00.github.io/categories/学习笔记/"/>
-    
-    
-    <category term="转载" scheme="https://behappy00.github.io/tags/转载/"/>
-    
-    <category term="pytorch" scheme="https://behappy00.github.io/tags/pytorch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Pytorch之permute函数</title>
-    <link href="https://behappy00.github.io/2021/04/21/Pytorch%E4%B9%8Bpermute%E5%87%BD%E6%95%B0/"/>
-    <id>https://behappy00.github.io/2021/04/21/Pytorch%E4%B9%8Bpermute%E5%87%BD%E6%95%B0/</id>
-    <published>2021-04-21T01:52:50.000Z</published>
-    <updated>2021-04-21T03:26:03.615Z</updated>
-    
-    <content type="html"><![CDATA[<hr><ul><li><a href="#1-先看看官方中英文doc">1 先看看官方中英文doc：</a><ul><li><a href="#11-permutedims">1.1 permute(dims)</a></li><li><a href="#12-permutedims-→-tensor">1.2 permute(*dims) → Tensor</a></li></ul></li><li><a href="#2-pytorch-permute的使用">2 pytorch permute的使用</a><ul><li><a href="#21-transpose与permute的异同">2.1 transpose与permute的异同</a></li><li><a href="#22-permute函数与contiguousview函数之关联">2.2 permute函数与contiguous、view函数之关联</a></li></ul></li></ul><a id="more"></a><!-- TOC --><!-- /TOC --><hr><p>参考文章：</p><ol><li><a href="https://zhuanlan.zhihu.com/p/76583143" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/76583143</a></li></ol><h3 id="1-先看看官方中英文doc："><a href="#1-先看看官方中英文doc：" class="headerlink" title="1 先看看官方中英文doc："></a>1 先看看官方中英文doc：</h3><h4 id="1-1-permute-dims"><a href="#1-1-permute-dims" class="headerlink" title="1.1 permute(dims)"></a>1.1 permute(dims)</h4><p>  将tensor的维度换位。<br>  参数： - <strong>dims</strong> (int ..*) -  换位顺序</p><h4 id="1-2-permute-dims-→-Tensor"><a href="#1-2-permute-dims-→-Tensor" class="headerlink" title="1.2 permute(*dims) → Tensor"></a>1.2 permute(*dims) → Tensor</h4><p>  Permute the dimensions of this tensor.</p><p>  Parameters： *dims (int…) – The desired ordering of dimensions</p><h3 id="2-pytorch-permute的使用"><a href="#2-pytorch-permute的使用" class="headerlink" title="2 pytorch permute的使用"></a>2 pytorch permute的使用</h3><p>permute函数功能还是比较简单的，下面主要介绍几个细节点：</p><h4 id="2-1-transpose与permute的异同"><a href="#2-1-transpose与permute的异同" class="headerlink" title="2.1 transpose与permute的异同"></a>2.1 transpose与permute的异同</h4><p>Tensor.permute(a,b,c,d, …)：permute函数可以对任意高维矩阵进行转置，但没有 torch.permute() 这个调用方式， 只能 Tensor.permute()：</p><p>torch.transpose(Tensor, a,b)：transpose只能操作2D矩阵的转置，有两种调用方式；</p><p>另：连续使用transpose也可实现permute的效果：</p><p>从以上操作中可知，permute相当于可以同时操作于tensor的若干维度，transpose只能同时作用于tensor的两个维度；</p><h4 id="2-2-permute函数与contiguous、view函数之关联"><a href="#2-2-permute函数与contiguous、view函数之关联" class="headerlink" title="2.2 permute函数与contiguous、view函数之关联"></a>2.2 permute函数与contiguous、view函数之关联</h4><p>contiguous：view只能作用在contiguous的variable上，如果在view之前调用了transpose、permute等，就需要调用contiguous()来返回一个contiguous copy；</p><p>一种可能的解释是：有些tensor并不是占用一整块内存，而是由不同的数据块组成，而tensor的view()操作依赖于内存是整块的，这时只需要执行contiguous()这个函数，把tensor变成在内存中连续分布的形式；</p><p>判断ternsor是否为contiguous，可以调用torch.Tensor.is_contiguous()函数:</p>]]></content>
-    
-    
-    <summary type="html">&lt;hr&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-先看看官方中英文doc&quot;&gt;1 先看看官方中英文doc：&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#11-permutedims&quot;&gt;1.1 permute(dims)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#12-permutedims-→-tensor&quot;&gt;1.2 permute(*dims) → Tensor&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-pytorch-permute的使用&quot;&gt;2 pytorch permute的使用&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#21-transpose与permute的异同&quot;&gt;2.1 transpose与permute的异同&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#22-permute函数与contiguousview函数之关联&quot;&gt;2.2 permute函数与contiguous、view函数之关联&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</summary>
     
     
     
