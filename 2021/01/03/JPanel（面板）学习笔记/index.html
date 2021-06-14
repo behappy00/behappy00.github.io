@@ -1,394 +1,106 @@
 <!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
 
-
-
-
-
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
-  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
-
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
-
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.4.0',
-    exturl: false,
-    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":true,"show_result":true,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
-    path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
-  <meta name="description" content="为了完成实验，强行学习GUI。   JPanel，面板。JPanel 是在开发中使用频率非常高的一般轻量级面板容器组件。">
+  
+  <title>JPanel（面板）学习笔记 | Snow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="为了完成实验，强行学习GUI。   JPanel，面板。JPanel 是在开发中使用频率非常高的一般轻量级面板容器组件。  JPanel 常用构造方法: 12345// 创建默认使用流式布局的面板  JPanel()      // 创建指定布局管理器的面板  JPanel(LayoutManager layout) 代码实例 12345678910111213141516171819202122">
 <meta name="keywords" content="java,原创,GUI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JPanel（面板）学习笔记">
 <meta property="og:url" content="https://behappy00.github.io/2021/01/03/JPanel（面板）学习笔记/index.html">
 <meta property="og:site_name" content="Snow">
-<meta property="og:description" content="为了完成实验，强行学习GUI。   JPanel，面板。JPanel 是在开发中使用频率非常高的一般轻量级面板容器组件。">
+<meta property="og:description" content="为了完成实验，强行学习GUI。   JPanel，面板。JPanel 是在开发中使用频率非常高的一般轻量级面板容器组件。  JPanel 常用构造方法: 12345// 创建默认使用流式布局的面板  JPanel()      // 创建指定布局管理器的面板  JPanel(LayoutManager layout) 代码实例 12345678910111213141516171819202122">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://behappy00.github.io/2021/01/03/JPanel（面板）学习笔记/2021-01-03-12-21-37.png">
 <meta property="og:updated_time" content="2021-01-15T15:04:26.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JPanel（面板）学习笔记">
-<meta name="twitter:description" content="为了完成实验，强行学习GUI。   JPanel，面板。JPanel 是在开发中使用频率非常高的一般轻量级面板容器组件。">
+<meta name="twitter:description" content="为了完成实验，强行学习GUI。   JPanel，面板。JPanel 是在开发中使用频率非常高的一般轻量级面板容器组件。  JPanel 常用构造方法: 12345// 创建默认使用流式布局的面板  JPanel()      // 创建指定布局管理器的面板  JPanel(LayoutManager layout) 代码实例 12345678910111213141516171819202122">
 <meta name="twitter:image" content="https://behappy00.github.io/2021/01/03/JPanel（面板）学习笔记/2021-01-03-12-21-37.png">
-  <link rel="canonical" href="https://behappy00.github.io/2021/01/03/JPanel（面板）学习笔记/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>JPanel（面板）学习笔记 | Snow</title>
   
-
-
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Snow</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Snow</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">光而不耀</a>
+        </h2>
+      
     </div>
-        <p class="site-subtitle">光而不耀</p>
-      
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://behappy00.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JPanel（面板）学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/03/JPanel（面板）学习笔记/" class="article-date">
+  <time datetime="2021-01-03T04:14:37.000Z" itemprop="datePublished">2021-01-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
   </div>
 
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
   </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-      
-      
-      
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <li class="menu-item menu-item-home">
-      
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-about">
-      
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-tags">
-      
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-categories">
-      
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-archives">
-      
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        
-          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
-      </li>
-    
-  </ul>
-
-</nav>
-  <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
-           placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result"></div>
-
-</div>
-<div class="search-pop-overlay"></div>
-
-  </div>
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-            
-
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
   
+    <h1 class="article-title" itemprop="name">
+      JPanel（面板）学习笔记
+    </h1>
   
-  
-  <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2021/01/03/JPanel（面板）学习笔记/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Snow">
-      <meta itemprop="description" content="计算机 Hiter">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Snow">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">JPanel（面板）学习笔记
-
-          
-        </h1>
-
-        <div class="post-meta">
-		
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2021-01-03 12:14:37" itemprop="dateCreated datePublished" datetime="2021-01-03T12:14:37+08:00">2021-01-03</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-15 23:04:26" itemprop="dateModified" datetime="2021-01-15T23:04:26+08:00">2021-01-15</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2021/01/03/JPanel（面板）学习笔记/" class="post-meta-item leancloud_visitors" data-flag-title="JPanel（面板）学习笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/03/JPanel（面板）学习笔记/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2021/01/03/JPanel（面板）学习笔记/" itemprop="commentCount"></span></a>
-  </span>
-  
-  
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>2.2k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>2 分钟</span>
-            </span>
-          
-
-        </div>
       </header>
-
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+    <div class="article-entry" itemprop="articleBody">
       
         <pre><code>为了完成实验，强行学习GUI。 
 
 JPanel，面板。JPanel 是在开发中使用频率非常高的一般轻量级面板容器组件。 
-</code></pre><a id="more"></a><p>JPanel 常用构造方法:</p>
+</code></pre><p>JPanel 常用构造方法:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建默认使用流式布局的面板  </span></span><br><span class="line">JPanel()  </span><br><span class="line">    </span><br><span class="line"><span class="comment">// 创建指定布局管理器的面板  </span></span><br><span class="line">JPanel(LayoutManager layout)</span><br></pre></td></tr></table></figure>
 <p>代码实例</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xiets.swing;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.swing.*;</span><br><span class="line"><span class="keyword">import</span> java.awt.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        JFrame jf = <span class="keyword">new</span> JFrame(<span class="string">"用户登录"</span>);</span><br><span class="line">        jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 1 个 JPanel, 使用默认的浮动布局</span></span><br><span class="line">        JPanel panel01 = <span class="keyword">new</span> JPanel();</span><br><span class="line">        panel01.add(<span class="keyword">new</span> JLabel(<span class="string">"用户名"</span>));</span><br><span class="line">        panel01.add(<span class="keyword">new</span> JTextField(<span class="number">10</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 2 个 JPanel, 使用默认的浮动布局</span></span><br><span class="line">        JPanel panel02 = <span class="keyword">new</span> JPanel();</span><br><span class="line">        panel02.add(<span class="keyword">new</span> JLabel(<span class="string">"密   码"</span>));</span><br><span class="line">        panel02.add(<span class="keyword">new</span> JPasswordField(<span class="number">10</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 3 个 JPanel, 使用浮动布局, 并且容器内组件居中显示</span></span><br><span class="line">        JPanel panel03 = <span class="keyword">new</span> JPanel(<span class="keyword">new</span> FlowLayout(FlowLayout.CENTER));</span><br><span class="line">        panel03.add(<span class="keyword">new</span> JButton(<span class="string">"登录"</span>));</span><br><span class="line">        panel03.add(<span class="keyword">new</span> JButton(<span class="string">"注册"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建一个垂直盒子容器, 把上面 3 个 JPanel 串起来作为内容面板添加到窗口</span></span><br><span class="line">        Box vBox = Box.createVerticalBox();</span><br><span class="line">        vBox.add(panel01);</span><br><span class="line">        vBox.add(panel02);</span><br><span class="line">        vBox.add(panel03);</span><br><span class="line"></span><br><span class="line">        jf.setContentPane(vBox);</span><br><span class="line"></span><br><span class="line">        jf.pack();</span><br><span class="line">        jf.setLocationRelativeTo(<span class="keyword">null</span>);</span><br><span class="line">        jf.setVisible(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -400,376 +112,147 @@ JPanel，面板。JPanel 是在开发中使用频率非常高的一般轻量级�
 <li>setDefaultCloseOperation(int operation)：设置用户在此窗体上发起 “close” 时默认执行的操作。</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">方法中的参数解释如下：</span><br><span class="line"></span><br><span class="line"> <span class="number">1</span>.为“<span class="number">0</span>”或DO_NOTHING_ON_CLOSE：</span><br><span class="line">（在 WindowConstants 中定义）：不执行任何操作；要求程序在已注册的WindowListener 对象的 windowClosing 方法中处理该操作。</span><br><span class="line">比如实例代码中更改为f.setDefaultCloseOperation(f. DO_NOTHING_ON_CLOSE);或者f.setDefaultCloseOperation(<span class="number">0</span>),可以发现窗口无法关闭。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="number">2</span>.为“<span class="number">1</span>”或HIDE_ON_CLOSE:</span><br><span class="line">调用任意已注册的 WindowListener 对象后自动隐藏该窗体。此时没有关闭程序，只是将程序界面隐藏了。可以打开任务管理器，可以看到一个叫“java.exe”的进程（如果调试运行了多个java程序，则会看到多个“java.exe”的进程），如果此时用EditPlus测试程序，会发现当单击窗口的关闭按钮关闭窗口后，却无法再次对程序进行调试，因为程序线程没有关闭，在任务管理器中关闭java.exe（如果有多个“java.exe”的进程，则先都关闭掉，再来测试该问题）基础后，EditPlus才可以重新编译改程序。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">3</span>.为“<span class="number">2</span>”或DISPOSE_ON_CLOSE:</span><br><span class="line">调用任意已注册 WindowListener 的对象后自动隐藏并释放该窗体。但继续运行应用程序，释放了窗体中占用的资源。</span><br><span class="line"></span><br><span class="line"> <span class="number">4</span>.为“<span class="number">3</span>”EXIT_ON_CLOSE（在 JFrame 中定义）：</span><br><span class="line">使用 System exit 方法退出应用程序。仅在应用程序中使用。结束了应用程序。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PS:默认情况下，该值被设置为 HIDE_ON_CLOSE。</span><br><span class="line"></span><br><span class="line">当注释掉实例中的f.setDefaultCloseOperation(f.EXIT_ON_CLOSE)语句时，起到的效果和f.setDefaultCloseOperation(f. HIDE_ON_CLOSE)或者f.setDefaultCloseOperation(<span class="number">1</span>)一样。</span><br></pre></td></tr></table></figure>
+      
     </div>
-
-    
-    
-    
-
-	
-        
-      
-
-      <footer class="post-footer">
-          
-            
-          
-          <div class="post-tags">
-            
-              <a href="/tags/java/" rel="tag"># java</a>
-            
-              <a href="/tags/原创/" rel="tag"># 原创</a>
-            
-              <a href="/tags/GUI/" rel="tag"># GUI</a>
-            
-          </div>
-        
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2021/01/03/JTextArea（文本区域）学习笔记/" rel="next" title="JTextArea（文本区域）学习笔记">
-                  <i class="fa fa-chevron-left"></i> JTextArea（文本区域）学习笔记
-                </a>
-              
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2021/01/03/Java程序设计中setFont()函数的用法(转)/" rel="prev" title="Java程序设计中setFont()函数的用法(转)">
-                  Java程序设计中setFont()函数的用法(转) <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
-        
-      </footer>
-    
-  </div>
-  
-  
-  
-  </article>
-
-  </div>
-
-
-          </div>
-          
-    
-    <div class="comments" id="comments"></div>
-  
-
-        </div>
-          
-  
-		
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-        
-        
-        
-        
-      
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Snow</p>
-  <div class="site-description" itemprop="description">计算机 Hiter</div>
-</div>
-  <nav class="site-state motion-element">
-      <div class="site-state-item site-state-posts">
-        
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">78</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-    
+    <footer class="article-footer">
+      <a data-url="https://behappy00.github.io/2021/01/03/JPanel（面板）学习笔记/" data-id="ckpw7g2ko001s2wts1qwctwiu" class="article-share-link">Share</a>
       
       
-      <div class="site-state-item site-state-categories">
-        
-          
-            <a href="/categories/">
-          
-        
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
-      </div>
-    
-      
-      
-      <div class="site-state-item site-state-tags">
-        
-          
-            <a href="/tags/">
-          
-        
-        <span class="site-state-item-count">28</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
-      </div>
-    
-  </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GUI/">GUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
 
-
-
-      </div>
-
-	 <!-- 添加近期文章 -->
-	 
-	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
-		 <div class="links-of-blogroll-title">
-		   <!-- modify icon to fire by szw -->
-		   <i class="fa fa-history fa-" aria-hidden="true"></i>
-		   近期文章
-		 </div>
-		 <ul class="links-of-blogroll-list">
-		   
-		   
-			 <li>
-			   <a href="/2021/05/20/20210520/" title="20210520" target="_blank">20210520</a>
-			 </li>
-		   
-			 <li>
-			   <a href="/2021/05/19/错误Non-UTF-8 code starting with ‘xe7‘解决办法/" title="错误Non-UTF-8 code starting with ‘\xe7‘解决办法" target="_blank">错误Non-UTF-8 code starting with ‘\xe7‘解决办法</a>
-			 </li>
-		   
-			 <li>
-			   <a href="/2021/05/19/Pytorch之输出整个tensor的方法/" title="Pytorch之输出整个tensor的方法" target="_blank">Pytorch之输出整个tensor的方法</a>
-			 </li>
-		   
-			 <li>
-			   <a href="/2021/05/18/机器学习中的范数规则化之（一）L0、L1与L2范数/" title="机器学习中的范数规则化之（一）L0、L1与L2范数" target="_blank">机器学习中的范数规则化之（一）L0、L1与L2范数</a>
-			 </li>
-		   
-			 <li>
-			   <a href="/2021/05/17/黑箱方法文本对抗样本生成/" title="黑箱方法文本对抗样本生成" target="_blank">黑箱方法文本对抗样本生成</a>
-			 </li>
-		   
-		 </ul>
-	   </div>
-	 
-	  
-	  <!-- 添加网易云播放歌曲 -->
-	  <div id="music163player">
-		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
-		</iframe>
-	  </div>
-  
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2021</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Snow</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">283k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">4:17</span>
-</div>
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="我的第 undefined 位朋友，">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-    <span class="post-meta-divider">|</span>
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-        
-      </div>
     </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/01/03/Java程序设计中setFont()函数的用法(转)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Java程序设计中setFont()函数的用法(转)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/01/03/JTextArea（文本区域）学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JTextArea（文本区域）学习笔记</div>
+    </a>
+  
+</nav>
 
   
+</article>
 
-
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/pisces.js?v=7.4.0"></script>
-<script src="/js/next-boot.js?v=7.4.0"></script>
-
-
-
+</section>
+        
+          <aside id="sidebar">
   
-
-
-
-
-
-
-
-
-  <script src="/js/local-search.js?v=7.4.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记-or-解决方案-or-编程-or-美好生活/">学习笔记 or 解决方案 or 编程 or 美好生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/解决方案/">解决方案</a></li></ul>
+    </div>
+  </div>
 
 
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/52破解-脱壳之类的属于这一类/">52破解 <!-- 脱壳之类的属于这一类--></a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GUI/">GUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/object-Object/">[object Object]</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bat/">bat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java模块学习/">java模块学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java模块学习-转载/">java模块学习 - 转载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/machine-learning/">machine learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python学习应用/">python学习应用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python模块学习/">python模块学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/verilog/">verilog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原创/">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原创-or-转载/">原创 or 转载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/搭建博客/">搭建博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文本分类模型/">文本分类模型</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/论文阅读/">论文阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/转载/">转载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑科技/">黑科技</a></li></ul>
+    </div>
+  </div>
+
 
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/52破解-脱壳之类的属于这一类/" style="font-size: 10px;">52破解 <!-- 脱壳之类的属于这一类--></a> <a href="/tags/GUI/" style="font-size: 13px;">GUI</a> <a href="/tags/HTML/" style="font-size: 11px;">HTML</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/object-Object/" style="font-size: 14px;">[object Object]</a> <a href="/tags/bat/" style="font-size: 12px;">bat</a> <a href="/tags/c/" style="font-size: 11px;">c</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/java/" style="font-size: 16px;">java</a> <a href="/tags/java模块学习/" style="font-size: 10px;">java模块学习</a> <a href="/tags/java模块学习-转载/" style="font-size: 10px;">java模块学习 - 转载</a> <a href="/tags/js/" style="font-size: 12px;">js</a> <a href="/tags/leetcode/" style="font-size: 11px;">leetcode</a> <a href="/tags/machine-learning/" style="font-size: 10px;">machine learning</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/python/" style="font-size: 17px;">python</a> <a href="/tags/python学习应用/" style="font-size: 12px;">python学习应用</a> <a href="/tags/python模块学习/" style="font-size: 11px;">python模块学习</a> <a href="/tags/pytorch/" style="font-size: 18px;">pytorch</a> <a href="/tags/verilog/" style="font-size: 10px;">verilog</a> <a href="/tags/原创/" style="font-size: 20px;">原创</a> <a href="/tags/原创-or-转载/" style="font-size: 13px;">原创 or 转载</a> <a href="/tags/搭建博客/" style="font-size: 13px;">搭建博客</a> <a href="/tags/文本分类模型/" style="font-size: 15px;">文本分类模型</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/论文阅读/" style="font-size: 13px;">论文阅读</a> <a href="/tags/转载/" style="font-size: 19px;">转载</a> <a href="/tags/黑科技/" style="font-size: 15px;">黑科技</a>
+    </div>
+  </div>
 
   
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li></ul>
+    </div>
+  </div>
+
 
   
-
-
-  <!--
-
-<script>
-  $(document).ready(function () {
-    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
-  });
-</script>
-
-
-
-  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
-  <script>
-    function timer() {
-      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
-      ages = ages.replace(/years?/, "年");
-      ages = ages.replace(/months?/, "月");
-      ages = ages.replace(/days?/, "天");
-      ages = ages.replace(/hours?/, "小时");
-      ages = ages.replace(/minutes?/, "分");
-      ages = ages.replace(/seconds?/, "秒");
-      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
-      div.innerHTML = `我已在此等候你 ${ages}`;
-    }
-    var div = document.createElement("div");
-    //插入到copyright之后
-    var copyright = document.querySelector(".copyright");
-    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
-    timer();
-    setInterval("timer()",1000)
-  </script>
--->
-
-<script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail';
-  guest = guest.split(',').filter(item => {
-    return GUEST.includes(item);
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
-    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
-    placeholder: 'Just go go',
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: true,
-    lang: 'zh-CN' || 'zh-cn',
-    path: location.pathname
-  });
-}, window.Valine);
-</script>
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/06/11/bp神经网络学习/">BP神经网络学习</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/06/20210606/">20210606</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/30/20210530/">20210530</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/27/20210527/">20210527</a>
+          </li>
+        
+          <li>
+            <a href="/2021/05/20/20210520/">20210520</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
 
   
-  <!--页面点击出现富强民主文明和谐-->
- <script type="text/javascript" src="/js/words-click.js"></script > 
-
-  <!-- 代码块复制功能 -->
-  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
-  <!--
-  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
-  -->
+</aside>
+        
+      </div>
+      <footer id="footer">
   
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Snow<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
 </html>
-
