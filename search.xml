@@ -376,7 +376,7 @@
   <entry>
     <title><![CDATA[论文阅读__label-wise-attention]]></title>
     <url>%2F2021%2F04%2F12%2F%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-label-wise-attention%2F</url>
-    <content type="text"><![CDATA[论文作者讲解 Interpretable Emoji Prediction via Label-Wise Attention LSTMs from ACL on Vimeo. 论文脉络 和普通的attention的区别就是每个标签单独进行处理 正常的attention： label-wise-attention:]]></content>
+    <content type="text"><![CDATA[论文作者讲解Interpretable Emoji Prediction via Label-Wise Attention LSTMs from ACL on Vimeo. 论文脉络 和普通的attention的区别就是每个标签单独进行处理 正常的attention： label-wise-attention:]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
@@ -468,7 +468,7 @@
   <entry>
     <title><![CDATA[关闭迅雷更新到新版本的提示]]></title>
     <url>%2F2021%2F01%2F13%2F%E5%85%B3%E9%97%AD%E8%BF%85%E9%9B%B7%E6%9B%B4%E6%96%B0%E5%88%B0%E6%96%B0%E7%89%88%E6%9C%AC%E7%9A%84%E6%8F%90%E7%A4%BA%2F</url>
-    <content type="text"><![CDATA[转载于 xiongtianci.com 每次打开迅雷都会自动检查是否是最新版本，如果不是最新版本，迅雷会一直重复弹窗弹出 更新到新版本 的提示： 解决方案简介：迅雷提示升级是因为每次迅雷主程序启动时都会同时启动一个叫XLLiveUD.exe的程序，这个程序会检查更新，所以如果不想让他检查更新，就只需要把他替换掉就可以了（因为如果删除它，每次迅雷启动时都会弹出一个错误对话框，提示找不到文件XLLiveUD.exe） 进入迅雷安装目录，找到 XLLiveUD.exe( 可直接在迅雷安装目录中搜索这个文件 )，将其删除。这个就是自动升级的程序，但是删除之后下次开启迅雷会提示该文件丢失。 在同一个目录找到迅雷执行程序文件 Thunder.exe，这个是就是迅雷桌面快捷方式指到的程序也就是迅雷开启程序。然后复制拷贝 Thunder.exe副本，然后将副本文件名更改为迅雷更新执行程序名： XLLiveUD.exe 当迅雷程序调用检查更新的执行文件时，实际上相当于重复点击打开迅雷，而迅雷本身不允许重复打开。这样既不会报错也不会造成重复弹屏的问题。从而算是比较完美的解决了 关闭迅雷更新到新版本提示 的问题(❁´◡`❁) _✲ﾟ_]]></content>
+    <content type="text"><![CDATA[转载于 xiongtianci.com每次打开迅雷都会自动检查是否是最新版本，如果不是最新版本，迅雷会一直重复弹窗弹出 更新到新版本 的提示： 解决方案简介：迅雷提示升级是因为每次迅雷主程序启动时都会同时启动一个叫XLLiveUD.exe的程序，这个程序会检查更新，所以如果不想让他检查更新，就只需要把他替换掉就可以了（因为如果删除它，每次迅雷启动时都会弹出一个错误对话框，提示找不到文件XLLiveUD.exe） 进入迅雷安装目录，找到 XLLiveUD.exe( 可直接在迅雷安装目录中搜索这个文件 )，将其删除。这个就是自动升级的程序，但是删除之后下次开启迅雷会提示该文件丢失。 在同一个目录找到迅雷执行程序文件 Thunder.exe，这个是就是迅雷桌面快捷方式指到的程序也就是迅雷开启程序。然后复制拷贝 Thunder.exe副本，然后将副本文件名更改为迅雷更新执行程序名： XLLiveUD.exe 当迅雷程序调用检查更新的执行文件时，实际上相当于重复点击打开迅雷，而迅雷本身不允许重复打开。这样既不会报错也不会造成重复弹屏的问题。从而算是比较完美的解决了 关闭迅雷更新到新版本提示 的问题(❁´◡`❁) _✲ﾟ_]]></content>
       <categories>
         <category>解决方案</category>
       </categories>
@@ -594,7 +594,7 @@
   <entry>
     <title><![CDATA[HAN_学习指导_未完待续]]></title>
     <url>%2F2021%2F01%2F05%2FHAN_%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%AF%BC_%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD%2F</url>
-    <content type="text"><![CDATA[RNN+Attention(HAN) 文本分类 阅读笔记 - 今天做作业没的文章 -知乎 Hierarchical Attention Networks for Document Classification 阅读笔记 - 滨城之恋的文章 -知乎 关于GRU不同门的介绍 pytorch的实现 实现 github: HAN HAN_pytorch]]></content>
+    <content type="text"><![CDATA[RNN+Attention(HAN) 文本分类 阅读笔记 - 今天做作业没的文章 -知乎Hierarchical Attention Networks for Document Classification 阅读笔记 - 滨城之恋的文章 -知乎 关于GRU不同门的介绍 pytorch的实现 实现 github: HAN HAN_pytorch]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
@@ -816,7 +816,7 @@
   <entry>
     <title><![CDATA[leetcode-2-两数相加]]></title>
     <url>%2F2019%2F09%2F10%2Fleetcode-2-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0%2F</url>
-    <content type="text"><![CDATA[题目来自leetcode 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。 示例： 输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)输出：7 -&gt; 0 -&gt; 8原因：342 + 465 = 807 这次尝试使用c++，测试结果比较喜人，最起码，不向昨天一样奇妙的出现不知道为什莫的错误，我其实认真想了一下，似乎是用中文进行了输入导致的。 12345678910111213141516171819202122232425262728293031323334 /** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) &#123; ListNode vHead(0), *p = &amp;vHead; int flag = 0; while (l1 || l2 || flag) &#123; int tmp = 0; if (l1 != nullptr) tmp += l1-&gt;val; if (l2 != nullptr) tmp += l2-&gt;val; tmp += flag; flag = tmp / 10; tmp %= 10; ListNode *next = l1 ? l1 : l2; if (next == nullptr) next = new ListNode(tmp); next-&gt;val = tmp; p-&gt;next = next; p = p-&gt;next; l1 = l1 ? l1-&gt;next : nullptr; l2 = l2 ? l2-&gt;next : nullptr; &#125; return vHead.next; &#125;&#125;; 下面引入官方的解法：（Java）12345678910111213141516171819public ListNode addTwoNumbers(ListNode l1, ListNode l2) &#123; ListNode dummyHead = new ListNode(0); ListNode p = l1, q = l2, curr = dummyHead; int carry = 0; while (p != null || q != null) &#123; int x = (p != null) ? p.val : 0; int y = (q != null) ? q.val : 0; int sum = carry + x + y; carry = sum / 10; curr.next = new ListNode(sum % 10); curr = curr.next; if (p != null) p = p.next; if (q != null) q = q.next; &#125; if (carry &gt; 0) &#123; curr.next = new ListNode(carry); &#125; return dummyHead.next;&#125;]]></content>
+    <content type="text"><![CDATA[题目来自leetcode给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。 示例： 输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)输出：7 -&gt; 0 -&gt; 8原因：342 + 465 = 807 这次尝试使用c++，测试结果比较喜人，最起码，不向昨天一样奇妙的出现不知道为什莫的错误，我其实认真想了一下，似乎是用中文进行了输入导致的。 12345678910111213141516171819202122232425262728293031323334 /** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode(int x) : val(x), next(NULL) &#123;&#125; * &#125;; */class Solution &#123;public: ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) &#123; ListNode vHead(0), *p = &amp;vHead; int flag = 0; while (l1 || l2 || flag) &#123; int tmp = 0; if (l1 != nullptr) tmp += l1-&gt;val; if (l2 != nullptr) tmp += l2-&gt;val; tmp += flag; flag = tmp / 10; tmp %= 10; ListNode *next = l1 ? l1 : l2; if (next == nullptr) next = new ListNode(tmp); next-&gt;val = tmp; p-&gt;next = next; p = p-&gt;next; l1 = l1 ? l1-&gt;next : nullptr; l2 = l2 ? l2-&gt;next : nullptr; &#125; return vHead.next; &#125;&#125;; 下面引入官方的解法：（Java）12345678910111213141516171819public ListNode addTwoNumbers(ListNode l1, ListNode l2) &#123; ListNode dummyHead = new ListNode(0); ListNode p = l1, q = l2, curr = dummyHead; int carry = 0; while (p != null || q != null) &#123; int x = (p != null) ? p.val : 0; int y = (q != null) ? q.val : 0; int sum = carry + x + y; carry = sum / 10; curr.next = new ListNode(sum % 10); curr = curr.next; if (p != null) p = p.next; if (q != null) q = q.next; &#125; if (carry &gt; 0) &#123; curr.next = new ListNode(carry); &#125; return dummyHead.next;&#125;]]></content>
       <categories>
         <category>编程</category>
       </categories>
@@ -830,7 +830,7 @@
   <entry>
     <title><![CDATA[leetcode-1-两数之和]]></title>
     <url>%2F2019%2F09%2F09%2Fleetcode-1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C%2F</url>
-    <content type="text"><![CDATA[题目来自leetcode 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例: 给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1] c语言： 123456789101112131415161718/** * Note: The returned array must be malloced, assume caller calls free(). */int* twoSum(int* nums, int numsSize, int target, int* returnSize)&#123; int* res = (int *)malloc(sizeof(int) * 2); for(int i = 0; i &lt; numsSize-1; i++) &#123; for(int j = i + 1; j &lt; numsSize; j++) &#123; if(nums[i] + nums [j] == target) &#123; res[0] = i; res[1] = j; *returnSize = 2; return res; &#125; &#125; &#125; return res;&#125; 然后玄幻的事情出现了，测试结果和实际提交之后的结果居然不一样，然后就失败了。。虽然这里莫得问题。认真思考，似乎是中文输入法乱入导致的惨案。 官方解法：（Java）不一一列举123456789101112class Solution &#123; public int[] twoSum(int[] nums, int target) &#123; for (int i = 0; i &lt; nums.length; i++) &#123; for (int j = i + 1; j &lt; nums.length; j++) &#123; if (nums[j] == target - nums[i]) &#123; return new int[] &#123; i, j &#125;; &#125; &#125; &#125; throw new IllegalArgumentException(“No two sum solution”); &#125; &#125;]]></content>
+    <content type="text"><![CDATA[题目来自leetcode给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例: 给定 nums = [2, 7, 11, 15], target = 9 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1] c语言： 123456789101112131415161718/** * Note: The returned array must be malloced, assume caller calls free(). */int* twoSum(int* nums, int numsSize, int target, int* returnSize)&#123; int* res = (int *)malloc(sizeof(int) * 2); for(int i = 0; i &lt; numsSize-1; i++) &#123; for(int j = i + 1; j &lt; numsSize; j++) &#123; if(nums[i] + nums [j] == target) &#123; res[0] = i; res[1] = j; *returnSize = 2; return res; &#125; &#125; &#125; return res;&#125; 然后玄幻的事情出现了，测试结果和实际提交之后的结果居然不一样，然后就失败了。。虽然这里莫得问题。认真思考，似乎是中文输入法乱入导致的惨案。 官方解法：（Java）不一一列举123456789101112class Solution &#123; public int[] twoSum(int[] nums, int target) &#123; for (int i = 0; i &lt; nums.length; i++) &#123; for (int j = i + 1; j &lt; nums.length; j++) &#123; if (nums[j] == target - nums[i]) &#123; return new int[] &#123; i, j &#125;; &#125; &#125; &#125; throw new IllegalArgumentException(“No two sum solution”); &#125; &#125;]]></content>
       <categories>
         <category>编程</category>
       </categories>
