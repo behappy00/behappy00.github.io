@@ -6,7 +6,7 @@
   <link href="https://behappy00.github.io/atom.xml" rel="self"/>
   
   <link href="https://behappy00.github.io/"/>
-  <updated>2021-06-11T08:40:10.778Z</updated>
+  <updated>2021-07-05T02:00:27.341Z</updated>
   <id>https://behappy00.github.io/</id>
   
   <author>
@@ -15,6 +15,73 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>有趣的注释</title>
+    <link href="https://behappy00.github.io/2021/07/05/20210705/"/>
+    <id>https://behappy00.github.io/2021/07/05/20210705/</id>
+    <published>2021-07-05T01:40:07.000Z</published>
+    <updated>2021-07-05T02:00:27.341Z</updated>
+    
+    <content type="html"><![CDATA[<hr><!-- TOC --><ul><li><a href="#1-佛祖保佑永无bug">1. 佛祖保佑，永无BUG</a></li><li><a href="#2-神兽护体永无bug">2. 神兽护体，永无BUG</a></li><li><a href="#3-来首程序员打油诗笑">3. 来首程序员打油诗，笑</a></li><li><a href="#4-无尽诱惑">4. 无尽诱惑</a></li><li><a href="#5-单身狗专用">5. 单身狗专用</a></li><li><a href="#6-骷髅头">6. 骷髅头</a></li><li><a href="#7-标准键盘">7. 标准键盘</a></li><li><a href="#8-顶">8. 顶</a></li><li><a href="#9-顶">9. 顶</a></li></ul><!-- /TOC --><hr><p>写在前面：</p><blockquote><p>程序员们可真是神奇的动物，如果你看源码，会发现他们将自己的情绪详细的记录</p></blockquote><h3 id="1-佛祖保佑，永无BUG"><a href="#1-佛祖保佑，永无BUG" class="headerlink" title="1. 佛祖保佑，永无BUG"></a>1. 佛祖保佑，永无BUG</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//                            _ooOoo_    </span><br><span class="line">//                           o8888888o    </span><br><span class="line">//                           88&quot; . &quot;88    </span><br><span class="line">//                           (| -_- |)    </span><br><span class="line">//                            O\ = /O    </span><br><span class="line">//                        ____/`---&apos;\____    </span><br><span class="line">//                      .   &apos; \\| |// `.    </span><br><span class="line">//                       / \\||| : |||// \    </span><br><span class="line">//                     / _||||| -:- |||||- \    </span><br><span class="line">//                       | | \\\ - /// | |    </span><br><span class="line">//                     | \_| &apos;&apos;\---/&apos;&apos; | |    </span><br><span class="line">//                      \ .-\__ `-` ___/-. /    </span><br><span class="line">//                   ___`. .&apos; /--.--\ `. . __    </span><br><span class="line">//                .&quot;&quot; &apos;&lt; `.___\_&lt;|&gt;_/___.&apos; &gt;&apos;&quot;&quot;.    </span><br><span class="line">//               | | : `- \`.;`\ _ /`;.`/ - ` : | |    </span><br><span class="line">//                 \ \ `-. \_ __\ /__ _/ .-` / /    </span><br><span class="line">//         ======`-.____`-.___\_____/___.-`____.-&apos;======    </span><br><span class="line">//                            `=---=&apos;    </span><br><span class="line">//    </span><br><span class="line">//         .............................................    </span><br><span class="line">//                  佛祖保佑             永无BUG</span><br></pre></td></tr></table></figure><h3 id="2-神兽护体，永无BUG"><a href="#2-神兽护体，永无BUG" class="headerlink" title="2. 神兽护体，永无BUG"></a>2. 神兽护体，永无BUG</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="3-来首程序员打油诗，笑"><a href="#3-来首程序员打油诗，笑" class="headerlink" title="3. 来首程序员打油诗，笑"></a>3. 来首程序员打油诗，笑</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/** *                      江城子 . 程序员之歌 * *                  十年生死两茫茫，写程序，到天亮。 *                      千行代码，Bug何处藏。 *                  纵使上线又怎样，朝令改，夕断肠。 * *                  领导每天新想法，天天改，日日忙。 *                      相顾无言，惟有泪千行。 *                  每晚灯火阑珊处，夜难寐，加班狂。*/</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/** *          写字楼里写字间，写字间里程序员； *          程序人员写程序，又拿程序换酒钱。 *          酒醒只在网上坐，酒醉还来网下眠； *          酒醉酒醒日复日，网上网下年复年。 *          但愿老死电脑间，不愿鞠躬老板前； *          奔驰宝马贵者趣，公交自行程序员。 *          别人笑我忒疯癫，我笑自己命太贱； *          不见满街漂亮妹，哪个归得程序员？ */</span><br></pre></td></tr></table></figure><h3 id="4-无尽诱惑"><a href="#4-无尽诱惑" class="headerlink" title="4. 无尽诱惑"></a>4. 无尽诱惑</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="5-单身狗专用"><a href="#5-单身狗专用" class="headerlink" title="5. 单身狗专用"></a>5. 单身狗专用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="6-骷髅头"><a href="#6-骷髅头" class="headerlink" title="6. 骷髅头"></a>6. 骷髅头</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="7-标准键盘"><a href="#7-标准键盘" class="headerlink" title="7. 标准键盘"></a>7. 标准键盘</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="8-顶"><a href="#8-顶" class="headerlink" title="8. 顶"></a>8. 顶</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="9-顶"><a href="#9-顶" class="headerlink" title="9. 顶"></a>9. 顶</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;!-- TOC --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-佛祖保佑永无bug&quot;&gt;1. 佛祖保佑，永无BUG&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2-神兽护体永无bug&quot;&gt;2. 神兽护体，永无BUG&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3-来</summary>
+      
+    
+    
+    
+    <category term="美好生活" scheme="https://behappy00.github.io/categories/美好生活/"/>
+    
+    
+    <category term="原创" scheme="https://behappy00.github.io/tags/原创/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20210704</title>
+    <link href="https://behappy00.github.io/2021/07/04/20210704/"/>
+    <id>https://behappy00.github.io/2021/07/04/20210704/</id>
+    <published>2021-07-04T04:19:38.000Z</published>
+    <updated>2021-07-04T04:19:38.851Z</updated>
+    
+    <content type="html"><![CDATA[<hr><!-- TOC --><ul><li><a href="#1">1.</a></li></ul><!-- /TOC --><hr><p>写在前面：</p><blockquote></blockquote><p>参考文章：</p><ol><li><h3 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h3></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;hr&gt;
+&lt;!-- TOC --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1&quot;&gt;1.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /TOC --&gt;
+&lt;hr&gt;
+&lt;p&gt;写在前面：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;参考文章：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="学习笔记 or 解决方案 or 编程 or 美好生活" scheme="https://behappy00.github.io/categories/学习笔记-or-解决方案-or-编程-or-美好生活/"/>
+    
+    
+    <category term="[object Object]" scheme="https://behappy00.github.io/tags/object-Object/"/>
+    
+    <category term="原创 or 转载" scheme="https://behappy00.github.io/tags/原创-or-转载/"/>
+    
+  </entry>
   
   <entry>
     <title>BP神经网络学习</title>
@@ -371,9 +438,9 @@
     <category term="学习笔记" scheme="https://behappy00.github.io/categories/学习笔记/"/>
     
     
-    <category term="转载" scheme="https://behappy00.github.io/tags/转载/"/>
-    
     <category term="文本分类模型" scheme="https://behappy00.github.io/tags/文本分类模型/"/>
+    
+    <category term="转载" scheme="https://behappy00.github.io/tags/转载/"/>
     
   </entry>
   
@@ -604,66 +671,6 @@
     
     
     <category term="转载" scheme="https://behappy00.github.io/tags/转载/"/>
-    
-    <category term="pytorch" scheme="https://behappy00.github.io/tags/pytorch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Pytorch错误集锦--那些年我们的血泪史</title>
-    <link href="https://behappy00.github.io/2021/04/27/Pytorch%E9%94%99%E8%AF%AF%E9%9B%86%E9%94%A6--%E9%82%A3%E4%BA%9B%E5%B9%B4%E6%88%91%E4%BB%AC%E7%9A%84%E8%A1%80%E6%B3%AA%E5%8F%B2/"/>
-    <id>https://behappy00.github.io/2021/04/27/Pytorch%E9%94%99%E8%AF%AF%E9%9B%86%E9%94%A6--%E9%82%A3%E4%BA%9B%E5%B9%B4%E6%88%91%E4%BB%AC%E7%9A%84%E8%A1%80%E6%B3%AA%E5%8F%B2/</id>
-    <published>2021-04-27T07:13:29.000Z</published>
-    <updated>2021-04-27T13:42:39.565Z</updated>
-    
-    <content type="html"><![CDATA[<hr><!-- TOC --><ul><li><a href="#font-color--orange-已解决-font"><font color="orange"> 已解决 </font></a><ul><li><a href="#1-indexerror-scatter_-expected-dtype-int64-for-index">1. IndexError: scatter_(): Expected dtype int64 for index.</a></li><li><a href="#2-typeerror-expected-long-got-float">2. TypeError: expected Long (got Float)</a></li><li><a href="#3-runtimeerror-unsupported-operation-some-elements-of-the-input-tensor-and-the-written-to-tensor-refer-to-a-single-memory-location-please-clone-the-tensor-before-performing-the-operation">3. RuntimeError: unsupported operation: some elements of the input tensor and the written-to tensor refer to a single memory location. Please clone() the tensor before performing the operation.</a></li></ul></li><li><a href="#font-color--red-未解决-font"><font color="red"> 未解决 </font></a></li></ul><!-- /TOC --><hr><p>参考文章：</p><ol><li><a href="https://blog.csdn.net/qq_30049011/article/details/112928377" target="_blank" rel="noopener">pytorch系列（一）常见错误</a></li><li><a href="https://blog.csdn.net/m0_46642368/article/details/111281642" target="_blank" rel="noopener">FloatTensor和LongTensor的转换，TypeError: expected Long (got Float)</a></li></ol><h3 id="已解决"><a href="#已解决" class="headerlink" title=" 已解决 "></a><font color="orange"> 已解决 </font></h3><h4 id="1-IndexError-scatter-Expected-dtype-int64-for-index"><a href="#1-IndexError-scatter-Expected-dtype-int64-for-index" class="headerlink" title="1. IndexError: scatter_(): Expected dtype int64 for index."></a>1. IndexError: scatter_(): Expected dtype int64 for index.</h4><p><img src="/2021/04/27/Pytorch错误集锦--那些年我们的血泪史/2021-04-27-21-25-49.png" alt></p><p>错误分析：</p><blockquote><p>scatter要求数据是int64类型</p></blockquote><p>解决方法：</p><ul><li>[x] 如果你定义的 tensor 时写的是 torch.Tensor(x) ，可改成 torch.LongTensor(x) ，指定为int64类型。</li></ul><h4 id="2-TypeError-expected-Long-got-Float"><a href="#2-TypeError-expected-Long-got-Float" class="headerlink" title="2. TypeError: expected Long (got Float)"></a>2. TypeError: expected Long (got Float)</h4><p><img src="/2021/04/27/Pytorch错误集锦--那些年我们的血泪史/2021-04-27-21-30-03.png" alt></p><p>错误分析：</p><blockquote><p>zero 是 FloatTensor 类型，在直接将其转换为LongTensor时失败</p></blockquote><p>解决方法：</p><ul><li>[x] 先将 zero 转换为 numpy()，再转换为 LongTensor ，具体代码如下：<br>torch.LongTensor(zero.numpy())</li></ul><h4 id="3-RuntimeError-unsupported-operation-some-elements-of-the-input-tensor-and-the-written-to-tensor-refer-to-a-single-memory-location-Please-clone-the-tensor-before-performing-the-operation"><a href="#3-RuntimeError-unsupported-operation-some-elements-of-the-input-tensor-and-the-written-to-tensor-refer-to-a-single-memory-location-Please-clone-the-tensor-before-performing-the-operation" class="headerlink" title="3. RuntimeError: unsupported operation: some elements of the input tensor and the written-to tensor refer to a single memory location. Please clone() the tensor before performing the operation."></a>3. RuntimeError: unsupported operation: some elements of the input tensor and the written-to tensor refer to a single memory location. Please clone() the tensor before performing the operation.</h4><p>错误分析：</p><blockquote><p>运行时错误：不支持的操作：输入张量和写入张量的某些元素引用单个内存位置。请在执行操作前克隆（）张量。</p></blockquote><p>解决方法：</p><ul><li>[x] 先将 zero 转换为 numpy()，再转换为 LongTensor ，具体代码如下：<br>torch.LongTensor(zero.numpy())</li></ul><h3 id="未解决"><a href="#未解决" class="headerlink" title=" 未解决 "></a><font color="red"> 未解决 </font></h3>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;hr&gt;
-&lt;!-- TOC --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#font-color--orange-已解决-font&quot;&gt;&lt;font color=&quot;orange&quot;&gt; 已解决 &lt;/font&gt;&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-indexerror-scatt</summary>
-      
-    
-    
-    
-    <category term="解决方案" scheme="https://behappy00.github.io/categories/解决方案/"/>
-    
-    
-    <category term="原创" scheme="https://behappy00.github.io/tags/原创/"/>
-    
-    <category term="pytorch" scheme="https://behappy00.github.io/tags/pytorch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Pytorch之tensor个人总结</title>
-    <link href="https://behappy00.github.io/2021/04/26/Pytorch%E4%B9%8Btensor%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/"/>
-    <id>https://behappy00.github.io/2021/04/26/Pytorch%E4%B9%8Btensor%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</id>
-    <published>2021-04-26T10:35:36.000Z</published>
-    <updated>2021-04-29T08:07:41.187Z</updated>
-    
-    <content type="html"><![CDATA[<hr><!-- TOC --><ul><li><a href="#1-tensor-使用-onehot-编码----tensor的建立">1. tensor 使用 onehot 编码 —-tensor的建立</a></li><li><a href="#2-tensor-进行维度扩展---其中一维是奇数">2. tensor 进行维度扩展 —其中一维是奇数</a></li><li><a href="#3">3.</a></li></ul><!-- /TOC --><hr><p>写在前面：</p><blockquote><ol><li>本文中的代码来自于我自己的项目，都是根据个人需要进行的编写</li><li>其中的调用函数可能也是自己的</li><li>如果有错，希望您能提出并给予一定的指导</li></ol></blockquote><p>参考文章：</p><ol><li><h3 id="1-tensor-使用-onehot-编码-—-tensor的建立"><a href="#1-tensor-使用-onehot-编码-—-tensor的建立" class="headerlink" title="1. tensor 使用 onehot 编码 —-tensor的建立"></a>1. tensor 使用 onehot 编码 —-tensor的建立</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># label的权重矩阵 三维</span></span><br><span class="line">gt = np.random.randint(<span class="number">0</span>, args.class_num, size=[args.embed_dim // <span class="number">2</span>, args.embed_dim // <span class="number">2</span>])</span><br><span class="line"><span class="comment"># 先生成一个 （args.embed_dim // 2） * （args.embed_dim // 2） 的label，值在class_num以内，意思是class_num类分割任务</span></span><br><span class="line">gt = torch.LongTensor(gt)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_one_hot</span><span class="params">(label, N)</span>:</span></span><br><span class="line">    size = list(label.size())</span><br><span class="line">    label = label.view(<span class="number">-1</span>)  <span class="comment"># reshape 为向量</span></span><br><span class="line">    ones = torch.sparse.torch.eye(N)</span><br><span class="line">    ones = ones.index_select(<span class="number">0</span>, label)  <span class="comment"># 用上面的办法转为换one hot</span></span><br><span class="line">    size.append(N)  <span class="comment"># 把类别输目添到size的尾后，准备reshape回原来的尺寸</span></span><br><span class="line">    <span class="keyword">return</span> ones.view(*size)</span><br><span class="line"></span><br><span class="line">args.label_weight = get_one_hot(gt, args.class_num)</span><br></pre></td></tr></table></figure></li></ol><h3 id="2-tensor-进行维度扩展-—其中一维是奇数"><a href="#2-tensor-进行维度扩展-—其中一维是奇数" class="headerlink" title="2. tensor 进行维度扩展 —其中一维是奇数"></a>2. tensor 进行维度扩展 —其中一维是奇数</h3><blockquote><p>我的期望值是进行0扩展<br>朋友提出的思路是通过一次Liner<br>虽然我觉得不对<br>选择使用 torch.cat 实现</p></blockquote><p>各种失败的尝试：<br><strong>expend</strong> </p><blockquote><ol><li>label_att_2 = label_att_2.expand(128,128)  # 报错 不为 1 的无法进行扩展</li></ol></blockquote><p><strong>repeat</strong></p><blockquote><ol><li>label_att_2 = label_att_2.repeat(1,128.0/11.0)  #报错 必须扩展为正数倍</li></ol></blockquote><p><strong>reshape</strong></p><blockquote><ol><li>label_att_2 = label_att_2.reshape(128,128)   # RuntimeError: shape ‘[128, 128]’ is invalid for input of size 1408</li></ol></blockquote><p><strong>Linear</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># print(label_att_2.shape)  # torch.Size([128, 11])</span></span><br><span class="line">connected_layer = nn.Linear(in_features=<span class="number">11</span>,out_features=<span class="number">128</span>)</span><br><span class="line">label_att_2 = connected_layer(label_att_2)</span><br><span class="line"><span class="comment"># print(label_att_2.shape)  # torch.Size([128, 128])</span></span><br></pre></td></tr></table></figure></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">label = np.eye(<span class="number">11</span>)</span><br><span class="line">label = torch.LongTensor(label)</span><br><span class="line"><span class="comment"># print(label)</span></span><br><span class="line"><span class="comment"># print(label.shape)</span></span><br><span class="line"></span><br><span class="line">zero = torch.zeros(<span class="number">11</span>,(<span class="number">128</span><span class="number">-11</span>))</span><br><span class="line"><span class="comment"># print(zero)</span></span><br><span class="line"><span class="comment"># print(zero.shape)</span></span><br><span class="line"></span><br><span class="line">res = torch.cat((label,zero),<span class="number">1</span>)</span><br><span class="line"><span class="comment"># print(res)</span></span><br><span class="line"><span class="comment"># print(res.shape)</span></span><br><span class="line"></span><br><span class="line">zero1 = torch.zeros((<span class="number">128</span><span class="number">-11</span>),<span class="number">128</span>)</span><br><span class="line"><span class="comment"># print(zero1.shape)</span></span><br><span class="line"></span><br><span class="line">res1 = torch.cat((res,zero1),<span class="number">0</span>)</span><br><span class="line">print(res1.shape)</span><br></pre></td></tr></table></figure><h3 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h3>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;hr&gt;
-&lt;!-- TOC --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1-tensor-使用-onehot-编码----tensor的建立&quot;&gt;1. tensor 使用 onehot 编码 —-tensor的建立&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2-tensor-</summary>
-      
-    
-    
-    
-    <category term="学习笔记" scheme="https://behappy00.github.io/categories/学习笔记/"/>
-    
-    
-    <category term="原创" scheme="https://behappy00.github.io/tags/原创/"/>
     
     <category term="pytorch" scheme="https://behappy00.github.io/tags/pytorch/"/>
     
