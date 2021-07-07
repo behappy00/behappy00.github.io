@@ -6,7 +6,7 @@
   <link href="https://behappy00.github.io/atom.xml" rel="self"/>
   
   <link href="https://behappy00.github.io/"/>
-  <updated>2021-07-05T02:34:23.730Z</updated>
+  <updated>2021-07-07T02:11:52.497Z</updated>
   <id>https://behappy00.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>彻底消除 Flash 助手推荐的弹窗广告</title>
+    <link href="https://behappy00.github.io/2021/07/07/%E5%BD%BB%E5%BA%95%E6%B6%88%E9%99%A4%20Flash%20%E5%8A%A9%E6%89%8B%E6%8E%A8%E8%8D%90%E7%9A%84%E5%BC%B9%E7%AA%97%E5%B9%BF%E5%91%8A/"/>
+    <id>https://behappy00.github.io/2021/07/07/%E5%BD%BB%E5%BA%95%E6%B6%88%E9%99%A4%20Flash%20%E5%8A%A9%E6%89%8B%E6%8E%A8%E8%8D%90%E7%9A%84%E5%BC%B9%E7%AA%97%E5%B9%BF%E5%91%8A/</id>
+    <published>2021-07-07T02:03:52.000Z</published>
+    <updated>2021-07-07T02:11:52.497Z</updated>
+    
+    <content type="html"><![CDATA[<hr><ul><li><a href="#1-关闭flash-helper-service后台进程">1. 关闭“Flash Helper Service”后台进程。</a></li><li><a href="#2禁止flash-helper-service自动运行">2、禁止“Flash Helper Service”自动运行。</a></li><li><a href="#3删除flash-helper-service应用程序">3、删除“Flash Helper Service”应用程序。</a></li><li><a href="#4清理注册表痕迹">4、清理注册表痕迹。</a></li></ul><a id="more"></a><!-- TOC --><!-- /TOC --><hr><p>写在前面：</p><blockquote><p>全新的 Windows 10 操作系统，安装好没多久就弹出个“ FF 新推荐”的大幅广告窗口，点击“近期不弹”选项，不再弹出。<br>今天又发现在屏幕右下角弹出了个“Flash 助手推荐”的广告。虽然在那个下拉菜单中，也可以选择“近期不再弹出”的选项，但看着总是心烦。<br>一开始还以为中恶意木马，看到许多网友也中招，才知道这是官方流氓行为。这是 Adobe 公司携手重庆重橙网络科技有限公司，为中国网民保留的特色流氓服务，是我们安装了 Adobe Flash Player 插件后的“正常”情况。</p><p>理论上说，Adobe 于 2020 年 12 月 31 日终止支持 Flash，各主流浏览器从几年前就陆续禁止 Flash 插件开启。也就是说 Flash 插件已经被淘汰了，没必要安装了。把 Adobe Flash Player 插件卸载就可以彻底清除 Flash 助手弹窗广告了。</p><p>但还有个别小视频网站，出于获取用户信息、降低运营成本等考虑，还在坚持使用 Flash 插件播放视频，所以我们可能还要保留 Adobe Flash Player 插件，那么我们就来删除 Flash 助手推荐。</p></blockquote><h3 id="1-关闭“Flash-Helper-Service”后台进程。"><a href="#1-关闭“Flash-Helper-Service”后台进程。" class="headerlink" title="1. 关闭“Flash Helper Service”后台进程。"></a>1. 关闭“Flash Helper Service”后台进程。</h3><p>右键任务栏，或 Ctrl+Shift+ESC 打开任务管理，在“后台进程”中找到“Flash Helper Service.exe”（居然有3个），结束任务。</p><h3 id="2、禁止“Flash-Helper-Service”自动运行。"><a href="#2、禁止“Flash-Helper-Service”自动运行。" class="headerlink" title="2、禁止“Flash Helper Service”自动运行。"></a>2、禁止“Flash Helper Service”自动运行。</h3><p>右键点击“此电脑”，<br>点击“管理”，<br>在计算机管理点击左侧的“服务”，在右栏找到“Flash Helper Service”，右键选择“属性”。<br>在“Flash Helper Service 的属性”界面，先停止服务，再在启动类型内，选择“禁用”，最后点击“确定”即可。</p><p>我们可在描述中发现端倪：Flash Player更新辅助服务,确保使用最新版的 Flash Player 软件。会向重庆重橙网络科技有限公司发送匿名使用Flash相关数据以帮助改进 Flash Player。</p><h3 id="3、删除“Flash-Helper-Service”应用程序。"><a href="#3、删除“Flash-Helper-Service”应用程序。" class="headerlink" title="3、删除“Flash Helper Service”应用程序。"></a>3、删除“Flash Helper Service”应用程序。</h3><p>在任务管理器中，点击进程名称，右键“打开文件所在的位置”，就可以找到它的息身之所了。<br>或者在服务属性中，我们可看到可执行文件的路径。<br>一般情况下，他在这里：C:\Windows\SysWOW64\Macromed\Flash\ 。<br>直接删除FlashHelperService.exe 即可。<br>最好把flash文件夹直接删了</p><h3 id="4、清理注册表痕迹。"><a href="#4、清理注册表痕迹。" class="headerlink" title="4、清理注册表痕迹。"></a>4、清理注册表痕迹。</h3><p>清理注册表中有关 Flash Helper Service 的所有东西</p><p>(1) 法一：按键盘Win键（有的键盘是一个像 Windows 窗口的图标）+R键，打开运行，输入 regedit 点确定，打开注册表管理器，搜索 FlashHelperService.exe，找到后右键删除，然后按F3搜索下一个，直到搜索完毕。</p><p>(2) 法二：注册表清理软件</p>]]></content>
+    
+    
+    <summary type="html">&lt;hr&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1-关闭flash-helper-service后台进程&quot;&gt;1. 关闭“Flash Helper Service”后台进程。&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2禁止flash-helper-service自动运行&quot;&gt;2、禁止“Flash Helper Service”自动运行。&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3删除flash-helper-service应用程序&quot;&gt;3、删除“Flash Helper Service”应用程序。&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4清理注册表痕迹&quot;&gt;4、清理注册表痕迹。&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="美好生活" scheme="https://behappy00.github.io/categories/美好生活/"/>
+    
+    
+    <category term="原创" scheme="https://behappy00.github.io/tags/原创/"/>
+    
+    <category term="黑科技" scheme="https://behappy00.github.io/tags/黑科技/"/>
+    
+  </entry>
   
   <entry>
     <title>有趣的注释</title>
@@ -622,34 +650,6 @@
     <category term="原创" scheme="https://behappy00.github.io/tags/原创/"/>
     
     <category term="搭建博客" scheme="https://behappy00.github.io/tags/搭建博客/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PyTorch之scatter()与scatter_()函数</title>
-    <link href="https://behappy00.github.io/2021/04/28/PyTorch%E4%B9%8Bscatter()%E4%B8%8Escatter_()%E5%87%BD%E6%95%B0/"/>
-    <id>https://behappy00.github.io/2021/04/28/PyTorch%E4%B9%8Bscatter()%E4%B8%8Escatter_()%E5%87%BD%E6%95%B0/</id>
-    <published>2021-04-28T02:51:51.000Z</published>
-    <updated>2021-04-28T06:20:33.773Z</updated>
-    
-    <content type="html"><![CDATA[<hr><ul><li><a href="#1">1.</a></li></ul><hr><p>参考文章：</p><ol><li><a href="https://blog.csdn.net/weixin_45999482/article/details/115728139?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/weixin_45999482/article/details/115728139?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242</a></li><li><a href="https://blog.csdn.net/ao1886/article/details/107749007?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-5&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/ao1886/article/details/107749007?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-5&amp;spm=1001.2101.3001.4242</a></li></ol><a id="more"></a><!-- TOC --><!-- /TOC --><h3 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h3>]]></content>
-    
-    
-    <summary type="html">&lt;hr&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1&quot;&gt;1.&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;hr&gt;&lt;p&gt;参考文章：&lt;/p&gt;&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/weixin_45999482/article/details/115728139?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;amp;spm=1001.2101.3001.4242&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://blog.csdn.net/weixin_45999482/article/details/115728139?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;amp;spm=1001.2101.3001.4242&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/ao1886/article/details/107749007?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-5&amp;amp;spm=1001.2101.3001.4242&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://blog.csdn.net/ao1886/article/details/107749007?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-5&amp;amp;spm=1001.2101.3001.4242&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary>
-    
-    
-    
-    <category term="学习笔记" scheme="https://behappy00.github.io/categories/学习笔记/"/>
-    
-    
-    <category term="转载" scheme="https://behappy00.github.io/tags/转载/"/>
-    
-    <category term="pytorch" scheme="https://behappy00.github.io/tags/pytorch/"/>
     
   </entry>
   
