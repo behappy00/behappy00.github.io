@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="Windows和Linux双系统的初尝试 UEFI模式 如何知道自己的电脑是哪种启动模式   准备工具 1. Unbutu18.04.1 LTS镜像 2. UltraIOS 3. 装机U盘 4. 制作装机系统U盘 5. 磁盘分区 6. 设置BIOS 7. 开始安装Ubuntu 8. 优化设置 9. 页面美化">
+<meta name="keywords" content="原创,搭建博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows和Linux双系统的初尝试">
+<meta property="og:url" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/index.html">
+<meta property="og:site_name" content="Snow">
+<meta property="og:description" content="Windows和Linux双系统的初尝试 UEFI模式 如何知道自己的电脑是哪种启动模式   准备工具 1. Unbutu18.04.1 LTS镜像 2. UltraIOS 3. 装机U盘 4. 制作装机系统U盘 5. 磁盘分区 6. 设置BIOS 7. 开始安装Ubuntu 8. 优化设置 9. 页面美化">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/4.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/5.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/7.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/8.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/9.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/10.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/11.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/12.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/14.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/15.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/16.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/17.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/18.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/19.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/20.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/21.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/22.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/23.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/24.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/25.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/26.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/27.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/28.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/29.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/30.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/31.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/32.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/33.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/34.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/35.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/36.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/37.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/38.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/39.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/40.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/41.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/42.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/43.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/44.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/45.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/46.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/48.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/49.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/assets/50.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/51.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/52.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/53.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/54.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/56.PNG">
+<meta property="og:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/57.PNG">
+<meta property="og:updated_time" content="2023-04-03T13:58:19.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows和Linux双系统的初尝试">
+<meta name="twitter:description" content="Windows和Linux双系统的初尝试 UEFI模式 如何知道自己的电脑是哪种启动模式   准备工具 1. Unbutu18.04.1 LTS镜像 2. UltraIOS 3. 装机U盘 4. 制作装机系统U盘 5. 磁盘分区 6. 设置BIOS 7. 开始安装Ubuntu 8. 优化设置 9. 页面美化">
+<meta name="twitter:image" content="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/4.PNG">
+  <link rel="canonical" href="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Windows和Linux双系统的初尝试 | Snow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Snow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">光而不耀</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Windows和Linux双系统的初尝试
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-03 12:12:39" itemprop="dateCreated datePublished" datetime="2019-07-03T12:12:39+08:00">2019-07-03</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-03 21:58:19" itemprop="dateModified" datetime="2023-04-03T21:58:19+08:00">2023-04-03</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2019/07/03/Windows和Linux双系统的初尝试/" class="post-meta-item leancloud_visitors" data-flag-title="Windows和Linux双系统的初尝试" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/07/03/Windows和Linux双系统的初尝试/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/07/03/Windows和Linux双系统的初尝试/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>4.7k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>4 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr><ul>
+<li><a href="#windows和linux双系统的初尝试">Windows和Linux双系统的初尝试</a><ul>
+<li><a href="#uefi模式">UEFI模式</a></li>
+<li><a href="#如何知道自己的电脑是哪种启动模式">如何知道自己的电脑是哪种启动模式</a></li>
+</ul>
+</li>
+<li><a href="#准备工具">准备工具</a><ul>
+<li><a href="#1-unbutu18041-lts镜像">1. Unbutu18.04.1 LTS镜像</a></li>
+<li><a href="#2-ultraios">2. UltraIOS</a></li>
+<li><a href="#3-装机u盘">3. 装机U盘</a></li>
+<li><a href="#4-制作装机系统u盘">4. 制作装机系统U盘</a></li>
+<li><a href="#5-磁盘分区">5. 磁盘分区</a></li>
+<li><a href="#6-设置bios">6. 设置BIOS</a></li>
+<li><a href="#7-开始安装ubuntu">7. 开始安装Ubuntu</a></li>
+<li><a href="#8-优化设置">8. 优化设置</a></li>
+<li><a href="#9-页面美化">9. 页面美化</a></li>
+</ul>
+</li>
+</ul><a id="more"></a>
+<!-- TOC -->
+
+<!-- /TOC -->
+<hr>
+<p><strong>整了两天，终于把自己的网站给简单的搭建并且美化了一下，顺便感谢一下 <em>Orange</em> 大佬的支持和寝室两只小可爱的美学指导</strong></p>
+<blockquote>
+<p>本身想着继续进行科学上网的探索，然鹅突然爆出我校某同学因为不当言论被处分，吓得我赶快放弃这个念头，但是小学期就要造作啊 <del>~</del><br>所以经过暗中观察，本宝宝决定尝试安装双系统</p>
+</blockquote>
+<hr>
+<p>首先，第一次尝试，生怕把系统整崩，本着数据无价的观点，我毫不犹豫地将除了win10系统之外的全部数据进行了备份。</p>
+<p><strong>再次强烈建议，如果大家都是造作的人，没事还是把数据备份一下吧。然后嘛，嘿嘿~~</strong></p>
+<p>在正式记录之前，先放几个教程： —中间的图似乎没有上传成功，直接点击链接去</p>
+<p>1.<a href="https://www.jianshu.com/p/fe4e3915495e" target="_blank" rel="noopener">https://www.jianshu.com/p/fe4e3915495e</a></p>
+<p>2.<a href="https://www.jianshu.com/p/8079ce5057d3" target="_blank" rel="noopener">https://www.jianshu.com/p/8079ce5057d3</a></p>
+<p>3.<a href="https://blog.csdn.net/mt1123456/article/details/89786111" target="_blank" rel="noopener">https://blog.csdn.net/mt1123456/article/details/89786111</a></p>
+<p>特此声明，我大体是根据教程1来安装，根据教程2来进行优化，根据教程3来进行中文输入法的配置</p>
+<h4 id="Windows和Linux双系统的初尝试"><a href="#Windows和Linux双系统的初尝试" class="headerlink" title="Windows和Linux双系统的初尝试"></a>Windows和Linux双系统的初尝试</h4><h5 id="UEFI模式"><a href="#UEFI模式" class="headerlink" title="UEFI模式"></a>UEFI模式</h5><p>首先必须说明的是，有两种不同的启动模式，在安装双系统的时候的操作也不尽相同，本文是针对UEFI启动模式的安装双系统的成功案例。如果您的计算机的启动模式是Legacy，请参考其他文章。</p>
+<h5 id="如何知道自己的电脑是哪种启动模式"><a href="#如何知道自己的电脑是哪种启动模式" class="headerlink" title="如何知道自己的电脑是哪种启动模式"></a>如何知道自己的电脑是哪种启动模式</h5><p>找到“运行” -&gt; 在“运行”中输入：msinfo32 -&gt; 查看右边的信息，找到“BIOS模式”，如果后边是“UEFI”，那么这篇文章就可以应用到你的计算机上啦 -&gt; 顺便看一下计算机的“已安装的物理内存（RAM）”，这个数字会对你有所帮助。</p>
+<h4 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h4><h5 id="1-Unbutu18-04-1-LTS镜像"><a href="#1-Unbutu18-04-1-LTS镜像" class="headerlink" title="1. Unbutu18.04.1 LTS镜像"></a>1. Unbutu18.04.1 LTS镜像</h5><p>到Ubuntu官方网站下载最新版Ubuntu LTS镜像： <a href="https://www.ubuntu.com/download/desktop" target="_blank" rel="noopener">https://www.ubuntu.com/download/desktop</a></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/4.PNG" alt></p>
+<h5 id="2-UltraIOS"><a href="#2-UltraIOS" class="headerlink" title="2. UltraIOS"></a>2. UltraIOS</h5><p>这是一个用于将镜像写入U盘制作系统安装盘，到官方网站下载（试用版足够）：<br><a href="https://cn.ultraiso.net/xiazai.html" target="_blank" rel="noopener">https://cn.ultraiso.net/xiazai.html</a></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/5.PNG" alt></p>
+<h5 id="3-装机U盘"><a href="#3-装机U盘" class="headerlink" title="3. 装机U盘"></a>3. 装机U盘</h5><p>一个大于2G的空U盘，并且提前将U盘内容备份，U盘需要格式化，格式化后其中的所有东西将被删除。  </p>
+<p>之后将U盘格式化：在插入的U盘上右键选择“格式化” -&gt; 文件系统选择FAT32（默认） -&gt; 开始</p>
+<h5 id="4-制作装机系统U盘"><a href="#4-制作装机系统U盘" class="headerlink" title="4. 制作装机系统U盘"></a>4. 制作装机系统U盘</h5><p>插入我们格式化好的U盘，打开UltraIOS，点击上方的“打开”图标，选择刚刚下载的Ubuntu18.04镜像文件</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/7.PNG" alt></p>
+<p>制作装机系统U盘</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/8.PNG" alt></p>
+<p>看到打开之后的内容大概如下：</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/9.PNG" alt></p>
+<p>点击“启动” -&gt; “写入硬盘映像”</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/10.PNG" alt></p>
+<p>这时可以看到上边出现了我们的U盘选项，如果还有别的选项，千万不要选错， <strong>一定要点击我们的U盘！</strong> 下边的写入方式是“USB-<br>HDD+”，右下角是“便捷启动”。检查好这三项之后点击下边的“写入”。经过确认之后会进入等待阶段。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/11.PNG" alt></p>
+<p>制作装机系统U盘</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/12.PNG" alt="12"></p>
+<p>制作装机系统U盘</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/14.PNG" alt="14"></p>
+<p>制作装机系统U盘</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/15.PNG" alt="15"></p>
+<p>直到出现了“刻录成功”，直接点击“返回”即可。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/16.PNG" alt="16"></p>
+<h5 id="5-磁盘分区"><a href="#5-磁盘分区" class="headerlink" title="5. 磁盘分区"></a>5. 磁盘分区</h5><p>在“此电脑”上邮件打开“管理”</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/17.PNG" alt="17"></p>
+<p>点击左边的“磁盘管理” -&gt; 出现右边的磁盘分区详情</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/18.PNG" alt="18"></p>
+<p>你需要选择将你的一个磁盘分出来一部分空间用来安装双系统，根据你的实际情况选择使用哪个磁盘以及分出多大的空间，我刚开始分出了50G（1G=1024M）。在选择好的磁盘上右键，选择“压缩卷”。（最后我分出了100G）</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/19.PNG" alt="19"></p>
+<p>磁盘分区过程</p>
+<p>填写你要分出的大小， <strong>（这里的图片和后续步骤有差异，因为整个过程笔者做了两遍，第一次分配了如图所示的50G空间发现不够用后来第二次更改成了90G）</strong><br>单位是M，点击“压缩”。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/20.PNG" alt="20"></p>
+<p>只要你刚刚压缩出来的区域显示“未分配”，说明你压缩成功了！</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/21.PNG" alt="21"></p>
+<h5 id="6-设置BIOS"><a href="#6-设置BIOS" class="headerlink" title="6. 设置BIOS"></a>6. 设置BIOS</h5><p>此时可以关机重启，在按下电源后及时按住快捷键进入BIOS（联想拯救者是F2，华硕笔记本是F2）。</p>
+<p>联想拯救者：将“安全启动”和“快速启动”都关闭（Disable），将“USB启动”设置为开启（Enable）</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/22.PNG" alt="22"></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/23.PNG" alt="23"></p>
+<p>华硕：</p>
+<p>进入BIOS后按方向键选择security选项，然后在这里选择boot menu。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/24.PNG" alt="24"></p>
+<p>把secure boot 这里以及control全部设置为disable，即禁止启动的意思。然后按方向键选择BIOS顶部boot选项，把launch csm<br>设置为enble，即开启的意思。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/25.PNG" alt="25"></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/26.PNG" alt="26"></p>
+<p>这个时候把启动U盘插入到电脑上，按一下键盘上面的f10，保存退出设置。选择OK即可。</p>
+<h5 id="7-开始安装Ubuntu"><a href="#7-开始安装Ubuntu" class="headerlink" title="7. 开始安装Ubuntu"></a>7. 开始安装Ubuntu</h5><p>联想：关机，插入U盘。然后选择USB启动那一项。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/27.PNG" alt="27"></p>
+<p>选择boot从U盘启动</p>
+<p>华硕：</p>
+<p>然后在黑屏瞬间按住ESC不动，看到图二选择你的U盘进行启动。如果没有掌握这个方法，则先关机后按住ESC，再按一下开机键开机。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/28.PNG" alt="28"></p>
+<p>之后会进入一个黑底白字的页面，可以默认选择第一个（Try<br>Ubuntu）进入Ubuntu的试用页面。此时可以随便体验一下，然后可以点击桌面上的安装程序安装Ubuntu系统。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/29.PNG" alt="29"></p>
+<p>选择语言，我这里选择的英语，可以根据自己的需求选择，接下来的教程中也是英语模式，如果你不懂英语，可以直接看位置，每个窗口的分布和每个窗口的位置都是相同的。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/30.PNG" alt="30"></p>
+<p>选择键盘模式，我们当然选择English(US)</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/31.PNG" alt="31"></p>
+<p>然后会让你选择连接网络，你可以选择连接与不连接。（如果你有一个比较好的网络环境，我倒是建议你可以直接联网，网上说联网环境下安装需要下载比较多的东西，会卡死或者很慢，不过我现在没有遇到这个问题，Ubuntu在国内的服务线路也比较完善了，应该不必担心）</p>
+<p>安装方式可以选择“最小安装”，因为这样可以安装一个干净整洁的系统，没有多余的软件，而且安装快，不用边安边下载。下边的“其他选项”根据自己的情况选择，如果联网了可以选择第一个，如果没有联网是没有可选项的。</p>
+<p>但是我选择的是正常安装，因为以后的使用可能很多，万一哪个功能不全，现安多麻烦。还有就是Linux系统很小的，安装之后不会很占硬盘。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/32.PNG" alt="32"></p>
+<p><strong>安装方式！重中之重！</strong><br><strong>一定要选择最下边的“其他方式”（Something else）！</strong><br><strong>一定要选择最下边的“其他方式”（Something else）！</strong><br><strong>一定要选择最下边的“其他方式”（Something else）！</strong><br><strong>否则你可能会删除原有的Win10系统！</strong></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/33.PNG" alt="33"></p>
+<p>再三确认之后，进入下一步，可以在这里找到你刚刚分出来的“空闲空间”，对照一下后边的大小是否是你分出来的大小，选好它之后点击下边的“+”号。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/34.PNG" alt="34"></p>
+<p>接下来就是分区了，每一次分区有四到五个可选项。</p>
+<ol>
+<li>挂载“/”，类型为“EXT4日志文件系统”，选中“主分区”和“空间起始位置”。这个空间可以理解成共用空间，尽量大一些，因为有些软件是无法更改他的安装位置到自己的个人目录下的，只能放在这个空间里边。</li>
+</ol>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/35.PNG" alt="35"></p>
+<p>swap交换空间，这个也就是虚拟内存的地方，选择“逻辑分区”和“空间起始位置”。其大小最好和你的物理内存相等。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/36.PNG" alt="36"></p>
+<ol>
+<li>新建EFI系统分区，选中“逻辑分区”和“空间起始位置”，大小最好不要小于256MB，系统引导文件都会在里面，可以给512MB。重点！分配完之后去上边的列表里找一下，刚刚这个分区的盘符一会儿会用到哦</li>
+</ol>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/37.PNG" alt="37"></p>
+<ol>
+<li>挂载“/home”，类型为“EXT4日志文件系统”，选中“逻辑分区”和“空间起始位置”，这个相当于你的个人文件夹，类似Windows里的User，建议最好能分配稍微大点，因为你的图片、视频、下载内容、有些自定义的软件安装路径基本都在这里面，这些东西可不像在Win上面你想移动就能移动的。</li>
+</ol>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/38.PNG" alt="38"></p>
+<p><strong>重点来了！此时千万不要点“安装”！</strong><br>找到你刚刚EFI分区的盘符（对照一下后边的大小是否是刚刚分配的大小，然后看看上下文是你分出来的其他分区，再三确认！）记住你的分区的名字，比如我的是图中的“/dev/sda8”<br><strong>更改下边的“安装引导启动器的设备”！千万不要用默认的！改为你刚刚记下的EFI分区的盘符！</strong><br><strong>更改下边的“安装引导启动器的设备”！千万不要用默认的！改为你刚刚记下的EFI分区的盘符！</strong><br><strong>更改下边的“安装引导启动器的设备”！千万不要用默认的！改为你刚刚记下的EFI分区的盘符！</strong></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/39.PNG" alt="39"></p>
+<p>可以点击“安装”了，再次确认一下你的分区。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/40.PNG" alt="40"></p>
+<p>下一步，选择时区</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/41.PNG" alt="41"></p>
+<p>最后一步，填一下你的用户名、设备名、密码等等</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/42.PNG" alt="42"></p>
+<p>好了，最终进入了你的安装过程</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/43.PNG" alt="43"></p>
+<p>一定的等待时间之后，就会提示安装完毕要求重启，点击重启计算机即可。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/44.PNG" alt="44"></p>
+<h5 id="8-优化设置"><a href="#8-优化设置" class="headerlink" title="8. 优化设置"></a>8. 优化设置</h5><p>grub引导的设置文件是 /etc/default/grub ，对其进行修改可以得到我们想要的结果。</p>
+<p>在命令行中输入：如果你会使用vim： <code>sudo vim /etc/default/grub</code></p>
+<p>或者如果你不会使用vim：<code>sudo gedit /etc/default/grub</code></p>
+<p>然后我们就可以对设置文件进行编辑了</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/45.PNG" alt="45"></p>
+<p>一般我们需要更改其中的<br>GRUB_DEFAULT（默认启动项：这个编号是你开机时看到的若干个启动项从上到下的依次编号，记住！程序员世界的编号从来都是从0开始的，意思是，第一项是0，第二项是1，以此类推）、GRUB_TIMEOUT_STYLE（是否显示倒计时，hidden的属性表示不会显示倒计时）、GRUB_TIMEOUT（等待时间，单位是秒）、GRUB_GFXMODE（屏幕的显示像素，可以不用管这一项）</p>
+<p>按照自己的需求更改，其他的很多配置如果你还需要更改可以去查询每一项的具体含义和属性值。</p>
+<p><strong>注意一点，如果你更改的属性语句前边有#符号，一定要将其去掉这一句才会起作用。</strong></p>
+<p>完成后记得保存离开，然后再命令行输入： <code>sudo update-grub</code> ，对刚才的设置进行更新。整体下来大概是这个样子：</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/46.PNG" alt="46"></p>
+<h5 id="9-页面美化"><a href="#9-页面美化" class="headerlink" title="9. 页面美化"></a>9. 页面美化</h5><p>这个黑底白字的启动引导页面说实话还是极其丑陋的，不过好在我们可以对其进行美化。如果你是可以完成自己修改源码或者加上样式的大神，不用我多说，但是如果你想省事或者不会自己写页面样式，可以去这里下载一款你喜欢的风格的页面样式给自己使用就好，点击左侧的GRUB<br>Themes</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/48.PNG" alt="48"></p>
+<p>这里你就可以看到各种各样的主题了，选择自己喜欢的一个，我以这个“Poly lignt”为例，选择它并下载</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/49.PNG" alt="49"></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/assets/50.PNG" alt="50"></p>
+<p>百度云分享：<a href="https://pan.baidu.com/s/1HEhEGK_qK9-0o826CePqrQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1HEhEGK_qK9-0o826CePqrQ</a> 提取码：x1hl</p>
+<p>下载好后得到了一个压缩包，将其解压</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/51.PNG" alt="51"></p>
+<p>创建一个文件夹：<code>sudo mkdir /boot/grub/themes/</code></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/52.PNG" alt="52"></p>
+<p>将整个解压出来的文件夹拷贝到刚刚创建的文件夹下：<code>sudo cp -R poly-light-master /boot/grub/themes/</code></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/53.PNG" alt="53"></p>
+<p>接下来编辑文件：/etc/grub.d/00_header，即输入命令：<code>sudo gedit /etc/grub.d/00_header</code></p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/54.PNG" alt="54"></p>
+<p>如果你发现自己更改内容之后无法保存文件，说明你权限不够，可以进入root权限再次编辑</p>
+<p>在打开的 00_header 文件中，加入如下两行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GRUB_THEME=”/boot/grub/themes/poly-light-master/theme.txt”  </span><br><span class="line">GRUB_GFXMODE=”1920×1080”</span><br></pre></td></tr></table></figure>
+<p>第一句根据你下载的主题改成自己刚刚拷贝到themes文件夹下的主题包中的theme.txt文件，第二句是你屏幕的分辨率。</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/56.PNG" alt="56"></p>
+<p>保存后记得要更新一下grub： <code>sudo update-grub</code></p>
+<p>好了，此时再次重启你的电脑就可以看到好看的开机页面啦！</p>
+<p><img src="/2019/07/03/Windows和Linux双系统的初尝试/57.PNG" alt="57"></p>
+
+    </div>
+
+    
+    
+    
+
+	
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Snow</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/" title="Windows和Linux双系统的初尝试">https://behappy00.github.io/2019/07/03/Windows和Linux双系统的初尝试/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/原创/" rel="tag"># 原创</a>
+            
+              <a href="/tags/搭建博客/" rel="tag"># 搭建博客</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/01/奇怪的bug-1/" rel="next" title="奇怪的bug-1">
+                  <i class="fa fa-chevron-left"></i> 奇怪的bug-1
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/07/08/machine learning-1/" rel="prev" title="machine learning-1">
+                  machine learning-1 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+		
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows和Linux双系统的初尝试"><span class="nav-number">1.</span> <span class="nav-text">Windows和Linux双系统的初尝试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UEFI模式"><span class="nav-number">1.1.</span> <span class="nav-text">UEFI模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何知道自己的电脑是哪种启动模式"><span class="nav-number">1.2.</span> <span class="nav-text">如何知道自己的电脑是哪种启动模式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备工具"><span class="nav-number">2.</span> <span class="nav-text">准备工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Unbutu18-04-1-LTS镜像"><span class="nav-number">2.1.</span> <span class="nav-text">1. Unbutu18.04.1 LTS镜像</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-UltraIOS"><span class="nav-number">2.2.</span> <span class="nav-text">2. UltraIOS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-装机U盘"><span class="nav-number">2.3.</span> <span class="nav-text">3. 装机U盘</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-制作装机系统U盘"><span class="nav-number">2.4.</span> <span class="nav-text">4. 制作装机系统U盘</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-磁盘分区"><span class="nav-number">2.5.</span> <span class="nav-text">5. 磁盘分区</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-设置BIOS"><span class="nav-number">2.6.</span> <span class="nav-text">6. 设置BIOS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-开始安装Ubuntu"><span class="nav-number">2.7.</span> <span class="nav-text">7. 开始安装Ubuntu</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-优化设置"><span class="nav-number">2.8.</span> <span class="nav-text">8. 优化设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-页面美化"><span class="nav-number">2.9.</span> <span class="nav-text">9. 页面美化</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Snow</p>
+  <div class="site-description" itemprop="description">计算机 Hiter</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+	 <!-- 添加近期文章 -->
+	 
+	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
+		 <div class="links-of-blogroll-title">
+		   <!-- modify icon to fire by szw -->
+		   <i class="fa fa-history fa-" aria-hidden="true"></i>
+		   近期文章
+		 </div>
+		 <ul class="links-of-blogroll-list">
+		   
+		   
+			 <li>
+			   <a href="/2023/10/03/markdown汇总/" title="markdown汇总" target="_blank">markdown汇总</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/hexo博客搜索显示异样/" title="hexo博客搜索显示异样" target="_blank">hexo博客搜索显示异样</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown使用TOC自动生成导航栏/" title="Markdown使用TOC自动生成导航栏" target="_blank">Markdown使用TOC自动生成导航栏</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown让文字居中和带颜色/" title="markdown让文字居中和带颜色" target="_blank">markdown让文字居中和带颜色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown-文本内跳转-生成目录/" title="markdown 文本内跳转,生成目录" target="_blank">markdown 文本内跳转,生成目录</a>
+			 </li>
+		   
+		 </ul>
+	   </div>
+	 
+	  
+	  <!-- 添加网易云播放歌曲 -->
+	  <div id="music163player">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
+		</iframe>
+	  </div>
+  
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Snow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">494k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:29</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="我的第 undefined 位朋友，">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--
+
+<script>
+  $(document).ready(function () {
+    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
+  });
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+  <script>
+    function timer() {
+      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
+      ages = ages.replace(/years?/, "年");
+      ages = ages.replace(/months?/, "月");
+      ages = ages.replace(/days?/, "天");
+      ages = ages.replace(/hours?/, "小时");
+      ages = ages.replace(/minutes?/, "分");
+      ages = ages.replace(/seconds?/, "秒");
+      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
+      div.innerHTML = `我已在此等候你 ${ages}`;
+    }
+    var div = document.createElement("div");
+    //插入到copyright之后
+    var copyright = document.querySelector(".copyright");
+    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+    timer();
+    setInterval("timer()",1000)
+  </script>
+-->
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
+    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-CN' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  
+  <!--页面点击出现富强民主文明和谐-->
+ <script type="text/javascript" src="/js/words-click.js"></script > 
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <!--
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+  -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
+

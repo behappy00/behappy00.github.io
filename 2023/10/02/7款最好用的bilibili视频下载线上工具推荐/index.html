@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="插件 1、ByClick Downloader 2、VideoFK 3、Video To Save 4、Tube Offline 5、9xBuddy 6、FetchFile 7、哔哩哔哩bilibili影片下载工具   其他问题 1、从bilibili下载的视频可以作为商业用途吗？ 2、bilibili视频下载后会存放在哪里？">
+<meta name="keywords" content="转载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7款最好用的bilibili视频下载线上工具推荐">
+<meta property="og:url" content="https://behappy00.github.io/2023/10/02/7款最好用的bilibili视频下载线上工具推荐/index.html">
+<meta property="og:site_name" content="Snow">
+<meta property="og:description" content="插件 1、ByClick Downloader 2、VideoFK 3、Video To Save 4、Tube Offline 5、9xBuddy 6、FetchFile 7、哔哩哔哩bilibili影片下载工具   其他问题 1、从bilibili下载的视频可以作为商业用途吗？ 2、bilibili视频下载后会存放在哪里？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-4a7c1a13aadfc2b509ca2e1ce0cbe390_r.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-a5a74ffdbc3bebddd582ec8e068fceb3_r.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-d0e8a9bfbf9db75e8b6c93a5a47769a8_r.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-c8a6db691e5286f715db8ab2ea37e2fa_r.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-664894a53c5c317fbb06f21eca91c5cd_r.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-b0eecba9c8aa0b6d0e40b352ffa8f269_r.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-43144861ddf6ae2f304f26f004622bef_r.jpg">
+<meta property="og:updated_time" content="2023-10-02T06:20:51.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7款最好用的bilibili视频下载线上工具推荐">
+<meta name="twitter:description" content="插件 1、ByClick Downloader 2、VideoFK 3、Video To Save 4、Tube Offline 5、9xBuddy 6、FetchFile 7、哔哩哔哩bilibili影片下载工具   其他问题 1、从bilibili下载的视频可以作为商业用途吗？ 2、bilibili视频下载后会存放在哪里？">
+<meta name="twitter:image" content="https://pic1.zhimg.com/v2-4a7c1a13aadfc2b509ca2e1ce0cbe390_r.jpg">
+  <link rel="canonical" href="https://behappy00.github.io/2023/10/02/7款最好用的bilibili视频下载线上工具推荐/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>7款最好用的bilibili视频下载线上工具推荐 | Snow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Snow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">光而不耀</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2023/10/02/7款最好用的bilibili视频下载线上工具推荐/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">7款最好用的bilibili视频下载线上工具推荐
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2023-10-02 10:54:52 / 修改时间：14:20:51" itemprop="dateCreated datePublished" datetime="2023-10-02T10:54:52+08:00">2023-10-02</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/解决方案/" itemprop="url" rel="index"><span itemprop="name">解决方案</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2023/10/02/7款最好用的bilibili视频下载线上工具推荐/" class="post-meta-item leancloud_visitors" data-flag-title="7款最好用的bilibili视频下载线上工具推荐" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/10/02/7款最好用的bilibili视频下载线上工具推荐/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2023/10/02/7款最好用的bilibili视频下载线上工具推荐/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>2.3k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>2 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr><ul>
+<li><a href="#插件">插件</a><ul>
+<li><a href="#1byclick-downloader">1、ByClick Downloader</a></li>
+<li><a href="#2videofk">2、VideoFK</a></li>
+<li><a href="#3video-to-save">3、Video To Save</a></li>
+<li><a href="#4tube-offline">4、Tube Offline</a></li>
+<li><a href="#59xbuddy">5、9xBuddy</a></li>
+<li><a href="#6fetchfile">6、FetchFile</a></li>
+<li><a href="#7哔哩哔哩bilibili影片下载工具">7、哔哩哔哩bilibili影片下载工具</a></li>
+</ul>
+</li>
+<li><a href="#其他问题">其他问题</a><ul>
+<li><a href="#1从bilibili下载的视频可以作为商业用途吗">1、从bilibili下载的视频可以作为商业用途吗？</a></li>
+<li><a href="#2bilibili视频下载后会存放在哪里">2、bilibili视频下载后会存放在哪里？</a></li>
+</ul>
+</li>
+</ul><a id="more"></a>
+<!-- TOC -->
+
+<!-- /TOC -->
+<hr>
+<p>写在前面：</p>
+<blockquote>
+<p>如本文描述有错误，希望读到这篇文章的您能够提出批评指正。 联系方式：172310978@qq.com</p>
+</blockquote>
+<p>参考文章：</p>
+<ol>
+<li><a href="https://zhuanlan.zhihu.com/p/474482997" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/474482997</a></li>
+</ol>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><h3 id="1、ByClick-Downloader"><a href="#1、ByClick-Downloader" class="headerlink" title="1、ByClick Downloader"></a>1、ByClick Downloader</h3><p><a href="https://link.zhihu.com/?target=https%3A//www.byclickdownloader.com/zh-cn/" target="_blank" rel="noopener">ByClick Downloader</a></p>
+<p><img src="https://pic1.zhimg.com/v2-4a7c1a13aadfc2b509ca2e1ce0cbe390_r.jpg" alt></p>
+<p>ByClick Downloader是一款B站视频下载工具，它具有操作直接的使用界面，能够帮你快速从B站下载视频，并把视频以MP3和MP4的格式输出。</p>
+<p>同时它也具有一些额外功能，例如下载B站播放列表、字幕等。ByClick Downloader还能让你在浏览器上观看视频时，自动识别出视频并在右下角显示下载提示框。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>支持B站视频下载功能</li>
+<li>能下载B站播放列表</li>
+<li>提供多种视频画质选择，包括1080p、720p、4K和8K</li>
+<li>具备自动检测B站视频的功能</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>免费功能有限，需要付费才能使用完整功能</li>
+<li>只支持Windows系统</li>
+</ul>
+<p><strong>价格：</strong></p>
+<ul>
+<li>年费7.99欧元</li>
+<li>终身9.99欧元</li>
+</ul>
+<h3 id="2、VideoFK"><a href="#2、VideoFK" class="headerlink" title="2、VideoFK"></a>2、VideoFK</h3><p><a href="https://link.zhihu.com/?target=https%3A//www.videofk.com/" target="_blank" rel="noopener">VideoFK</a></p>
+<p><img src="https://pic4.zhimg.com/v2-a5a74ffdbc3bebddd582ec8e068fceb3_r.jpg" alt></p>
+<p>其次，推荐我最喜欢的B站视频下载工具——VideoFK，不需要安装任何应用程序和外挂，只要把B站视频链接复制粘贴，然后再注册一个账号就可以开始下载。</p>
+<p>它最大的有点事除了支持B站下载外，也支持下载火山、抖音、快手、微博、腾讯视频等热门平台的视频内容。</p>
+<p>不过它虽然支持下载的平台多，但还是有一个缺点就是视频储存格式只有一种-MP4格式，幸好这个问题很好处理，只要使用视频格式转换软件，就可以轻松将MP4格式转换成FLV、AVI等其它格式。</p>
+<p>顺带提一下，下载时会进入一个视频播放器，你只要点选右上角“三点”图示就会有下载选项可以选择。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>容易使用</li>
+<li>简洁的使用界面</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>视频输出格式只有MP4一种</li>
+<li>需要注册</li>
+</ul>
+<p><strong>价格：</strong></p>
+<ul>
+<li>免费</li>
+</ul>
+<h3 id="3、Video-To-Save"><a href="#3、Video-To-Save" class="headerlink" title="3、Video To Save"></a>3、Video To Save</h3><p><a href="https://link.zhihu.com/?target=https%3A//www.videotosave.com/" target="_blank" rel="noopener">Video To Save</a></p>
+<p><img src="https://pic1.zhimg.com/v2-d0e8a9bfbf9db75e8b6c93a5a47769a8_r.jpg" alt></p>
+<p>Video To Save也是一款线上工具，你只需要将视频URL复制粘贴到输入框中，即可从B站下载视频。这是一个免费工具，你可以使用它下载MP4或flv格式的视频文件。</p>
+<p>使用此工具从B站下载视频时，你不需要安装任何第三方软件或注册，只需要粘贴视频链接并按下载按钮，即可开始使用。</p>
+<p>在下载视频前，你还可以检查视频的大小（以MB为单位）和视频格式。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>无需注册</li>
+<li>简单的复制粘贴，即可使用</li>
+<li>简洁的用户界面</li>
+<li>下载前可检查文件大小</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>有时它不会显示文件格式</li>
+</ul>
+<p><strong>价格：</strong></p>
+<ul>
+<li>免费</li>
+</ul>
+<h3 id="4、Tube-Offline"><a href="#4、Tube-Offline" class="headerlink" title="4、Tube Offline"></a>4、Tube Offline</h3><p><a href="https://link.zhihu.com/?target=https%3A//www.tubeoffline.com/download-BiliBili-videos.php" target="_blank" rel="noopener">Tube Offline</a></p>
+<p><img src="https://pic3.zhimg.com/v2-c8a6db691e5286f715db8ab2ea37e2fa_r.jpg" alt></p>
+<p>Tube Offline是另一款不错的B站下载工具，你只需要在工具中放上B站视频的链接，即可开始使用。该工具为你提供下载前选择视频画质和视频格式的选项。</p>
+<p>共有三种画质选项，分别为“正常”、“最佳”和“低画质”，而你可以下载五种格式的B站视频，这些格式分别为MP4、FLV、AVI、WMV和MP3。</p>
+<p>不过这个工具有个比较大的缺点、就是整个过程速度比较慢。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>提供画质和视频格式选项</li>
+<li>使用方便</li>
+<li>无需注册</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>使用界面差</li>
+<li>广告很多</li>
+<li>执行速度慢</li>
+</ul>
+<p><strong>价格：</strong></p>
+<ul>
+<li>免费</li>
+</ul>
+<h3 id="5、9xBuddy"><a href="#5、9xBuddy" class="headerlink" title="5、9xBuddy"></a>5、9xBuddy</h3><p><a href="https://link.zhihu.com/?target=https%3A//9xbuddy.org/sites/1ve-bilibili" target="_blank" rel="noopener">9xBuddy</a></p>
+<p><img src="https://pic2.zhimg.com/v2-664894a53c5c317fbb06f21eca91c5cd_r.jpg" alt></p>
+<p>9xBuddy是非常方便的B站视频下载线上工具，因为使用这款工具下载B站视频非常容易。你可以通过两种方式来下载视频。让我们一一介绍。</p>
+<p>第一种方法就是简单的将B站视频的URL复制并粘贴到这个工具上，然后你将获得可下载的文件，只需要点击下载按钮即可下载该视频。</p>
+<p>第二种方法非常有趣，在这个方法中，你只需要打开B站并播放要下载的视频即可。进入下载视频页面后，你必须在地址栏中编辑链接，只需在URL的开头加上“<a href="https://link.zhihu.com/?target=http%3A//9xbud.com/" target="_blank" rel="noopener">http://9xbud.com/</a>”,你就会被重定向到可以下载视频的界面。</p>
+<p>例如，如果你的视频链接是“https：//<a href="https://link.zhihu.com/?target=http%3A//www.bilibili.com/video/ED1q" target="_blank" rel="noopener">http://www.bilibili.com/video/ED1q</a> …”则编辑后的链接将是“<a href="https://link.zhihu.com/?target=http%3A//9xbud.com/www.bilibili.com/video/ED1q" target="_blank" rel="noopener">http://9xbud.com/www.bilibili.com/video/ED1q</a> …”</p>
+<p>此外，在下载B站视频之前，你还可以检查要下载的视频大小和格式。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>提供两种下载视频的方法</li>
+<li>下载前可检查视频大小和格式</li>
+<li>无需注册</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>缺乏自定义选项</li>
+</ul>
+<p><strong>价格：</strong></p>
+<ul>
+<li>免费</li>
+</ul>
+<h3 id="6、FetchFile"><a href="#6、FetchFile" class="headerlink" title="6、FetchFile"></a>6、FetchFile</h3><p><a href="https://link.zhihu.com/?target=https%3A//en.fetchfile.net/" target="_blank" rel="noopener">FetchFile</a></p>
+<p><img src="https://pic2.zhimg.com/v2-b0eecba9c8aa0b6d0e40b352ffa8f269_r.jpg" alt></p>
+<p>FetchFile是一款免费的线上工具，你可以使用该工具从B站下载视频，它提供不同的视频格式，例如MP4、WebM、Audio、3GPP和X-FLV。</p>
+<p>它还支持各种视频画质选项，例如1080P、HD、FullHD和UltraHD。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>使用方便</li>
+<li>无需注册</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>有广告</li>
+<li>没有中文界面</li>
+</ul>
+<p><strong>价格：</strong></p>
+<ul>
+<li>免费</li>
+</ul>
+<h3 id="7、哔哩哔哩bilibili影片下载工具"><a href="#7、哔哩哔哩bilibili影片下载工具" class="headerlink" title="7、哔哩哔哩bilibili影片下载工具"></a>7、哔哩哔哩bilibili影片下载工具</h3><p><img src="https://pic4.zhimg.com/v2-43144861ddf6ae2f304f26f004622bef_r.jpg" alt></p>
+<p>哔哩哔哩bilibili影片下载工具是一个Chrome浏览器扩展程序，它非常易于使用，只要安装之后打开要下载的哔哩哔哩视频，你就会在右下角看到一个下载图表，点击就可以直接下载。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>Chrome扩展程序很方便</li>
+<li>无需注册</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>需要安装谷歌Chrome浏览器</li>
+</ul>
+<p><strong>价格：</strong></p>
+<ul>
+<li>免费</li>
+</ul>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="1、从bilibili下载的视频可以作为商业用途吗？"><a href="#1、从bilibili下载的视频可以作为商业用途吗？" class="headerlink" title="1、从bilibili下载的视频可以作为商业用途吗？"></a>1、从bilibili下载的视频可以作为商业用途吗？</h3><p>从bilibili下载视频必须要CCO授权，或联系视频作者取得使用许可，才能够将视频使用在商业用途，不然<strong>将会面临侵犯著作权的问题</strong>。</p>
+<h3 id="2、bilibili视频下载后会存放在哪里？"><a href="#2、bilibili视频下载后会存放在哪里？" class="headerlink" title="2、bilibili视频下载后会存放在哪里？"></a>2、bilibili视频下载后会存放在哪里？</h3><p>使用浏览器从bilibili下载视频时，视频会自动存储到浏览器预设的下载文件夹中。如果你忘记预设路径在哪里，可以在浏览器设置选项中查找。</p>
+
+    </div>
+
+    
+    
+    
+
+	
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Snow</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://behappy00.github.io/2023/10/02/7款最好用的bilibili视频下载线上工具推荐/" title="7款最好用的bilibili视频下载线上工具推荐">https://behappy00.github.io/2023/10/02/7款最好用的bilibili视频下载线上工具推荐/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/转载/" rel="tag"># 转载</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2023/10/02/跨域报错，When-allowCredentials-is-true-allowedOrigins-cannot-contain-the-special-value/" rel="next" title="跨域报错，When allowCredentials is true, allowedOrigins cannot contain the special value">
+                  <i class="fa fa-chevron-left"></i> 跨域报错，When allowCredentials is true, allowedOrigins cannot contain the special value
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2023/10/02/mock的基础用法及安装/" rel="prev" title="mock的基础用法及安装">
+                  mock的基础用法及安装 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+		
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#插件"><span class="nav-number">1.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、ByClick-Downloader"><span class="nav-number">1.1.</span> <span class="nav-text">1、ByClick Downloader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、VideoFK"><span class="nav-number">1.2.</span> <span class="nav-text">2、VideoFK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Video-To-Save"><span class="nav-number">1.3.</span> <span class="nav-text">3、Video To Save</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Tube-Offline"><span class="nav-number">1.4.</span> <span class="nav-text">4、Tube Offline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、9xBuddy"><span class="nav-number">1.5.</span> <span class="nav-text">5、9xBuddy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、FetchFile"><span class="nav-number">1.6.</span> <span class="nav-text">6、FetchFile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、哔哩哔哩bilibili影片下载工具"><span class="nav-number">1.7.</span> <span class="nav-text">7、哔哩哔哩bilibili影片下载工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题"><span class="nav-number">2.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、从bilibili下载的视频可以作为商业用途吗？"><span class="nav-number">2.1.</span> <span class="nav-text">1、从bilibili下载的视频可以作为商业用途吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、bilibili视频下载后会存放在哪里？"><span class="nav-number">2.2.</span> <span class="nav-text">2、bilibili视频下载后会存放在哪里？</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Snow</p>
+  <div class="site-description" itemprop="description">计算机 Hiter</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+	 <!-- 添加近期文章 -->
+	 
+	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
+		 <div class="links-of-blogroll-title">
+		   <!-- modify icon to fire by szw -->
+		   <i class="fa fa-history fa-" aria-hidden="true"></i>
+		   近期文章
+		 </div>
+		 <ul class="links-of-blogroll-list">
+		   
+		   
+			 <li>
+			   <a href="/2023/10/03/markdown汇总/" title="markdown汇总" target="_blank">markdown汇总</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/hexo博客搜索显示异样/" title="hexo博客搜索显示异样" target="_blank">hexo博客搜索显示异样</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown使用TOC自动生成导航栏/" title="Markdown使用TOC自动生成导航栏" target="_blank">Markdown使用TOC自动生成导航栏</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown让文字居中和带颜色/" title="markdown让文字居中和带颜色" target="_blank">markdown让文字居中和带颜色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown-文本内跳转-生成目录/" title="markdown 文本内跳转,生成目录" target="_blank">markdown 文本内跳转,生成目录</a>
+			 </li>
+		   
+		 </ul>
+	   </div>
+	 
+	  
+	  <!-- 添加网易云播放歌曲 -->
+	  <div id="music163player">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
+		</iframe>
+	  </div>
+  
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Snow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">494k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:29</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="我的第 undefined 位朋友，">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--
+
+<script>
+  $(document).ready(function () {
+    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
+  });
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+  <script>
+    function timer() {
+      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
+      ages = ages.replace(/years?/, "年");
+      ages = ages.replace(/months?/, "月");
+      ages = ages.replace(/days?/, "天");
+      ages = ages.replace(/hours?/, "小时");
+      ages = ages.replace(/minutes?/, "分");
+      ages = ages.replace(/seconds?/, "秒");
+      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
+      div.innerHTML = `我已在此等候你 ${ages}`;
+    }
+    var div = document.createElement("div");
+    //插入到copyright之后
+    var copyright = document.querySelector(".copyright");
+    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+    timer();
+    setInterval("timer()",1000)
+  </script>
+-->
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
+    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-CN' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  
+  <!--页面点击出现富强民主文明和谐-->
+ <script type="text/javascript" src="/js/words-click.js"></script > 
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <!--
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+  -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
+

@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="1.bs4数据分析 一、基础介绍 二、实例操作 1.获取北京新发地网页中每日菜价的所有数据 （1）.第一步分析网页 （2）.第二步拿到数据 （3）.第三步解析数据   2.下载优美图库中的图片，并保存在本地文件中 （1）.第一步分析网页 （2）.第二步拿到数据 （3）.第三步解析数据 补充：正则表达式进行图片链接提取 （4）.第四步保存数据   3.爬取《三国演义》小说">
+<meta name="keywords" content="转载,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用BeautifulSoup进行解析数据">
+<meta property="og:url" content="https://behappy00.github.io/2023/10/02/使用BeautifulSoup进行解析数据/index.html">
+<meta property="og:site_name" content="Snow">
+<meta property="og:description" content="1.bs4数据分析 一、基础介绍 二、实例操作 1.获取北京新发地网页中每日菜价的所有数据 （1）.第一步分析网页 （2）.第二步拿到数据 （3）.第三步解析数据   2.下载优美图库中的图片，并保存在本地文件中 （1）.第一步分析网页 （2）.第二步拿到数据 （3）.第三步解析数据 补充：正则表达式进行图片链接提取 （4）.第四步保存数据   3.爬取《三国演义》小说">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ec0e47b2b0c546d58ca10b9756c24a6e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a328b67fc64446c6b69801f6d3b43e36.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9f43d45a58d54d5a91c4a66418fb7a0c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c00fdea1eab2482b98949e6278cce9c6.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6e82a3a584c34eed9b16dd7f8aece4c4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/876e478b187a4494935b32355ddb2d2c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2848037eb5fc4e93a2faa07124492474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8513e55b978149a98f787afd51edd121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ab7b173266a449f587d8c6f5799b29bd.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/96653121e32c4bf6a42c86c549373bc5.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8aafea9edab64317a459c64751d7efec.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f0dbf447d0e1420780d5f89ee2729656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f48529792ce74d15aacf8abdf073fe66.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2dd99c04b8a94344aebc5999c343f0a1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d2c7c905441040a9b00a8aaf6c1de4f0.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d3ba198e834847728e7a7193485180ff.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2023-10-02T08:13:24.528Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用BeautifulSoup进行解析数据">
+<meta name="twitter:description" content="1.bs4数据分析 一、基础介绍 二、实例操作 1.获取北京新发地网页中每日菜价的所有数据 （1）.第一步分析网页 （2）.第二步拿到数据 （3）.第三步解析数据   2.下载优美图库中的图片，并保存在本地文件中 （1）.第一步分析网页 （2）.第二步拿到数据 （3）.第三步解析数据 补充：正则表达式进行图片链接提取 （4）.第四步保存数据   3.爬取《三国演义》小说">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/ec0e47b2b0c546d58ca10b9756c24a6e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70">
+  <link rel="canonical" href="https://behappy00.github.io/2023/10/02/使用BeautifulSoup进行解析数据/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>使用BeautifulSoup进行解析数据 | Snow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Snow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">光而不耀</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2023/10/02/使用BeautifulSoup进行解析数据/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">使用BeautifulSoup进行解析数据
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2023-10-02 10:28:22 / 修改时间：16:13:24" itemprop="dateCreated datePublished" datetime="2023-10-02T10:28:22+08:00">2023-10-02</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/解决方案/" itemprop="url" rel="index"><span itemprop="name">解决方案</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2023/10/02/使用BeautifulSoup进行解析数据/" class="post-meta-item leancloud_visitors" data-flag-title="使用BeautifulSoup进行解析数据" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/10/02/使用BeautifulSoup进行解析数据/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2023/10/02/使用BeautifulSoup进行解析数据/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>8.5k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>8 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr><ul>
+<li><a href="#1bs4数据分析">1.bs4数据分析</a><ul>
+<li><a href="#一基础介绍">一、基础介绍</a></li>
+<li><a href="#二实例操作">二、实例操作</a><ul>
+<li><a href="#1获取北京新发地网页中每日菜价的所有数据">1.获取北京新发地网页中每日菜价的所有数据</a><ul>
+<li><a href="#1第一步分析网页">（1）.第一步分析网页</a></li>
+<li><a href="#2第二步拿到数据">（2）.第二步拿到数据</a></li>
+<li><a href="#3第三步解析数据">（3）.第三步解析数据</a></li>
+</ul>
+</li>
+<li><a href="#2下载优美图库中的图片并保存在本地文件中">2.下载优美图库中的图片，并保存在本地文件中</a><ul>
+<li><a href="#1第一步分析网页-1">（1）.第一步分析网页</a></li>
+<li><a href="#2第二步拿到数据-1">（2）.第二步拿到数据</a></li>
+<li><a href="#3第三步解析数据-1">（3）.第三步解析数据</a></li>
+<li><a href="#补充正则表达式进行图片链接提取">补充：正则表达式进行图片链接提取</a></li>
+<li><a href="#4第四步保存数据">（4）.第四步保存数据</a></li>
+</ul>
+</li>
+<li><a href="#3爬取三国演义小说">3.爬取《三国演义》小说</a><!-- /TOC -->
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><a id="more"></a>
+<!-- TOC -->
+
+<hr>
+<p>写在前面：</p>
+<blockquote>
+<p>如本文描述有错误，希望读到这篇文章的您能够提出批评指正。 联系方式：172310978@qq.com</p>
+</blockquote>
+<h2 id="1-bs4数据分析"><a href="#1-bs4数据分析" class="headerlink" title="1.bs4数据分析"></a>1.bs4数据分析</h2><p><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>bs4数据分析</p>
+<h3 id="一、基础介绍"><a href="#一、基础介绍" class="headerlink" title="一、基础介绍"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>一、基础介绍</h3><p>bs4 全名 BeautifulSoup，是编写 python 爬虫常用库之一，BeautifulSoup4也是一个html/xml的解析器，主要用来解析 html 标签。</p>
+<p><strong>-数据解析的原理：</strong></p>
+<ul>
+<li>1.标签定位</li>
+<li>2.提取标签、标签属性中存储的数据值</li>
+</ul>
+<p><strong>- bs4数据解析的原理：</strong></p>
+<ul>
+<li><p>1.实例化一个BeautifulSoup对象，并且将页面源码数据加载到该对象中</p>
+</li>
+<li><p>2.通过调用BeautifulSoup对象中相关的属性或者方法进行标签定位和数据提取</p>
+</li>
+</ul>
+<p>我们一般在使用bs4库进行数据分析时，最主要使用的都是beautifulsoup。所以我们在使用时一般都是引入这个库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
+<p><strong>bs4提供用于数据解析的方法和属性有：</strong></p>
+<ul>
+<li><p><strong>soup.find().text 获取标签内文本内容</strong></p>
+</li>
+<li><p><strong>soup.get_text() 获取标签内的文本内容</strong></p>
+</li>
+<li><p><strong>soup.get() 获取标签属性的值</strong></p>
+</li>
+<li><p><strong>soup.tagName:返回的是文档中第一次出现的tagName对应的标签</strong></p>
+</li>
+<li><p><strong>soup.find():</strong></p>
+<p><strong>-soup.find(‘div’,class_/id/attr=‘song’)</strong></p>
+</li>
+<li><p><strong>soup.find_all(‘tagName’):返回符合要求的所有标签（列表）</strong></p>
+</li>
+<li><p><strong>find(‘tagName’):等同于soup.div</strong></p>
+</li>
+</ul>
+<p>有了这些基本介绍下，我们就能够进行基本的bs4数据解析了</p>
+<p>接下来将通过几个实例进行巩固。</p>
+<h3 id="二、实例操作"><a href="#二、实例操作" class="headerlink" title="二、实例操作"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>二、实例操作</h3><h4 id="1-获取北京新发地网页中每日菜价的所有数据"><a href="#1-获取北京新发地网页中每日菜价的所有数据" class="headerlink" title="1.获取北京新发地网页中每日菜价的所有数据"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>1.获取北京新发地网页中每日菜价的所有数据</h4><p>流程：</p>
+<p>分析网页：打开开发者工具，观察我们所需要的内容特点，并且看看网站的源代码中是否由我们所需要的内容，如果有便可以直接进行爬取，如果没有的话可能还需要进行更深入的查找</p>
+<p>拿到数据：通过urllib进行request请求，拿到网页数据</p>
+<p>数据分析：使用bs4进行解析，拿到我们想要的数据</p>
+<p>首先我们需要导入两个库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">from bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
+<h5 id="（1）-第一步分析网页"><a href="#（1）-第一步分析网页" class="headerlink" title="（1）.第一步分析网页"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>（1）.第一步分析网页</h5><p><img src="https://img-blog.csdnimg.cn/ec0e47b2b0c546d58ca10b9756c24a6e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-hdGVpuGE-1626970354469)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713153251624.png)]"></p>
+<p>我们所需要的东西都在这个表格里，同时我们也发现它还有好多页数据，如果我们想要所有页的数据该怎么办。</p>
+<p>我们发现这个网址有一个规律</p>
+<p><a href="http://www.xinfadi.com.cn/marketanalysis/0/list/1.shtml" target="_blank" rel="noopener">http://www.xinfadi.com.cn/marketanalysis/0/list/1.shtml</a></p>
+<p>当第一页时，list为1，第二页时list为2.依次列推，这样之后我们可以利用这个规律，将所有网页的信息都获取到</p>
+<p>右键打开网页源代码，Ctrl+f 查找大白菜</p>
+<p><img src="https://img-blog.csdnimg.cn/a328b67fc64446c6b69801f6d3b43e36.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-wGCQAu8w-1626970354470)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713153629269.png)]"></p>
+<p>发现我们所需要的数据在源代码中存在。</p>
+<p>所以我们直接访问此网址进行数据提取即可</p>
+<p>然后打开开发者工具，点击我们要的数据进行观察</p>
+<p><img src="https://img-blog.csdnimg.cn/9f43d45a58d54d5a91c4a66418fb7a0c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-97azODGT-1626970354472)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713153743053.png)]"></p>
+<p>由图也能看到，我们所需要的数据都存在table表中</p>
+<p>我们只需要能够定位到table表中，便能进一步得到数据</p>
+<p><img src="https://img-blog.csdnimg.cn/c00fdea1eab2482b98949e6278cce9c6.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-V1RWB49w-1626970354476)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713153849043.png)]"></p>
+<p>点开其中的tr我们可以看到，我们所需要的内容都在tr标签的td中，所以我们只需要获取td标签中的文本信息，便完成了整个数据爬取。接下来我们将进入下一步：拿到数据</p>
+<h5 id="（2）-第二步拿到数据"><a href="#（2）-第二步拿到数据" class="headerlink" title="（2）.第二步拿到数据"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>（2）.第二步拿到数据</h5><p>首先我们定义一个变量，存放网址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url =&quot;http://www.xinfadi.com.cn/marketanalysis/0/list/1.shtml&quot;</span><br><span class="line">requ = requests.get(url)</span><br><span class="line">requ.encoding=&quot;utf-8&quot;</span><br></pre></td></tr></table></figure>
+<p>当然还需要定义一个变量，存放request请求到的网页信息</p>
+<p>同时为了防止可能出现乱码，所以使用encoding转化为”utf-8”</p>
+<p>这样其实就已经拿到了我们这个网址的源代码了，我们可以输出看一下</p>
+<p><img src="https://img-blog.csdnimg.cn/6e82a3a584c34eed9b16dd7f8aece4c4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-EI6zYXI5-1626970354478)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713154551496.png)]"></p>
+<p>下一步便是解析数据了</p>
+<h5 id="（3）-第三步解析数据"><a href="#（3）-第三步解析数据" class="headerlink" title="（3）.第三步解析数据"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>（3）.第三步解析数据</h5><p>我们使用的是bs4库进行解析</p>
+<p>首先 要实例化一个BeautifulSoup对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">page = BeautifulSoup(requ.text,&quot;html.parser&quot;)</span><br></pre></td></tr></table></figure>
+<p>设置一个变量存储bs4处理后的源代码数据</p>
+<blockquote>
+<p>beautifulsoup括号中的第一个参数时要解析的HTML文本，第二个参数是使用的解析器，解析HTML使用的是自带的html.parser</p>
+</blockquote>
+<p>根据之前分析网页的过程，我们知道我们需要的内容都存在于一个table表中，所以我们使用bs4中的方法进行数据解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table = page.find(&quot;table&quot;, class_=&quot;hq_table&quot;)</span><br></pre></td></tr></table></figure>
+<p>通过find方法，找到源代码中class=”hq_table”的table内容</p>
+<p>我们可以输出看一下得到了什么</p>
+<p><img src="https://img-blog.csdnimg.cn/876e478b187a4494935b32355ddb2d2c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-Yct1CpJG-1626970354480)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713155429665.png)]"></p>
+<p>然后下一步我们继续往下找，找到所有的tr标签的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trs = table.find_all(&quot;tr&quot;)[1:]</span><br></pre></td></tr></table></figure>
+<p><strong>找寻所有符合条件的使用find_all方法</strong></p>
+<p>因为我们第一行是我们不需要的数据，所以我们从第二行情开始。</p>
+<p>同样我们也可以输出结果看看</p>
+<p><img src="https://img-blog.csdnimg.cn/2848037eb5fc4e93a2faa07124492474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-dCFXKBah-1626970354481)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713155737006.png)]"></p>
+<p>得到了所有的tr标签后，我们所需要的内容都在其中的td标签中</p>
+<p>因为数据是比较多的，所以我们利用一个循环来获取所有的td标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for tr in trs:</span><br><span class="line">    tds = tr.find_all(&quot;td&quot;)</span><br></pre></td></tr></table></figure>
+<p>这样我们就得到了所有的td标签了</p>
+<p>也可以输出看一下</p>
+<p><img src="https://img-blog.csdnimg.cn/8513e55b978149a98f787afd51edd121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-t3mnlEtf-1626970354482)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713160209794.png)]"></p>
+<p>但是我们需要的是td标签中的文本信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">name = tds[0].text        #.text 表示拿到被标签标记的内容</span><br><span class="line">low = tds[1].text</span><br><span class="line">avg = tds[2].text</span><br><span class="line">high = tds[3].text</span><br><span class="line">gui = tds[4].text</span><br><span class="line">kind = tds[5].text</span><br><span class="line">data = tds[6].text</span><br></pre></td></tr></table></figure>
+<p>根据观察我们所获取的内容可以看到，我们的菜品名称是第一个td的文本内容，所以我们输入tds[0],<strong>定位到这个标签</strong>后加上**.text**,便可以获取被标签标记的文本内容。<br>输出后便能得到我们最终需要的内容了</p>
+<p><img src="https://img-blog.csdnimg.cn/ab7b173266a449f587d8c6f5799b29bd.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-C5VsUCyP-1626970354483)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713160716760.png)]"></p>
+<p>嘿嘿，这样便完成了</p>
+<p><strong>当然我们还可以扩展很多操作，可以将数据进行保存，也可以进行翻页爬取。</strong></p>
+<h4 id="2-下载优美图库中的图片，并保存在本地文件中"><a href="#2-下载优美图库中的图片，并保存在本地文件中" class="headerlink" title="2.下载优美图库中的图片，并保存在本地文件中"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>2.下载优美图库中的图片，并保存在本地文件中</h4><p>步骤和上一个例子是一样的，同样还是打开网页，分析网页的内容</p>
+<h5 id="（1）-第一步分析网页-1"><a href="#（1）-第一步分析网页-1" class="headerlink" title="（1）.第一步分析网页"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>（1）.第一步分析网页</h5><p>我们想要下载图片，所以需要拿到图片的下载链接。</p>
+<p>首先打开网址，右键查看源代码，看源代码中是否有我们想要的数据</p>
+<p><img src="https://img-blog.csdnimg.cn/96653121e32c4bf6a42c86c549373bc5.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-3k2gzt0O-1626970354484)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713190718462.png)]"></p>
+<p>我们看到源代码，发现其实里边存在我们想要的链接。</p>
+<p>那便尝试下使用bs4进行提取内容</p>
+<h5 id="（2）-第二步拿到数据-1"><a href="#（2）-第二步拿到数据-1" class="headerlink" title="（2）.第二步拿到数据"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>（2）.第二步拿到数据</h5><p>一样的步骤</p>
+<p>导入库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import requestsfrom bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
+<p>然后请求网址，获取网页源代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url = &quot;https://www.umei.net/bizhitupian/weimeibizhi/&quot;</span><br><span class="line">requ = requests.get(url)</span><br><span class="line">requ.encoding=&quot;utf-8&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="（3）-第三步解析数据-1"><a href="#（3）-第三步解析数据-1" class="headerlink" title="（3）.第三步解析数据"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>（3）.第三步解析数据</h5><p>实例化bs4对象，并生成page对象</p>
+<p>根据网页分析，获得class = “TypeList”下的a标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">page = BeautifulSoup(requ.text,&quot;html.parser&quot;)</span><br><span class="line">div = page.find(&quot;div&quot;,class_=&quot;TypeList&quot;).find_all(&quot;a&quot;)</span><br></pre></td></tr></table></figure>
+<p>得到后，因为我们有很多张图片信息需要获取，所以也用一个循环来进行操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for a in div:	 </span><br><span class="line">	chref = a.get(&apos;img&apos;)                 #直接通过get就可以拿到属性的值    </span><br><span class="line">print(chref)</span><br></pre></td></tr></table></figure>
+<p>然后输出我们需要的图片链接</p>
+<p>结果为：</p>
+<p><img src="https://img-blog.csdnimg.cn/8aafea9edab64317a459c64751d7efec.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt></p>
+<p><strong>我们所爬取到的却是空值</strong></p>
+<p>搞了很久才知道问题所在，因为我们的bs4解析，是根据标签中属性去进行提取其中的值，而img是在a标签里边的内容，我们可以定义href得到网址内容，也可以定义class得到内容，但是无法对标签里的内容进行提取，所以我们使用bs4提取的话，是需要先进入到网站的子网站中去，才能获取到图片的链接。</p>
+<p>但是既然在源代码中已经存在了，那我们一样就可以直接提取。我们可以使用正则表达式进行数据提取。</p>
+<p>当然这里还是讲解我们的bs4提取方式</p>
+<p>因为我们无法直接在源代码中提取到信息，所以我们需要访问到图片的子网页中，下一步便是获得每个子网页的网址，同样因为网址很多，所以我们利用寻循环进行提取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for a in div:	</span><br><span class="line">	chref = a.get(&apos;href&apos;)                 #直接通过get就可以拿到属性的值    </span><br><span class="line">print(chref)</span><br></pre></td></tr></table></figure>
+<p>输出结果便是子网页的网址</p>
+<p>但是我们经过观察发现，并不是完整的网址，不能点击进入</p>
+<p>我们得到的是：</p>
+<p>/bizhitupian/weimeibizhi/225260.htm</p>
+<p>/bizhitupian/weimeibizhi/225259.htm</p>
+<p>实际网址是：<a href="https://www.umei.net/bizhitupian/weimeibizhi/225260.htm" target="_blank" rel="noopener">https://www.umei.net/bizhitupian/weimeibizhi/225260.htm</a></p>
+<p>原网址：<a href="https://www.umei.net/bizhitupian/weimeibizhi/" target="_blank" rel="noopener">https://www.umei.net/bizhitupian/weimeibizhi/</a></p>
+<p>经过对比观察我们发现，我们得到的网址其实每个都是只有后边的数字在变化，所以我们可以将后边的数字分开存储。</p>
+<p>然后和原网址进行拼接，便能得到所有能够进入的子网页网址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">href_name = chref.split(&quot;/&quot;)[-1]href = url + href_name</span><br></pre></td></tr></table></figure>
+<p>split （） ：从分号为准，进行切割</p>
+<p>我们可以输出一下看看</p>
+<p>[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-emXe8pdu-1626970354485)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713201942623.png)]</p>
+<p>这就是我们得到的内容</p>
+<p>当然还没有结束，接下来，我们需要请求子网页的地址，获取子网页的内容，其实和我们获取原网页的内容操作是一样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">child_page_requ = requests.get(href)</span><br><span class="line">child_page_requ.encoding=&quot;utf-8&quot;</span><br><span class="line">child_page_text = child_page_requ.text</span><br></pre></td></tr></table></figure>
+<p>然后也是一样实例化bs4对象，进行数据提取。</p>
+<p><img src="https://img-blog.csdnimg.cn/f0dbf447d0e1420780d5f89ee2729656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt></p>
+<p>根据网页格式，我们先进入到p标签下，然后在进入到img标签中，最后找到图片链接的属性src，提取到我们需要的图片下载链接。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">child_page = BeautifulSoup(child_page_text,&quot;html.parser&quot;)</span><br><span class="line">p = child_page.find(&quot;p&quot;, align=&quot;center&quot;)</span><br><span class="line">img = p.find(&quot;img&quot;)</span><br><span class="line">src = img.get(&quot;src&quot;)</span><br></pre></td></tr></table></figure>
+<p>这样我们就得到了所有的下载链接</p>
+<p>当然这个也可以进行翻页爬取，之后可以作为拓展练习操作</p>
+<h5 id="补充：正则表达式进行图片链接提取"><a href="#补充：正则表达式进行图片链接提取" class="headerlink" title="补充：正则表达式进行图片链接提取"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>补充：正则表达式进行图片链接提取</h5><p>首先我们也需要引入一个库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br></pre></td></tr></table></figure>
+<p>然后定义一个正则表达式规则进行数据提取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj2 = re.compile(r&apos;img src=&quot;(.*?)&quot;&apos;,re.S)</span><br></pre></td></tr></table></figure>
+<p>re.compile 编译成 Pattern 对象</p>
+<p>然后便可以通过re常用的方法进行匹配查找</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for a in div:    </span><br><span class="line">	a=str(a)    </span><br><span class="line">	res=obj2.findall(a)[0]    </span><br><span class="line">	print(res)</span><br></pre></td></tr></table></figure>
+<p>这里我们用了findall进行查找，<strong>当然如果我们直接进行查找的话是会报错的</strong>，因为我们的正则是在字符串中进行提取数据，但是当时的a是一个bs4对象，所有我们需要先进行转化，才能得到最后的结果</p>
+<p><img src="https://img-blog.csdnimg.cn/f48529792ce74d15aacf8abdf073fe66.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-H5Tc86Fe-1626970354486)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713200424021.png)]"></p>
+<p>当然，我们还是回到bs4方法中来，虽然这个网站里存在我们子网页中的信息，但是很多网页中，我们想要的内容都不会在当前网页的源代码中，所以就需要我们去深入查找，我们的bs4也就能够运用进来。</p>
+<p>其实我们爬虫的方式有很多种，每个网站的信息也不同，我们可以根据不同的网页信息，去使用不同的爬取方法，只要最终能够得到我们所需要的内容。</p>
+<blockquote>
+<p>注意：我们通过观察源代码中图片和子网页中图片链接对比能发现在源代码中得到的图片只是缩略图，所以如果我们需要对图片清晰度有一定的要求的话，还是得进入到子网页中进行图片下载</p>
+</blockquote>
+<h5 id="（4）-第四步保存数据"><a href="#（4）-第四步保存数据" class="headerlink" title="（4）.第四步保存数据"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>（4）.第四步保存数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">img_requ = requests.get(src)     #请求src链接    </span><br><span class="line">#img_requ.content      #这里拿到的是字节img_name = src.split(&quot;/&quot;)[-1]   </span><br><span class="line">#拿到url最后一个/以后的内容</span><br><span class="line">with open(&quot;优美图库/&quot;+img_name,mode=&quot;wb&quot;) as f:    	</span><br><span class="line">	f.write(img_requ.content)     #图片内容写入文件</span><br><span class="line">	print(&quot;over!!!&quot;,img_name)time.sleep(1)</span><br></pre></td></tr></table></figure>
+<p>我们可以执行with open（）命令，打开或者新建一个文件夹，并对参数进行设置，建立一个“优美图库”的文件，执行二进制写入的操作</p>
+<p>然后将图片写入文件中：</p>
+<p>f.write（img_requ.content）</p>
+<p>便可以将图片下载到本地文件中了</p>
+<p><img src="https://img-blog.csdnimg.cn/2dd99c04b8a94344aebc5999c343f0a1.png" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-0zaDNDcc-1626970354487)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713202921177.png)]"></p>
+<p>因为我们的图库中都是图片，为了不让它在pycharm中占用索引搜索，我们把它标记为<strong>已排除文件</strong></p>
+<p>因为我们的软件每一次都需要对所有文件进行索引，把文件进行标记后，可以跳过此文件，减少索引时间。</p>
+<p>这样，我们这个下载图片的过程就已经完成了</p>
+<p><img src="https://img-blog.csdnimg.cn/d2c7c905441040a9b00a8aaf6c1de4f0.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-t7fzXK8n-1626970354488)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210713203159435.png)]"></p>
+<h4 id="3-爬取《三国演义》小说"><a href="#3-爬取《三国演义》小说" class="headerlink" title="3.爬取《三国演义》小说"></a><a href="https://blog.csdn.net/m0_50086696/article/details/119011998" target="_blank" rel="noopener"></a>3.爬取《三国演义》小说</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#打开网页源代码检查我们需要的数据</span><br><span class="line">#数据在子页面中</span><br><span class="line">#流程：1.获取子网页网址</span><br><span class="line">#2.提取文本内容</span><br><span class="line">#3.下载文本内容</span><br><span class="line">import requests</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import re</span><br><span class="line">from lxml import etree</span><br><span class="line"></span><br><span class="line">url = &quot;https://www.shicimingju.com/book/sanguoyanyi.html&quot;</span><br><span class="line">requ = requests.get(url)</span><br><span class="line">requ.encoding=(&quot;utf-8&quot;)</span><br><span class="line"></span><br><span class="line">#提取子网页网址</span><br><span class="line">page = BeautifulSoup(requ.text,&quot;html.parser&quot;)</span><br><span class="line">div = page.find(&apos;div&apos;,class_=&quot;book-mulu&quot;).find_all(&apos;a&apos;)</span><br><span class="line">obj = re.compile(r&apos;&lt;div class=&quot;chapter_content&quot;&gt;(.*?)&lt;/div&gt;&apos;,re.S)</span><br><span class="line">i = 0</span><br><span class="line"></span><br><span class="line">for a in div:</span><br><span class="line">    # html = etree.HTML(requ.text)</span><br><span class="line">    # text = html.xpath(&apos;/html/body/div[3]/div[1]/div/div[4]/ul/li/a/text()&apos;)[i]</span><br><span class="line">    # i = i+1</span><br><span class="line">    # print(text)</span><br><span class="line">    text = a.get_text()</span><br><span class="line">    #print(text)</span><br><span class="line">    href = a.get(&apos;href&apos;)</span><br><span class="line">    text_name = url.split(&quot;/book&quot;)[0]+href</span><br><span class="line">    childrequ = requests.get(text_name)</span><br><span class="line">    childrequ.encoding=(&quot;utf-8&quot;)</span><br><span class="line"></span><br><span class="line">    #print(text)</span><br><span class="line">    # childrequ =str(childrequ.text)</span><br><span class="line">    # # print(childrequ)</span><br><span class="line">    # res = obj.findall(childrequ)[0].replace(&apos;&lt;p&gt;&apos;,&apos;&apos;).replace(&apos;&amp;nbsp;&apos;,&apos;&apos;).replace(&apos; &apos;,&apos;&apos;).replace(&apos;\\n&apos;,&apos;&apos;).replace(&apos;\\t&apos;,&apos;&apos;).replace(&apos;\\r&apos;,&apos;&apos;).replace(&apos;&lt;BR&gt;&apos;,&apos;&apos;).replace(&apos;/p&apos;,&apos;&apos;).replace(&apos;br/&apos;,&apos;&apos;).replace(&apos;&lt;br&gt;&apos;,&apos;&apos;)</span><br><span class="line">    # print(res)</span><br><span class="line"></span><br><span class="line">    childrequ_page = BeautifulSoup(childrequ.text,&quot;html.parser&quot;)</span><br><span class="line">    div1 = childrequ_page.find(&apos;div&apos;,class_ =&quot;chapter_content&quot;)</span><br><span class="line">    div1 = str(div1.text).strip()</span><br><span class="line">    #print(div1)</span><br><span class="line">    with open(r&apos;D:\python练习\python爬虫\自主爬虫训练&apos;+&apos;\三国演义\\&apos;+text+&apos;.txt&apos;,&apos;w&apos;,encoding=&apos;utf-8&apos;) as f:</span><br><span class="line">        f.write(&apos;\r\n&apos;+div1)</span><br><span class="line">    print(&quot;导入成功！&quot;,text)</span><br><span class="line">print(&quot;over!!!&quot;)</span><br></pre></td></tr></table></figure>
+<p>简单讲述下爬取过程</p>
+<p>首先是打开了网页进行分析，发现当前网页没有我们想要的文本内容，所以我进入到了子网页中查看源代码，找到了我们所需要的内容。所有我们便有了大致的流程，先要从原网址中找到子网址，然后在从子网址中得到数据，进行下载。</p>
+<p>所以我们直接请求原网址内容，然后用bs4提取子网页网址。</p>
+<p>提取后发现不能直接打开，需要做一些修整，与原网页网址对比后，发现了关系，调整后便可以获取了。</p>
+<p>进入子网页后也是一样的请求子网页原代码，然后利用bs4提取文本内容，但是在提取后得到的不仅仅是文本内容，还会得到什么div标签得内容。 但是后面重新提取就没问题了</p>
+<p>在发现有问题后我就使用了正则提取，先导入库后，定义了一个正则表达式，然后进行提取，提取内容会发现很多其他符号，利用replace去除后，也能得到想要的内容</p>
+<p>文本内容获取到了，但是我还想得到标题，每一个标题对应每一章内容</p>
+<p>经过网页分析发现标题并不在子网页中，而是在原网页中，所以我们只需要获取原网页中，a标签中的文本内容便可以了。但是并不知道bs4可以提取文本内容，所以我使用了xpath进行提取。首先导入库<strong>from lxml import etree</strong> ，并解析HTML文档内容 <strong>html = etree.HTML(requ.text)</strong></p>
+<p>然后便可以进行xpath提取了，得到a标签的文本内容</p>
+<p>后边自己查了一下，原来bs4中可以使用<strong>get_text（）提取标签中内容</strong>。</p>
+<p>最后就是将文本存入本地文件中，但是存入后不能自动换行，这是最后一直都没有解决的问题，以及排序的问题，乱序。</p>
+<p><img src="https://img-blog.csdnimg.cn/d3ba198e834847728e7a7193485180ff.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzUwMDg2Njk2,size_16,color_FFFFFF,t_70" alt="[外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传(img-laanEvks-1626970354488)(C:\Users\苏柒\AppData\Roaming\Typora\typora-user-images\image-20210714090857269.png)]"></p>
+
+    </div>
+
+    
+    
+    
+
+	
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Snow</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://behappy00.github.io/2023/10/02/使用BeautifulSoup进行解析数据/" title="使用BeautifulSoup进行解析数据">https://behappy00.github.io/2023/10/02/使用BeautifulSoup进行解析数据/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/转载/" rel="tag"># 转载</a>
+            
+              <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2023/04/07/ORA-00257-归档程序错误。只有在解析完成后才以-AS-SYSDBA-方式连接/" rel="next" title="ORA-00257: 归档程序错误。只有在解析完成后才以 AS SYSDBA 方式连接">
+                  <i class="fa fa-chevron-left"></i> ORA-00257: 归档程序错误。只有在解析完成后才以 AS SYSDBA 方式连接
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2023/10/02/java 多层压缩包解压后放到指定文件夹/" rel="prev" title="java 多层压缩包解压后放到指定文件夹">
+                  java 多层压缩包解压后放到指定文件夹 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+		
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-bs4数据分析"><span class="nav-number">1.</span> <span class="nav-text">1.bs4数据分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、基础介绍"><span class="nav-number">1.1.</span> <span class="nav-text">一、基础介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、实例操作"><span class="nav-number">1.2.</span> <span class="nav-text">二、实例操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-获取北京新发地网页中每日菜价的所有数据"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.获取北京新发地网页中每日菜价的所有数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#（1）-第一步分析网页"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">（1）.第一步分析网页</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（2）-第二步拿到数据"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">（2）.第二步拿到数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（3）-第三步解析数据"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">（3）.第三步解析数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-下载优美图库中的图片，并保存在本地文件中"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.下载优美图库中的图片，并保存在本地文件中</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#（1）-第一步分析网页-1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">（1）.第一步分析网页</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（2）-第二步拿到数据-1"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">（2）.第二步拿到数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（3）-第三步解析数据-1"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">（3）.第三步解析数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#补充：正则表达式进行图片链接提取"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">补充：正则表达式进行图片链接提取</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#（4）-第四步保存数据"><span class="nav-number">1.2.2.5.</span> <span class="nav-text">（4）.第四步保存数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-爬取《三国演义》小说"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.爬取《三国演义》小说</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Snow</p>
+  <div class="site-description" itemprop="description">计算机 Hiter</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+	 <!-- 添加近期文章 -->
+	 
+	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
+		 <div class="links-of-blogroll-title">
+		   <!-- modify icon to fire by szw -->
+		   <i class="fa fa-history fa-" aria-hidden="true"></i>
+		   近期文章
+		 </div>
+		 <ul class="links-of-blogroll-list">
+		   
+		   
+			 <li>
+			   <a href="/2023/10/03/markdown汇总/" title="markdown汇总" target="_blank">markdown汇总</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/hexo博客搜索显示异样/" title="hexo博客搜索显示异样" target="_blank">hexo博客搜索显示异样</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown使用TOC自动生成导航栏/" title="Markdown使用TOC自动生成导航栏" target="_blank">Markdown使用TOC自动生成导航栏</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown让文字居中和带颜色/" title="markdown让文字居中和带颜色" target="_blank">markdown让文字居中和带颜色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown-文本内跳转-生成目录/" title="markdown 文本内跳转,生成目录" target="_blank">markdown 文本内跳转,生成目录</a>
+			 </li>
+		   
+		 </ul>
+	   </div>
+	 
+	  
+	  <!-- 添加网易云播放歌曲 -->
+	  <div id="music163player">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
+		</iframe>
+	  </div>
+  
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Snow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">494k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:29</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="我的第 undefined 位朋友，">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--
+
+<script>
+  $(document).ready(function () {
+    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
+  });
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+  <script>
+    function timer() {
+      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
+      ages = ages.replace(/years?/, "年");
+      ages = ages.replace(/months?/, "月");
+      ages = ages.replace(/days?/, "天");
+      ages = ages.replace(/hours?/, "小时");
+      ages = ages.replace(/minutes?/, "分");
+      ages = ages.replace(/seconds?/, "秒");
+      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
+      div.innerHTML = `我已在此等候你 ${ages}`;
+    }
+    var div = document.createElement("div");
+    //插入到copyright之后
+    var copyright = document.querySelector(".copyright");
+    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+    timer();
+    setInterval("timer()",1000)
+  </script>
+-->
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
+    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-CN' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  
+  <!--页面点击出现富强民主文明和谐-->
+ <script type="text/javascript" src="/js/words-click.js"></script > 
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <!--
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+  -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
+

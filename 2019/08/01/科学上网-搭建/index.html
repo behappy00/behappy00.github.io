@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="先说一句，本人尝试在Ubuntu18.04上进行安装配置，然后不太明白，也没有好的教程，故而失败了所以本文是win10+vultr+Centos7(服务器系统的选择)进行配置的方法">
+<meta name="keywords" content="原创,黑科技">
+<meta property="og:type" content="article">
+<meta property="og:title" content="科学上网-搭建">
+<meta property="og:url" content="https://behappy00.github.io/2019/08/01/科学上网-搭建/index.html">
+<meta property="og:site_name" content="Snow">
+<meta property="og:description" content="先说一句，本人尝试在Ubuntu18.04上进行安装配置，然后不太明白，也没有好的教程，故而失败了所以本文是win10+vultr+Centos7(服务器系统的选择)进行配置的方法">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2023-04-03T13:58:15.647Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="科学上网-搭建">
+<meta name="twitter:description" content="先说一句，本人尝试在Ubuntu18.04上进行安装配置，然后不太明白，也没有好的教程，故而失败了所以本文是win10+vultr+Centos7(服务器系统的选择)进行配置的方法">
+  <link rel="canonical" href="https://behappy00.github.io/2019/08/01/科学上网-搭建/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>科学上网-搭建 | Snow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Snow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">光而不耀</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2019/08/01/科学上网-搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">科学上网-搭建
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-01 21:27:58" itemprop="dateCreated datePublished" datetime="2019-08-01T21:27:58+08:00">2019-08-01</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-03 21:58:15" itemprop="dateModified" datetime="2023-04-03T21:58:15+08:00">2023-04-03</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2019/08/01/科学上网-搭建/" class="post-meta-item leancloud_visitors" data-flag-title="科学上网-搭建" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/08/01/科学上网-搭建/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/08/01/科学上网-搭建/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>4.4k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>4 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h6 id="先说一句，本人尝试在Ubuntu18-04上进行安装配置，然后不太明白，也没有好的教程，故而失败了"><a href="#先说一句，本人尝试在Ubuntu18-04上进行安装配置，然后不太明白，也没有好的教程，故而失败了" class="headerlink" title="先说一句，本人尝试在Ubuntu18.04上进行安装配置，然后不太明白，也没有好的教程，故而失败了"></a>先说一句，本人尝试在Ubuntu18.04上进行安装配置，然后不太明白，也没有好的教程，故而失败了</h6><h6 id="所以本文是win10-vultr-Centos7-服务器系统的选择-进行配置的方法"><a href="#所以本文是win10-vultr-Centos7-服务器系统的选择-进行配置的方法" class="headerlink" title="所以本文是win10+vultr+Centos7(服务器系统的选择)进行配置的方法"></a>所以本文是win10+vultr+Centos7(服务器系统的选择)进行配置的方法</h6><a id="more"></a><p>可以根据自己的能力，我选择centos7是因为网上的教程多，并且终于成功了，所以就没有探索</p>
+<h5 id="此处为正文地开始"><a href="#此处为正文地开始" class="headerlink" title="此处为正文地开始"></a>此处为正文地开始</h5><p>作为一个离开 Google<br>生活就无法自理的人类，我曾经发帖、提问、翻遍各种网站，四处寻找靠谱的科学上网利器。确实也找到过一些能满足当下需求的产品，但是不久后，就被封的被封、跑路的跑路了。<br>而且这些服务通常价格不低，稳定性也差强人意。这时候我想，反正都是通过海外服务器来提供建服务的，为什么不干脆自己来搭呢？既能独享带宽，又安心可控，而且选取合适的提供商的话，价格也很平易近人。<br>所以，如果你和我一样不满足那些服务，又有耐心的话，这里有一份详细而对小白友好的折腾指南。事先说明，如果你希望不花钱就能用上优质的服务──醒醒，别做梦了，免费和优质从来不可能划上等号。</p>
+<h5 id="1-背景和原理"><a href="#1-背景和原理" class="headerlink" title="1 背景和原理"></a>1 背景和原理</h5><h6 id="1-1-shadowsocks简介"><a href="#1-1-shadowsocks简介" class="headerlink" title="1.1 shadowsocks简介"></a>1.1 shadowsocks简介</h6><p>Shadowsocks(ss) 是由 Clowwindy 开发的一款软件，其作用本来是加密传输资料。当然，也正因为它加密传输资料的特性，使得 GFW<br>没法将由它传输的资料和其他普通资料区分开来（上图），也就不能干扰我们访问那些「不存在」的网站了。<br>但是时至今日，Shadowsocks 的安全性被发现是存在缺陷的，其 IP 和端口可以被嗅探到。因而，有了基于它但增加了混淆能力的 ShadowsocksR<br>项目、Simple-obfs 插件，以及 v2ray 项目等。<br>它们本质上，都是依托墙外服务器的网络代理软件。ssR 和官方版 ss 均已不再更新，目前还在更新的只有 shadowsocks-libev，可以说是最轻量的<br>ss 版本，也是本文推荐安装使用的版本。</p>
+<h6 id="1-2-什么是-VPS-和-Vultr"><a href="#1-2-什么是-VPS-和-Vultr" class="headerlink" title="1.2 什么是 VPS 和 Vultr"></a>1.2 什么是 VPS 和 Vultr</h6><p>VPS (Virtual private server)译作虚拟专用伺服器。你可以把它简单地理解为一台在远端的强劲电脑。当你租用了它以后，可以给它安装操作系统、软件，并通过一些工具连接和远程操控它。  </p>
+<p>Vultr 是一家 VPS 服务器提供商，有美国、亚洲、欧洲等多地的 VPS。它家的服务器以性价比高闻名，按时间计费，最低的资费为每月  $2.5。</p>
+<p>比 Vultr 价格更低的服务商也有许多，最知名的莫过于「搬瓦工」，和 V 家差不多的配置只要 $19.9 每年。不过后者过于出名，据说超售严重，实测夜间速度足以让人痛哭流涕。</p>
+<p><a href="https://www.vultr.com/?ref=8214552-4F" target="_blank" rel="noopener">VULTR注册快速通道–免费送50美元</a><br>PS:这就是官网的注册，不放心的可以自行搜索，实质是一个分享码</p>
+<h6 id="1-3-什么是-Linux-和-SSH"><a href="#1-3-什么是-Linux-和-SSH" class="headerlink" title="1.3 什么是 Linux 和 SSH"></a>1.3 什么是 Linux 和 SSH</h6><p>Linux 是免费开源的操作系统，大概被世界上过半服务器所采用。有大量优秀的开源软件可以安装，上述 Shadowsocks 就是其一。你可以通过命令行来直接给 Linux 操作系统「下命令」，比如 $ cd ~/Desktop 就是进入你根目录下的 Desktop 文件夹。</p>
+<h5 id="2-购买和连接-VPS"><a href="#2-购买和连接-VPS" class="headerlink" title="2 购买和连接 VPS"></a>2 购买和连接 VPS</h5><p>首先，访问 Vultr.com 注册帐号，网站目前还没有被墙，访问速度不错。</p>
+<h6 id="2-1-注册-Vultr"><a href="#2-1-注册-Vultr" class="headerlink" title="2.1 注册 Vultr"></a>2.1 注册 Vultr</h6><p>Vultr 官网定期会有一些促销活动，可以留意。另外，如果使用我的<a href="https://www.vultr.com/?ref=8214552-4F" target="_blank" rel="noopener">推荐链接1</a> 注册，激活后可以获赠 $50 试用金，有效期两个月。</p>
+<p>换句话说，注册后两个月内可以免费使用 5 个最低配置的 VPS。可以趁这段时间，把不同国家的节点试个遍，不过到期后记着删除多余的服务器。</p>
+<p><a href="https://www.vultr.com/?ref=8214552-4F" target="_blank" rel="noopener">推荐链接1</a></p>
+<p><a href="https://www.vultr.com/?ref=8214552-4F" target="_blank" rel="noopener">推荐链接2</a> 送的少一点，不过也是可以省钱的</p>
+<h6 id="2-2-部署-VPS"><a href="#2-2-部署-VPS" class="headerlink" title="2.2 部署 VPS"></a>2.2 部署 VPS</h6><p>注册完成后，在左边选择“Servers”标签，点击右边的加号部署新的服务器。</p>
+<p>选择一个你想要的节点。推荐东京和洛杉矶，速度较快，不过这也受运营商网络、你的地理位置影响，如果有试用金可以多建几个自行对比。</p>
+<p>为 VPS 选择安装系统。这里因为安装脚本限制的原因，请选择 CentOS 6+，Debian 7+，Ubuntu 12+ 的系统，具体哪个可以随自己喜欢。下面的教程以 Ubuntu 18.10 为例。</p>
+<p>只供个人科学上网用的话，$5 绰绰有余</p>
+<p>剩下都可以使用默认值。最后一项你可以自定义服务器的名字和标签，以方便区分。</p>
+<p>等待系统安装完成。当显示“Running”时，就表示部署已完成。之后你可以随时停用、重启或销毁它。</p>
+<h6 id="2-3-连接-VPS"><a href="#2-3-连接-VPS" class="headerlink" title="2.3 连接 VPS"></a>2.3 连接 VPS</h6><p>如果你使用的是 PC，连接 VPS 需要借助一些工具，比如 Putty或者xshell。  </p>
+<p>首先，在 Vultr 上你刚部署的服务器右边点“Manage”，找到服务器的 IP 地址（标黄部分）和密码。  </p>
+<p>用xshell进行连接，具体方法进行百度。  </p>
+<p>当出现上图那串 [root@vultr ~]# 时，说明已成功登录。</p>
+<h5 id="3-部署-Shadowsocks"><a href="#3-部署-Shadowsocks" class="headerlink" title="3 部署 Shadowsocks"></a>3 部署 Shadowsocks</h5><p>Shadowsocks 需要同时具备客户端和服务器端，所以它的安装也需要分两步。</p>
+<h6 id="3-1-部署-Shadowsocks-服务器端"><a href="#3-1-部署-Shadowsocks-服务器端" class="headerlink" title="3.1 部署 Shadowsocks 服务器端"></a>3.1 部署 Shadowsocks 服务器端</h6><p>这里使用 @秋水逸冰 的一键安装脚本，几乎不需要多余的操作，只需根据提示做选择即可。<br>首先输入以下 3 行命令，每次输入一行、回车，等待屏幕上的操作完成后再输入下一条。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget –no-check-certificate -O shadowsocks-all.sh</span><br><span class="line">&lt;https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh&gt;</span><br><span class="line"></span><br><span class="line">chmod +x shadowsocks-all.sh</span><br><span class="line"></span><br><span class="line">./shadowsocks-all.sh 2&gt;&amp;1 | tee shadowsocks-all.log</span><br></pre></td></tr></table></figure>
+<p>最后一步输完，你应该会看到下图中内容──是要你选择需要安装的 Shadowsocks 版本。这里选择 4)shadowsocks-libev，因为正如上文所说，这是目前唯一在持续更新且最为轻量的版本。</p>
+<p>选好输入回车后，会让你输入 Shadowsocks 的密码。</p>
+<p>然后选择一个端口，输入 1-65535 间的任意数字都行。</p>
+<p>之后可以选择加密方式，默认是 aes-256-gcm。如果没有特殊偏好，保持默认即可。</p>
+<p>之后会提示你是否需要安装 simple-obfs。这是 ss 的一个插件工具，可以起到混淆的作用，防止 IP 和端口被嗅探到，建议选 y 安装。</p>
+<p>如果上一步选择了 y，这里可以选择一种混淆方式。通常 tls 要比 http 的混淆效果更好，所以选 tls。</p>
+<p>之后所有的配置就完成了，按任意键开始部署 Shadowsocks-libev。这时你什么都不用做，只需要耐心地等它运行完就好。</p>
+<p>结束后就会看到你所部署的 Shadowsocks 的配置信息。</p>
+<p>记住红色的内容，也就是服务器 IP、服务器 ss 端口、你设的密码、混淆方式和加密方式。</p>
+<h6 id="3-2-检查和配置-Shadowsocks"><a href="#3-2-检查和配置-Shadowsocks" class="headerlink" title="3.2 检查和配置 Shadowsocks"></a>3.2 检查和配置 Shadowsocks</h6><p>安装完成以后，Shadowsocks 的服务器端就已经配置完了，你可以输入以下命令检查是否已经开始运行。<br>/etc/init.d/shadowsocks-libev status<br>如果出现类似 Shadowsocks-libev is running… 的字样，说明已经开始正常运行了。<br>这时你已经可以在自己的任意设备上进行登录使用了。如果你要修改 ss 的配置，或者忘了当初自己设置的密码和端口，可以用以下命令来打开配置文件。<br>nano /etc/shadowsocks-libev/config.json<br>意为用 nano 这个编辑器打开 config.json 这个配置文件。你的「终端」会刷新一下，出现下图。<br>如果某天你的 ss 突然无法使用了，很可能就是端口被封了。这时你可以直接在这里，将端口修改为 1-65535 间任意其他数字。编辑完成后，按 Ctrl +<br>X ，再输入 Y 并回车确认退出。<br>需注意的是，如果你更新了配置文件，得重启 ss 才能生效。重启命令如下：<br>/etc/init.d/shadowsocks-libev restart<br>另外，如需添加多端口或多用户——很遗憾，shadowsocks-libev 无法通过简单的修改配置文件来实现。不过，作者另外开发了一个 ss-<br>manager，来管理和开启多端口，感兴趣的话可以参考 这篇教程。</p>
+<h6 id="3-3-安装-Shadowsocks-客户端"><a href="#3-3-安装-Shadowsocks-客户端" class="headerlink" title="3.3 安装 Shadowsocks 客户端"></a>3.3 安装 Shadowsocks 客户端</h6><p>下载相应的软件进行安装，然后按照自己前一步配置的最终结果进行输入，运行之后就能享受相应的科学上网了。</p>
+<h5 id="4-开启-BBR"><a href="#4-开启-BBR" class="headerlink" title="4 开启 BBR"></a>4 开启 BBR</h5><p>完成上述步骤后，使用过程中可能会发现连接速度有时不太令人满意。这就是加速工具们发挥功能的时候了。常用的加速工具有「锐速」、TCP<br>BBR、kcptun，等等。原理虽各不相同，但都是通过一些技术手段，来实现连接和传输速度的提升。</p>
+<h6 id="4-1-什么是-BBR"><a href="#4-1-什么是-BBR" class="headerlink" title="4.1 什么是 BBR"></a>4.1 什么是 BBR</h6><p>TCP BBR 是 Google 于 2016 年发布的，一种避免网络拥塞的算法。目的是要尽量跑满带宽, 并且尽可能避免排队的情况。<br>实际使用下来，BBR 的速度提升效果并不比「锐速」（据说已倒闭）、kcptun（多倍发包耗流量）等差。而且 BBR 已植入 Linux 4.9+<br>版本的内核中，服务器开启后就能有显著的效果提升。</p>
+<h6 id="4-2-安装-BBR"><a href="#4-2-安装-BBR" class="headerlink" title="4.2 安装 BBR"></a>4.2 安装 BBR</h6><p>和 2.3 中的步骤一样，首先需要使用 SSH 登录 VPS。<br>ssh root@<br>这里依然使用 @秋水逸冰的一键安装脚本，输入以下命令。<br>wget –no-check-certificate <a href="https://github.com/teddysun/across/raw/master/bbr.sh" target="_blank" rel="noopener">https://github.com/teddysun/across/raw/master/bbr.sh</a> &amp;&amp; chmod +x bbr.sh &amp;&amp; ./bbr.sh<br>按任意键开始安装，安装需要一段时间，等待一会即可<br>安装完成后，脚本会提示需要重启 VPS，输入 y 并回车后重启。</p>
+<p>感谢为我指路的各位大佬：<br>win10上的教程：<br>1.<a href="https://zoomyale.com/2016/vultr_and_ss/" target="_blank" rel="noopener">科学上网的终极姿势 </a>  </p>
+<p>2.<a href="https://slanceli.top/2018/10/03/SS-SSR%E7%9A%84%E6%90%AD%E5%BB%BA%E3%80%81%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%8A%A0%E9%80%9F/" target="_blank" rel="noopener">SS&amp;SSR的搭建、配置与加速 </a>  </p>
+<p>3.<a href="https://dyfloveslife.github.io/2018/05/14/Build-VPS/" target="_blank" rel="noopener">基于Vultr+Ubuntu18.04+BBR的ShadowsocksR配置教程</a>  </p>
+<p>4.<a href="http://www.zhangdanyang.com/?p=56" target="_blank" rel="noopener">Vultr 搭建 ShadowSocks</a></p>
+<p>5.<a href="https://my.oschina.net/u/1167564/blog/851680/" target="_blank" rel="noopener">Vultr搭建ShadowSocks教程</a></p>
+<p>6.<a href="http://www.luyixian.cn/news_show_16582.aspx" target="_blank" rel="noopener">从零开始于Vultr上搭建属于自己的VPN服务器【CentOS7+Shadowsocks+serverspeeder加速+防坑指北】【适合新手】</a></p>
+<p>7.<a href="https://wistbean.github.io/vultr-vps-bbr-ss.html" target="_blank" rel="noopener">使用vultr(vps)搭建ss并开启BBR快速上网教程 超简单10分钟搞定</a></p>
+<p>Linux下的教程：<br>1.<a href="https://my.oschina.net/u/1432769/blog/619651" target="_blank" rel="noopener">linux配置shadowsocks客户端 </a><br>2.<a href="https://www.imzzj.com/post-549.html" target="_blank" rel="noopener">Ubuntu18.04 配置Shadowsocks（亲测可用）</a></p>
+<p><strong>作为踩坑大王的我，不负众望地遇到了很多问题，比如所bbr加速没好使，</strong><a href="https://www.kucourse.com/sources/223.html" target="_blank" rel="noopener">解决方案</a></p>
+<p>还有两个网址也可以参考一下，但经常会打不开<br><a href="https://viencoding.com/article/90" target="_blank" rel="noopener">网址一</a><br><a href="https://viencoding.com/article/114" target="_blank" rel="noopener">网址二</a></p>
+
+    </div>
+
+    
+    
+    
+
+	
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Snow</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://behappy00.github.io/2019/08/01/科学上网-搭建/" title="科学上网-搭建">https://behappy00.github.io/2019/08/01/科学上网-搭建/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/原创/" rel="tag"># 原创</a>
+            
+              <a href="/tags/黑科技/" rel="tag"># 黑科技</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/24/python-learning-game-2/" rel="next" title="python-learning-game-2">
+                  <i class="fa fa-chevron-left"></i> python-learning-game-2
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/09/05/insertyoutube/" rel="prev" title="insertyoutube">
+                  insertyoutube <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+		
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#先说一句，本人尝试在Ubuntu18-04上进行安装配置，然后不太明白，也没有好的教程，故而失败了"><span class="nav-number">1.</span> <span class="nav-text">先说一句，本人尝试在Ubuntu18.04上进行安装配置，然后不太明白，也没有好的教程，故而失败了</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#所以本文是win10-vultr-Centos7-服务器系统的选择-进行配置的方法"><span class="nav-number">2.</span> <span class="nav-text">所以本文是win10+vultr+Centos7(服务器系统的选择)进行配置的方法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#此处为正文地开始"><span class="nav-number"></span> <span class="nav-text">此处为正文地开始</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-背景和原理"><span class="nav-number"></span> <span class="nav-text">1 背景和原理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-1-shadowsocks简介"><span class="nav-number">1.</span> <span class="nav-text">1.1 shadowsocks简介</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-2-什么是-VPS-和-Vultr"><span class="nav-number">2.</span> <span class="nav-text">1.2 什么是 VPS 和 Vultr</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-3-什么是-Linux-和-SSH"><span class="nav-number">3.</span> <span class="nav-text">1.3 什么是 Linux 和 SSH</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-购买和连接-VPS"><span class="nav-number"></span> <span class="nav-text">2 购买和连接 VPS</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-1-注册-Vultr"><span class="nav-number">1.</span> <span class="nav-text">2.1 注册 Vultr</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-部署-VPS"><span class="nav-number">2.</span> <span class="nav-text">2.2 部署 VPS</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-连接-VPS"><span class="nav-number">3.</span> <span class="nav-text">2.3 连接 VPS</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-部署-Shadowsocks"><span class="nav-number"></span> <span class="nav-text">3 部署 Shadowsocks</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-1-部署-Shadowsocks-服务器端"><span class="nav-number">1.</span> <span class="nav-text">3.1 部署 Shadowsocks 服务器端</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-检查和配置-Shadowsocks"><span class="nav-number">2.</span> <span class="nav-text">3.2 检查和配置 Shadowsocks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-3-安装-Shadowsocks-客户端"><span class="nav-number">3.</span> <span class="nav-text">3.3 安装 Shadowsocks 客户端</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-开启-BBR"><span class="nav-number"></span> <span class="nav-text">4 开启 BBR</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-1-什么是-BBR"><span class="nav-number">1.</span> <span class="nav-text">4.1 什么是 BBR</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-安装-BBR"><span class="nav-number">2.</span> <span class="nav-text">4.2 安装 BBR</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Snow</p>
+  <div class="site-description" itemprop="description">计算机 Hiter</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+	 <!-- 添加近期文章 -->
+	 
+	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
+		 <div class="links-of-blogroll-title">
+		   <!-- modify icon to fire by szw -->
+		   <i class="fa fa-history fa-" aria-hidden="true"></i>
+		   近期文章
+		 </div>
+		 <ul class="links-of-blogroll-list">
+		   
+		   
+			 <li>
+			   <a href="/2023/10/03/markdown汇总/" title="markdown汇总" target="_blank">markdown汇总</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/hexo博客搜索显示异样/" title="hexo博客搜索显示异样" target="_blank">hexo博客搜索显示异样</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown使用TOC自动生成导航栏/" title="Markdown使用TOC自动生成导航栏" target="_blank">Markdown使用TOC自动生成导航栏</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown让文字居中和带颜色/" title="markdown让文字居中和带颜色" target="_blank">markdown让文字居中和带颜色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown-文本内跳转-生成目录/" title="markdown 文本内跳转,生成目录" target="_blank">markdown 文本内跳转,生成目录</a>
+			 </li>
+		   
+		 </ul>
+	   </div>
+	 
+	  
+	  <!-- 添加网易云播放歌曲 -->
+	  <div id="music163player">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
+		</iframe>
+	  </div>
+  
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Snow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">494k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:29</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="我的第 undefined 位朋友，">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--
+
+<script>
+  $(document).ready(function () {
+    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
+  });
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+  <script>
+    function timer() {
+      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
+      ages = ages.replace(/years?/, "年");
+      ages = ages.replace(/months?/, "月");
+      ages = ages.replace(/days?/, "天");
+      ages = ages.replace(/hours?/, "小时");
+      ages = ages.replace(/minutes?/, "分");
+      ages = ages.replace(/seconds?/, "秒");
+      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
+      div.innerHTML = `我已在此等候你 ${ages}`;
+    }
+    var div = document.createElement("div");
+    //插入到copyright之后
+    var copyright = document.querySelector(".copyright");
+    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+    timer();
+    setInterval("timer()",1000)
+  </script>
+-->
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
+    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-CN' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  
+  <!--页面点击出现富强民主文明和谐-->
+ <script type="text/javascript" src="/js/words-click.js"></script > 
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <!--
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+  -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
+

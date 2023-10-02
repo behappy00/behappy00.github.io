@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="Pytorch中Torch 工具包的数学操作汇总速查 torch package 包含了多维张量的数据结构, 以及基于其上的多种数学操作. 此外,它还提供了许多用于高效序列化 Tensor 和任意类型的实用工具包, 以及一起其它有用的实用工具包.">
+<meta name="keywords" content="转载,python,pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch中Torch 工具包的数学操作汇总速查">
+<meta property="og:url" content="https://behappy00.github.io/2021/01/06/Pytorch中Torch 工具包的数学操作汇总速查/index.html">
+<meta property="og:site_name" content="Snow">
+<meta property="og:description" content="Pytorch中Torch 工具包的数学操作汇总速查 torch package 包含了多维张量的数据结构, 以及基于其上的多种数学操作. 此外,它还提供了许多用于高效序列化 Tensor 和任意类型的实用工具包, 以及一起其它有用的实用工具包.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2023-04-03T13:58:20.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pytorch中Torch 工具包的数学操作汇总速查">
+<meta name="twitter:description" content="Pytorch中Torch 工具包的数学操作汇总速查 torch package 包含了多维张量的数据结构, 以及基于其上的多种数学操作. 此外,它还提供了许多用于高效序列化 Tensor 和任意类型的实用工具包, 以及一起其它有用的实用工具包.">
+  <link rel="canonical" href="https://behappy00.github.io/2021/01/06/Pytorch中Torch 工具包的数学操作汇总速查/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Pytorch中Torch 工具包的数学操作汇总速查 | Snow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Snow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">光而不耀</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2021/01/06/Pytorch中Torch 工具包的数学操作汇总速查/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Pytorch中Torch 工具包的数学操作汇总速查
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-06 08:27:19" itemprop="dateCreated datePublished" datetime="2021-01-06T08:27:19+08:00">2021-01-06</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-03 21:58:20" itemprop="dateModified" datetime="2023-04-03T21:58:20+08:00">2023-04-03</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2021/01/06/Pytorch中Torch 工具包的数学操作汇总速查/" class="post-meta-item leancloud_visitors" data-flag-title="Pytorch中Torch 工具包的数学操作汇总速查" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/06/Pytorch中Torch 工具包的数学操作汇总速查/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2021/01/06/Pytorch中Torch 工具包的数学操作汇总速查/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>16k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>15 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>Pytorch中Torch 工具包的数学操作汇总速查</strong></p><blockquote>
+<p>torch package 包含了多维张量的数据结构, 以及基于其上的多种数学操作. 此外,它还提供了许多用于高效序列化 Tensor 和任意类型的实用工具包, 以及一起其它有用的实用工具包.</p>
+</blockquote><a id="more"></a>
+
+<p>变量 | 解释 |<br>|—-|—-|<br>Tensors (张量) |<br>torch.is<em>tensor(obj) | 如果 obj 是一个 pytorch tensor, 则返回True.<br>torch.is_storage(obj) | 如果 obj 是一个 pytorch storage object, 则返回True<br>torch.set_default_tensor_type(t) | 设置默认类型<br>torch.numel(input) → int | 返回 input Tensor 中的元素总数<br>torch.set_printoptions(precision=None, threshold=None,edgeitems=None,linewidth=None, profile=None) | 设置打印选项. 从 Numpy 中采集数据<br>torch.set_flush_denormal(mode) | 为了防止一些不正常的元素产生，比如特别小的数，pytorch支持如下设置<br><strong>Creation Ops (创建操作)</strong> |  |<br>torch.from_numpy(ndarray) → Tensor | 从 numpy.ndarray 类 创建一个 Tensor 类<br>torch.as_tensor(data, dtype=None, device=None) |  |<br>torch.eye(n, m=None, out=None) | 返回对角线位置全为1, 其它位置全为0的二维 tensor<br>torch.zeros(<em>sizes, out=None) → Tensor | 返回填充了标量值为 0 的 Tensor, 其形状由可变参量 sizes 定义<br>torch.zeros_like(input, out=None) → Tensor | 返回一个用标量值 0 填充的 Tensor, 其大小与 input 相同.<br>torch.ones(</em>sizes, out=None) → Tensor | 返回填充了标量值 1 的 Tensor, 其形状由可变参数 sizes 定义<br>torch.ones_like(input, out=None) → Tensor | 返回一个用标量值 1 填充的张量, 大小与 input 相同<br>torch.empty() |<br>torch.empty_like() |<br>torch.full(size, fill_value, …) | 返回大小为sizes,单位值为fill_value的矩阵<br>torch.full_like(input, fill_value, …) | 返回与input相同size，单位值为fill_value的矩阵<br>torch.linspace(start, end, steps=100, out=None) → Tensor | 返回 start 和 end 之间等间隔 steps 点的一维 Tensor.输出 是尺寸 steps 为一维 tensor<br>torch.logspace(start, end, steps=100, out=None) → Tensor | 返回一个在 10^start 和 10^end之间的对数间隔 steps 点的一维 Tensor，输出是长度为 steps 的一维 tensor<br>torch.arange(start=0, end, step=1, out=None) → Tensor | 从 start 用步长为 step 开始, 间隔在 [start, end) 中的值返回大小层次为 floor((end−start)/step)floor((end−start)/step) 的一维 Tensor.<br>torch.range(start, end, step=1, out=None) → Tensor | 返回一个在 start 到 end 并且步长为 step 的区间内, 大小为 floor((end−start)/step)+1floor((end−start)/step)+1 为一维 Tensor.<br><strong>Indexing, Slicing, Joining, Mutating Ops (索引, 切片, 连接, 换位) 操作</strong> |<br>torch.cat(seq, dim=0, out=None) → Tensor | 在给定维度上对输入的张量序列 seq 进行连接操作. 所有张量必须具有相同的形状(在 cat 维度中除外) 或为空.<br>torch.chunk(tensor, chunks, dim=0) | 在给定维度(轴)上将输入张量进行分块处理.<br>torch.gather(input, dim, index, out=None) → Tensor | 沿给定轴 dim ,将输入索引张量 index 指定位置的值进行聚合.<br>torch.index_select(input, dim, index, out=None) → Tensor | 沿着指定维度 dim 对输入进行切片,取 index 中指定的相应项 ( index 为一个 LongTensor ),然后返回到一个新的张量.返回的张量与原始张量 Tensor 有相同的维度(在指定轴上)<br>torch.masked_select(input, mask, out=None) → Tensor | 根据掩码张量 mask 中的二元值,取输入张量中的指定项 ( mask 为一个 ByteTensor ),将取值返回到一个新的一维张量.张量 mask 与 input 的shape 或维度不需要相同,但是他们必须是 broadcastable .<br>torch.nonzero(input, out=None) → LongTensor | 返回一个包含输入 input 中非零元素索引的张量. 输出张量中的每行包含 input 中非零元素的索引.如果输入张量 input 有 n 维,则输出的索引张量 out 的 size 为 z x n , 这里 z 是输入张量 input 中所有非零元素的个数.<br>torch.where(condition, x, y) | 按照条件从x和y中选出满足条件的元素组成新的tensor。<br>torch.split(tensor, split_size, dim=0) | 将输入张量分割成相等 size 的 chunks (如果可分).如果沿指定维的张量形状大小不能被 split_size 整分, 则最后一个分块会小于其它分块<br>torch.squeeze(input, dim=None, out=None) | 将 input 张量 size 中的 1 去除并返回.如果 input 的 shape 如 (Ax1xBxCx1xD)(Ax1xBxCx1xD) ,那么输出 shape 就为: (AxBxCxD)<br>torch.stack(sequence, dim=0, out=None) | 沿着一个新维度对输入张量序列进行连接.序列中所有的张量都应该为相同 size .<br>torch.reshape(input, shape) |<br>torch.view |<br>torch.t(input, out=None) → Tensor | 预期 input 为一个矩阵 (2 维张量), 并转置 0, 1 维.可以被视为函数 transpose(input, 0, 1) 的简写函数<br>torch.take(input, indices) → Tensor | 在给定的索引处返回一个新的 Tensor ,其元素为 input . 输入张量被看作是一维张量.结果与索引具有相同的 shape<br>torch.transpose(input, dim0, dim1, out=None) → Tensor | 返回输入矩阵 input 的转置.交换给定维度 dim0 和 dim1 .out 张量与 input 张量共享内存,所以改变其中一个会导致另外一个也被修改.<br>torch.unbind(tensor, dim=0) | 移除一个张量的维度<br>torch.unsqueeze(input, dim, out=None) | 返回在指定位置插入维度 size 为 1 的新张量.返回张量与输入张量共享内存,所以改变其中一个的内容会改变另一个.如果 dim 为负,则将会被转化 dim+input.dim()+1<br><strong>Random sampling (随机采样)</strong> |<br>torch.manual_seed(seed) | 设置生成随机数的种子,并返回一个<br>torch.initial_seed() | 返回用于生成随机数字的初始种子 (python long)<br>torch.get_rng_state() | 以ByteTensor的形式返回随机数发生器的状态<br>torch.set_rng_state(new_state) | 设置随机数发生器的参数<br>torch.bernoulli(input, out=None) → Tensor | 从伯努利分布中抽取二进制随机数 (0 或 1)<br>torch.multinomial(input, num_samples, replacement=False, out=None)→ LongTensor|  返回一个张量, 其中每一行包含在 input 张量对应行中多项式分布取样的 num_samples 索引 |<br>torch.normal(means, std, out=None) | 返回一个随机数张量, 随机数从给定平均值和标准差的离散正态分布中抽取.<br>torch.normal(mean=0.0, std, out=None) | 功能与上面函数类似, 但所有被抽取的元素共享均值<br>torch.normal(means, std=1.0, out=None) | 功能与上面函数类似, 但所有被抽取的元素共享标准差<br>torch.rand(<em>sizes, out=None) → Tensor | 在区间 [0,1)[0,1) 中,返回一个填充了均匀分布的随机数的张量.这个张量的形状由可变参数 sizes 来定义<br>torch.randn(</em>sizes, out=None) → Tensor | 返回一个从正态分布中填充随机数的张量, 其均值为 0 , 方差为 1.这个张量的形状被可变参数 sizes 定义<br>torch.randperm(n, out=None) → LongTensor | 返回一个从 0 to n - 1 的整数的随机排列<br>torch.rand(<em>sizes, out=None, dtype=None, layout=torch.strided, device=None, requires_grad=False) | 生成[0，1）的随机数<br>torch.rand_like(input, dtype=None, layout=None, device=None,requires_grad=False) | 按照输入的tensor的尺寸生成<br>torch.randint(low=0, high, size, out=None, dtype=None, layout=torch.strided, device=None, requires_grad=False)  | 在一个范围内生成整型的随机<br>torch.randint_like(input, low=0, high, dtype=None, layout=torch.strided, device=None, requires_grad=False) | 不解释<br>torch.randn(</em>sizes, out=None, dtype=None, layout=torch.strided, device=None, requires_grad=False) | 返回01正太分布<br>torch.randn_like(input, dtype=None, layout=None, device=None, requires_grad=False) | 不解释<br>torch.randperm(n, out=None, dtype=torch.int64, layout=torch.strided, device=None, requires_grad=False) | 返回0到输入n的之间整数随机排列不含n<br><strong>In-place random sampling (直接随机采样)</strong> |<br>torch.Tensor.bernoulli</em>() | torch.bernoulli()的 in-place 版本<br>torch.Tensor.cauchy<em>() | 从柯西分布中抽取数字<br>torch.Tensor.exponential</em>() | 从指数分布中抽取数字<br>torch.Tensor.geometric<em>() | 从几何分布中抽取元素<br>torch.Tensor.log_normal</em>() | 对数正态分布中的样本<br>torch.Tensor.normal<em>() | 是 torch.normal() 的 in-place 版本<br>torch.Tensor.random</em>() | 离散均匀分布中采样的数字<br>torch.Tensor.uniform_() | 正态分布中采样的数字<br><strong>Serialization (序列化)</strong> |<br>torch.save(obj, f, pickle_module=<module ‘cpickle’ from‘ usr lib64 python2.7 lib-dynload cpickle.so’>, pickle_protocol=2)  |将一个对象保存到一个磁盘文件中.<br>torch.load(f, map_location=None, pickle_module=<module ‘cpickle’ from ‘ usr lib64 python2.7 lib-dynload cpickle.so’>) | 从磁盘文件中加载一个用 torch.save()保存的对象.<br><strong>Parallelism (并行化)</strong> |<br>torch.get_num_threads() → int | 获得 OpenMP 并行化操作的线程数目<br>torch.set_num_threads(int) | 设置 OpenMP 并行化操作的线程数目<br><strong>Math operations (数学操作)</strong> |<br><strong>Pointwise Ops (逐点操作)</strong> |<br>torch.abs(input, out=None) → Tensor | 计算给定 input 张量的元素的绝对值<br>torch.acos(input, out=None) → Tensor | 用 input 元素的反余弦返回一个新的张量<br>torch.add(input, value, out=None) | 将标量值 value 添加到输入张量 attr:input 的每个元素并返回一个新的结果张量<br>torch.add(input, value=1, other, out=None) | 张量 other 的每个元素乘以标量值 value 并加到张量 input 上, 返回生成的张量 out<br>torch.addcdiv(tensor, value=1, tensor1, tensor2, out=None) → Tensor | 将张量 tensor1 逐元素除以张量 tensor2, 然后乘以标量值 value 并加到张量 tensor 上.<br>torch.addcmul(tensor, value=1, tensor1, tensor2, out=None) → Tensor | 将张量 tensor1 逐元素与张量 tensor2 相乘, 然后乘以标量值 value 并加到张量 tensor 上.<br>torch.asin(input, out=None) → Tensor | 返回一个新的 Tensor , 其元素为张量 input 的每个元素的反正弦<br>torch.atan(input, out=None) → Tensor | 返回一个新的 Tensor , 其元素为张量 input 的每个元素的反正切<br>torch.atan2(input1, input2, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是输入张量 input1 和输入张量 input2 元素的反正切.<br>torch.ceil(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 的元素向上取整(取不小于每个元素的最小整数).<br>torch.clamp(input, min, max, out=None) → Tensor | 将输入张量 input 所有元素限制在区间 [min,max] 中并返回一个结果张量<br>torch.clamp(input, <em>, min, out=None) → Tensor | 张量 input 的所有元素值大于或者等于 min<br>torch.clamp(input, </em>, max, out=None) → Tensor | 张量 input 的所有元素值小于或者等于 max.<br>torch.cos(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 每个元素的余弦<br>torch.cosh(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 每个元素的双曲余弦<br>torch.div(input, value, out=None) | 将张量 input 的元素逐一除以标量值 value ,其结果作为一个新的张量返回.<br>torch.div(input, other, out=None) | 张量 input 的元素与张量 other 的元素逐一相除. 返回一个新的结果张量 out . 张量 input 与张量 other 的形状必须可 broadcastable.outi=inputi/otheri<br>torch.erf(tensor, out=None) → Tensor | 计算每个元素的误差函数<br>torch.erfinv(tensor, out=None) → Tensor | 计算每个元素的反向误差函数<br>torch.exp(tensor, out=None) → Tensor | 计算每个元素的指数<br>torch.floor(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 的元素向下取整(取不大于每个元素的最大整数).<br>torch.fmod(input, divisor, out=None) → Tensor | 计算除法余数.<br>torch.frac(tensor, out=None) → Tensor | 计算张量 tensor 每个元素的分数部分.<br>torch.lerp(start, end, weight, out=None) | 基于标量值 weight: , 在张量 start 与张量 end 之间做线性插值 并返回结果张量 out 。outi=starti+weight∗(endi−starti)<br>torch.log(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 所有元素的自然对数.<br>torch.log1p(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是(1 + input) 的自然对数.yi=log(xi+1)<br>torch.mul(input, value, out=None) | 将输入张量 input 的每个元素与标量值 value 相乘并返回一个新的结果张量.out=tensor∗value<br>torch.mul(input, other, out=None) | 张量 input 的元素与张量 other 的元素逐一相乘. 其结果作为一个新的张量返回.<br>torch.neg(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 的元素的负值.out=−1∗input<br>torch.pow(input, exponent, out=None) | 对输入张量 input 按元素求 exponent 次幂值并返回结果张量(其值作为结果张量的元素).<br>torch.pow(base, input, out=None) | base 是一个标量浮点值, input 是一个张量. 返回的张量 out 的形状与张量 input 的形状相同.<br>torch.reciprocal(input, out=None) → Tensor | 返回一个新的 Tensor , 其元素是张量 input 元素的倒数, i.e. 1.0/x<br>torch.remainder(input, divisor, out=None) → Tensor | 计算元素的除法的余数.<br>torch.round(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是输入张量的元素四舍五入到最近的整数<br>torch.rsqrt(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的平方根的倒数.<br>torch.sigmoid(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的sigmoid值<br>torch.sign(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的符号.<br>torch.sin(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的正弦.<br>torch.sinh(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的双曲正弦<br>torch.sqrt(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的平方根<br>torch.tan(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的正切<br>torch.tanh(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的双曲正切<br>torch.trunc(input, out=None) → Tensor | 返回一个新的张量 Tensor , 其元素是张量 input 元素的截断整数值 (直接去除小数部分) .<br><strong>Reduction Ops (归约操作)</strong> |<br>torch.cumprod(input, dim, out=None) → Tensor | 返回元素 input 在给定维度 dim 下的累积积<br>torch.cumsum(input, dim, out=None) → Tensor | 返回元素 input 在给定维度 dim 下的累积和<br>torch.dist(input, other, p=2) → float | 返回(input - other)的p-范数 input 和 other 的形状必须满足 broadcastable.<br>torch.mean(input) → float | 返回张量 input 所有元素的均值.<br>torch.mean(input, dim, keepdim=False, out=None) → Tensor | 返回张量 input 在给定维度 dim 上每行的均值<br>torch.median(input) → float | 返回输出张量 input 所有元素的中位数.<br>torch.median(input, dim=-1, keepdim=False, values=None, indices=None) -&gt; (Tensor, LongTensor) | 返回输出张量 input 在给定维度 dim 下每行的中位数. 同时返回一个包含中位数的索引 LongTensor.<br>torch.mode(input, dim=-1, keepdim=False, values=None, indices=None) -&gt; |  (Tensor, LongTensor) | 返回输入张量 input 在给定维数 dim 下每行元素的众数值. 同时也返回众数值的索引LongTensor.<br>torch.norm(input, p=2) → float | 返回输入张量 input 的p-范数<br>torch.norm(input, p, dim, keepdim=False, out=None) → Tensor | 返回输入张量 input 在给定维度 dim 下每行元素的p-范数.<br>torch.prod(input) → float | 返回输入张量 input 所有元素的乘积.<br>torch.prod(input, dim, keepdim=False, out=None) → Tensor | 返回输入张量 input 在给定维度 dim 下每行元素的积.<br>torch.unique(input, sorted=False, return_inverse=False) |以1D向量保存张量中不同的元素。剔除tensor中的重复元素，如果设置return_inverse=True，会得到一个元素在在原tensor中的映射表<br>torch.std(input, unbiased=True) → float | 返回输入张量 input 所有元素的标准差<br>torch.std(input, dim, keepdim=False, unbiased=True, out=None) → Tensor | 返回输入张量 input 在给定维度 dim 下每行元素的标准差<br>torch.sum(input) → float | 返回输入张量 input 所有元素的和<br>torch.sum(input, dim, keepdim=False, out=None) → Tensor | 返回输入张量 input 在给定维度 dim 下每行元素的和<br>torch.var(input, unbiased=True) → float | 返回输入张量 input 的方差.<br>torch.var(input, dim, keepdim=False, unbiased=True, out=None) → Tensor | 返回输入张量 input 在给定维度 dim 下每行的方差<br><strong>Comparison Ops (比较操作)</strong> |<br>torch.eq(input, other, out=None) → Tensor | 比较元素是否相等<br>torch.equal(tensor1, tensor2) → bool | 如果两个张量有相同的形状和元素值, 则返回 True , 否则 False .<br><a href="http://torch.ge/" target="_blank" rel="noopener">torch.ge</a>(input, other, out=None) → Tensor | 逐元素比较 input 和 other , 即是否 input&gt;=other .<br><a href="http://torch.gt/" target="_blank" rel="noopener">torch.gt</a>(input, other, out=None) → Tensor | 逐元素比较 input 和 other , 即是否 input&gt;other 如果两个张量有相同的形状和元素值, 则返回 True ,否则 False<br>torch.kthvalue(input, k, dim=None, keepdim=False, out=None) -&gt; (Tensor, |  LongTensor) | 取输入张量 input 指定维上第 k 个最小值. 如果不指定 dim , 则默认为 input 的最后一维<br>torch.le(input, other, out=None) → Tensor | 逐元素比较 input 和 other , 即是否input&lt;=other 如果两个张量有相同的形状和元素值, 则返回 True ,否则 False .<br><a href="http://torch.lt/" target="_blank" rel="noopener">torch.lt</a>(input, other, out=None) → Tensor | 逐元素比较 input 和other , 即是否 input<other 如果两个张量有相同的形状和元素值, 则返回 true ,否则 false torch.argmax(input, dim="None," keepdim="False)" | 按指定的维度返回最大元素的坐标 torch.argmin(input, 返回最小的 torch.max(input) → float 返回输入 input 张量所有元素的最大值 torch.max(input, dim, out="None)" -> (Tensor, LongTensor) | 返回输入张量 input 在给定维度 dim 上每行的最大值, 并同时返回每个最大值的位置索引.<br>torch.max(input, other, out=None) → Tensor | 输入 input 每一个元素和对应的比较张量 other 进行比较, 留下较大的元素 max.<br>torch.min(input) → float | 返回输入张量 input 所有元素的最小值<br>torch.min(input, dim, keepdim=False, out=None) -&gt; (Tensor, LongTensor) | 返回输入张量 input 在给定维度 dim 下每行元素的最小值. 其中第二个返回值是每个被找出的最小值的索引位置 ( argmin )<br>torch.min(input, other, out=None) → Tensor | 输入 input 每一个元素和对应的比较张量 other 进行比较, 留下较小的元素 min .<br><a href="http://torch.ne/" target="_blank" rel="noopener">torch.ne</a>(input, other, out=None) → Tensor | 逐元素比较 input 和 other , 即是否 tensor != other 如果两个张量有相同的形状和元素值, 则返回 True , 否则 False .<br>torch.sort(input, dim=None, descending=False, out=None) -&gt; (Tensor, |  LongTensor) | 对输入张量 input 沿着指定维按升序排序.<br>torch.topk(input, k, dim=None, largest=True, sorted=True, out=None) -&gt; (Tensor, LongTensor) | 沿给定 dim 维度返回输入张量 input 中 k 个最大值. 如果不指定 dim , 则默认为 input的最后一维. 如果为 largest 为 False ,则返回最小的 k 个值. 返回一个元组 (values, indices) , 其中 indices是原始输入张量 input 中测元素下标. 如果设定布尔值 sorted 为 True , 将会确保返回的 k 个值被排序.<br>torch.isfinite(tensor) / torch.isinf(tensor) / torch.isnan(tensor) | 返回一个标记元素是否为 finite/inf/nan 的mask 张量。<br><strong>Other Operations (其它操作)</strong> |<br>torch.bincount(self, weights=None, minlength=0) | 返回每个值得频数。<br>torch.cross(input, other, dim=-1, out=None) → Tensor | 返回沿着维度 dim 上, 两个张量 input 和 other 的向量积 (叉积), input 和 other 必须有相同的形状, 且指定的 dim 维上 size 必须为 3.<br>torch.diag(input, diagonal=0, out=None) → Tensor | 如果输入是一个向量( 1D 张量), 则返回一个以 input 为对角线元素的 2D 方阵.如果输入是一个矩阵( 2D 张量), 则返回一个包含 input 对角线元素的1D张量.<br>torch.flip(input, dims) | 按照给定维度翻转张量<br>torch.histc(input, bins=100, min=0, max=0, out=None) → Tensor | 计算输入张量的直方图<br>torch.meshgrid(seq) | 生成网格（可以生成坐标）。<br>torch.renorm(input, p, dim, maxnorm, out=None) → Tensor | 返回一个张量, 包含规范化后的各个子张量, 使得沿着 dim 维划分的各子张量的 p 范数小于 maxnorm<br>torch.trace(input) → float | 返回输入 2 维矩阵对角线元素的和(迹).<br>torch.tril(input, diagonal=0, out=None) → Tensor | 返回一个张量, 包含输入矩阵 ( 2D 张量)的下三角部分, 其余部分被设为 0.<br>torch.triu(input, diagonal=0, out=None) → Tensor | 返回一个张量, 包含输入矩阵 ( 2D 张量)的上三角部分, 其余部分被设为 0.<br><strong>BLAS and LAPACK Operations (BLAS和LAPACK操作)</strong> |<br>torch.addbmm(beta=1, mat, alpha=1, batch1, batch2, out=None) → Tensor | 执行保存在 batch1 和 batch2 中的矩阵的批量点乘, 伴随着一个减少的相加步骤 (所有的矩阵乘法沿第一维累加). mat 被相加到最终的结果中.<br>torch.addmm(beta=1, mat, alpha=1, mat1, mat2, out=None) → Tensor | 执行矩阵 mat1 和 mat2 的相乘. 矩阵 mat 将与相乘的最终计算结果相加.<br>torch.addmv(beta=1, tensor, alpha=1, mat, vec, out=None) → Tensor | 执行矩阵 mat 和向量 vec 的相乘. 矩阵 tensor 将与相乘的最终计算结果相加.<br>torch.addr(beta=1, mat, alpha=1, vec1, vec2, out=None) → Tensor | 执行向量:attr:vec1 和 vec2 的外积, 并把外积计算结果与矩阵 mat相加<br>torch.baddbmm(beta=1, mat, alpha=1, batch1, batch2, out=None) → Tensor | 执行保存在 batch1 和 batch2 中的矩阵的批量点乘. mat 被相加到最终的结果中.<br>torch.bmm(batch1, batch2, out=None) → Tensor | 执行保存在 batch1 和 batch2 中的矩阵的批量点乘.<br>torch.btrifact(A, info=None, pivot=True) → Tensor, IntTensor | 批量 LU 分解.<br>torch.btrisolve(b, LU_data, LU_pivots) → Tensor | 批量 LU 解.返回线性系统 Ax = b 的 LU 解<br>torch.dot(tensor1, tensor2) → float | 计算两个张量的点乘 (内积).<br>torch.eig(a, eigenvectors=False, out=None) -&gt; (Tensor, Tensor) | 计算实数方阵的特征值和特征向量.<br>torch.det(A) | 返回矩阵A的行列式<br>torch.gels(B, A, out=None) → Tensor | 计算秩为 mm 的， 大小为 m x n 的矩阵 AA 最小二乘和最小范数问题的解<br>torch.geqrf(input, out=None) -&gt; (Tensor, Tensor) | 直接调用 LAPACK 的低层函数<br>torch.ger(vec1, vec2, out=None) → Tensor | 计算 vec1 和 vec2 的外积. 如果 vec1 是一个长度为n 的向量, vec2 是一个长度为 m 的向量, 那么 out 必须是一个 n x m 的矩阵<br>torch.gesv(B, A, out=None) -&gt; (Tensor, Tensor) | X, LU = torch.gesv(B, A) ,该函数返回线性系统 AX=B 的解<br>torch.inverse(input, out=None) → Tensor | 计算方阵 input 的逆.<br>torch.matmul(tensor1, tensor2, out=None) | Matrix product of two tensors<br><a href="http://torch.mm/" target="_blank" rel="noopener">torch.mm</a>(mat1, mat2, out=None) → Tensor | 执行 mat1 和 mat2 的矩阵乘法.<br><a href="http://torch.mv/" target="_blank" rel="noopener">torch.mv</a>(mat, vec, out=None) → Tensor | 执行矩阵 mat 与向量 vec 的乘法操作.<br>torch.potrf(a, out=None) | 计算半正定矩阵 a: 的 Cholesky 分解<br>torch.potri(u, out=None) | 给定一个半正定矩阵的 Cholesky 分解因子 u, 计算该半正定矩阵的逆.<br>torch.potrs(b, u, out=None) | Solves a linear system of equations with a positive semidefinite matrix to be inverted given its given a Cholesky factor matrix u<br>torch.pstrf(a, out=None) | Computes the pivoted Cholesky decomposition of a positive semidefinite matrix a: returns matrices u and piv<br>torch.qr(input, out=None) -&gt; (Tensor, Tensor) | 计算矩阵 input 的 QR 分解. 返回矩阵 q 和 r 使得 x=q∗rx=q∗r, 且 q 是一个 正交矩阵, r 是一个上三角矩阵<br>torch.svd(input, some=True, out=None) -&gt; (Tensor, Tensor, Tensor) | U, S, V =torch.svd(A) 返回大小为 (n x m) 的实矩阵 A 的奇异值分解, 使得A=USV′∗<br>torch.symeig(input, eigenvectors=False, upper=True, out=None) -&gt; (Tensor, Tensor) | e, V = torch.symeig(input) 返回实对称矩阵 input 的特征值和特征向量.</other></module></module></p>
+
+    </div>
+
+    
+    
+    
+
+	
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Snow</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://behappy00.github.io/2021/01/06/Pytorch中Torch 工具包的数学操作汇总速查/" title="Pytorch中Torch 工具包的数学操作汇总速查">https://behappy00.github.io/2021/01/06/Pytorch中Torch 工具包的数学操作汇总速查/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/转载/" rel="tag"># 转载</a>
+            
+              <a href="/tags/python/" rel="tag"># python</a>
+            
+              <a href="/tags/pytorch/" rel="tag"># pytorch</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/01/05/HAN_pytorch版复现/" rel="next" title="HAN_pytorch版复现">
+                  <i class="fa fa-chevron-left"></i> HAN_pytorch版复现
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/01/06/Html方式转载CSDN博客 & CSDN博客转换成Markdown文件/" rel="prev" title="Html方式转载CSDN博客 & CSDN博客转换成Markdown文件">
+                  Html方式转载CSDN博客 & CSDN博客转换成Markdown文件 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+		
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Snow</p>
+  <div class="site-description" itemprop="description">计算机 Hiter</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+	 <!-- 添加近期文章 -->
+	 
+	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
+		 <div class="links-of-blogroll-title">
+		   <!-- modify icon to fire by szw -->
+		   <i class="fa fa-history fa-" aria-hidden="true"></i>
+		   近期文章
+		 </div>
+		 <ul class="links-of-blogroll-list">
+		   
+		   
+			 <li>
+			   <a href="/2023/10/03/markdown汇总/" title="markdown汇总" target="_blank">markdown汇总</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/hexo博客搜索显示异样/" title="hexo博客搜索显示异样" target="_blank">hexo博客搜索显示异样</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown使用TOC自动生成导航栏/" title="Markdown使用TOC自动生成导航栏" target="_blank">Markdown使用TOC自动生成导航栏</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown让文字居中和带颜色/" title="markdown让文字居中和带颜色" target="_blank">markdown让文字居中和带颜色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown-文本内跳转-生成目录/" title="markdown 文本内跳转,生成目录" target="_blank">markdown 文本内跳转,生成目录</a>
+			 </li>
+		   
+		 </ul>
+	   </div>
+	 
+	  
+	  <!-- 添加网易云播放歌曲 -->
+	  <div id="music163player">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
+		</iframe>
+	  </div>
+  
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Snow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">494k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:29</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="我的第 undefined 位朋友，">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--
+
+<script>
+  $(document).ready(function () {
+    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
+  });
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+  <script>
+    function timer() {
+      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
+      ages = ages.replace(/years?/, "年");
+      ages = ages.replace(/months?/, "月");
+      ages = ages.replace(/days?/, "天");
+      ages = ages.replace(/hours?/, "小时");
+      ages = ages.replace(/minutes?/, "分");
+      ages = ages.replace(/seconds?/, "秒");
+      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
+      div.innerHTML = `我已在此等候你 ${ages}`;
+    }
+    var div = document.createElement("div");
+    //插入到copyright之后
+    var copyright = document.querySelector(".copyright");
+    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+    timer();
+    setInterval("timer()",1000)
+  </script>
+-->
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
+    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-CN' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  
+  <!--页面点击出现富强民主文明和谐-->
+ <script type="text/javascript" src="/js/words-click.js"></script > 
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <!--
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+  -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
+
