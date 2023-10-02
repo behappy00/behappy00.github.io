@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="1、卷积神经网络的概念 2、 发展过程 3、如何利用CNN实现图像识别的任务 4、CNN的特征 5、CNN的求解 6、卷积神经网络注意事项 7、CNN发展综合介绍 8、LeNet-5结构分析 9、AlexNet 10、ZFNet 10.1 意义 10.2 实现方法 10.3 训练细节">
+<meta name="keywords" content="转载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络超详细介绍">
+<meta property="og:url" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/index.html">
+<meta property="og:site_name" content="Snow">
+<meta property="og:description" content="1、卷积神经网络的概念 2、 发展过程 3、如何利用CNN实现图像识别的任务 4、CNN的特征 5、CNN的求解 6、卷积神经网络注意事项 7、CNN发展综合介绍 8、LeNet-5结构分析 9、AlexNet 10、ZFNet 10.1 意义 10.2 实现方法 10.3 训练细节">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/1618825748113.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-49-35.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-50-03.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-50-45.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-51-12.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-51-36.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-51-52.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-52-08.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-52-19.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-53-02.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-53-20.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-53-32.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-56-47.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-58-48.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-18-00-07.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-18-02-32.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/2021-04-19-18-04-12.png">
+<meta property="og:updated_time" content="2023-04-03T13:21:06.208Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积神经网络超详细介绍">
+<meta name="twitter:description" content="1、卷积神经网络的概念 2、 发展过程 3、如何利用CNN实现图像识别的任务 4、CNN的特征 5、CNN的求解 6、卷积神经网络注意事项 7、CNN发展综合介绍 8、LeNet-5结构分析 9、AlexNet 10、ZFNet 10.1 意义 10.2 实现方法 10.3 训练细节">
+<meta name="twitter:image" content="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/1618825748113.png">
+  <link rel="canonical" href="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>卷积神经网络超详细介绍 | Snow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Snow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">光而不耀</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">卷积神经网络超详细介绍
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2021-04-19 00:20:35" itemprop="dateCreated datePublished" datetime="2021-04-19T00:20:35+08:00">2021-04-19</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-03 21:21:06" itemprop="dateModified" datetime="2023-04-03T21:21:06+08:00">2023-04-03</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2021/04/19/卷积神经网络超详细介绍/" class="post-meta-item leancloud_visitors" data-flag-title="卷积神经网络超详细介绍" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/04/19/卷积神经网络超详细介绍/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2021/04/19/卷积神经网络超详细介绍/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>18k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>16 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr><ul>
+<li><a href="#1卷积神经网络的概念">1、卷积神经网络的概念</a></li>
+<li><a href="#2-发展过程">2、 发展过程</a></li>
+<li><a href="#3如何利用cnn实现图像识别的任务">3、如何利用CNN实现图像识别的任务</a></li>
+<li><a href="#4cnn的特征">4、CNN的特征</a></li>
+<li><a href="#5cnn的求解">5、CNN的求解</a></li>
+<li><a href="#6卷积神经网络注意事项">6、卷积神经网络注意事项</a></li>
+<li><a href="#7cnn发展综合介绍">7、CNN发展综合介绍</a></li>
+<li><a href="#8lenet-5结构分析">8、LeNet-5结构分析</a></li>
+<li><a href="#9alexnet">9、AlexNet</a></li>
+<li><a href="#10zfnet">10、ZFNet</a><ul>
+<li><a href="#101-意义">10.1 意义</a></li>
+<li><a href="#102-实现方法">10.2 实现方法</a></li>
+<li><a href="#103-训练细节">10.3 训练细节</a></li>
+</ul>
+</li>
+</ul><a id="more"></a>
+<!-- TOC -->
+
+<!-- /TOC -->
+<hr>
+<p>参考：</p>
+<ol>
+<li><a href="https://blog.csdn.net/jiaoyangwm/article/details/80011656/" target="_blank" rel="noopener">https://blog.csdn.net/jiaoyangwm/article/details/80011656/</a></li>
+</ol>
+<h3 id="1、卷积神经网络的概念"><a href="#1、卷积神经网络的概念" class="headerlink" title="1、卷积神经网络的概念"></a>1、卷积神经网络的概念</h3><p><a href="http://mp.weixin.qq.com/s/eosTWBbLpwVroYPEb9Q0wA" target="_blank" rel="noopener">计算机视觉和 CNN 发展十一座里程碑</a></p>
+<p>上世纪60年代，Hubel等人通过对猫视觉皮层细胞的研究，提出了感受野这个概念，到80年代，Fukushima在感受野概念的基础之上提出了神经认知机的概念，可以看作是卷积神经网络的第一个实现网络，神经认知机将一个视觉模式分解成许多子模式（特征），然后进入分层递阶式相连的特征平面进行处理，它试图将视觉系统模型化，使其能够在即使物体有位移或轻微变形的时候，也能完成识别。</p>
+<p>卷积神经网络是多层感知机（MLP）的变种，由生物学家休博尔和维瑟尔在早期关于猫视觉皮层的研究发展而来，视觉皮层的细胞存在一个复杂的构造，这些细胞对视觉输入空间的子区域非常敏感，称之为感受野。</p>
+<p><strong>CNN由纽约大学的Yann Lecun于1998年提出，其本质是一个多层感知机，成功的原因在于其所采用的局部连接和权值共享的方式：</strong></p>
+<ul>
+<li>一方面减少了权值的数量使得网络易于优化</li>
+<li>另一方面降低了模型的复杂度，也就是减小了过拟合的风险</li>
+</ul>
+<p>该优点在网络的输入是图像时表现的更为明显，使得图像可以直接作为网络的输入，避免了传统识别算法中复杂的特征提取和数据重建的过程，在二维图像的处理过程中有很大的优势，如网络能够自行抽取图像的特征包括颜色、纹理、形状及图像的拓扑结构，在处理二维图像的问题上，特别是识别位移、缩放及其他形式扭曲不变性的应用上具有良好的鲁棒性和运算效率等。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LeNet5</td>
+<td>没啥特点-不过是第一个CNN应该要知道</td>
+</tr>
+<tr>
+<td>AlexNet</td>
+<td>引入了ReLU和dropout，引入数据增强、池化相互之间有覆盖，三个卷积一个最大池化+三个全连接层</td>
+</tr>
+<tr>
+<td>VGGNet</td>
+<td>采用1_1和3_3的卷积核以及2*2的最大池化使得层数变得更深。常用VGGNet-16和VGGNet19</td>
+</tr>
+<tr>
+<td>Google Inception Net</td>
+<td>这个在控制了计算量和参数量的同时，获得了比较好的分类性能，和上面相比有几个大的改进：1、去除了最后的全连接层，而是用一个全局的平均池化来取代它； 2、引入Inception Module，这是一个4个分支结合的结构。所有的分支都用到了1_1的卷积，这是因为1_1性价比很高，可以用很少的参数达到非线性和特征变换。3、Inception V2第二版将所有的5_5变成2个3_3，而且提出来著名的Batch Normalization；4、Inception V3第三版就更变态了，把较大的二维卷积拆成了两个较小的一维卷积，加速运算、减少过拟合，同时还更改了Inception Module的结构。</td>
+</tr>
+<tr>
+<td>微软ResNet残差神经网络(Residual Neural Network)</td>
+<td>1、引入高速公路结构，可以让神经网络变得非常深2、ResNet第二个版本将ReLU激活函数变成y=x的线性函数</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2、-发展过程"><a href="#2、-发展过程" class="headerlink" title="2、 发展过程"></a>2、 发展过程</h3><p>1986年Rumelhart等人提出了人工神经网络的反向传播算法，掀起了神经网络在机器学习中的热潮，神经网络中存在大量的参数，存在 <strong>容易发生过拟合、训练时间长</strong>的缺点，但是对比Boosting、Logistic回归、SVM等基于统计学习理论的方法（也可以看做具有一层隐层节点或不含隐层节点的学习模型，被称为浅层模型）来说，具有较大的优越性。</p>
+<p><strong>浅层模型为什么效果没有深层模型好？</strong></p>
+<p>浅层学习模型通常要由人工的方法来获得好的样本特性，在此基础上进行识别和预测，因此方法的有效性在很大程度上受到特征提取的制约。</p>
+<p><strong>深度学习的提出：</strong></p>
+<p>2006年，Hinton提出了深度学习，两个主要的观点是：</p>
+<ul>
+<li>多隐层的人工神经网络具有优异的特征学习能力，学习到的数据更能反映数据的本质特征有利于可视化或分类</li>
+<li>深度神经网络在训练上的难度，可以通过逐层无监督训练有效克服，</li>
+</ul>
+<p><strong>深度学习取得成功的原因：</strong></p>
+<ul>
+<li>大规模数据（例如ImageNet）：为深度学习提供了好的训练资源</li>
+<li>计算机硬件的飞速发展：特别是GPU的出现，使得训练大规模上网络成为可能</li>
+</ul>
+<p><strong>深度学习的思想：</strong></p>
+<p>深度神经网络的基本思想是通过构建多层网络，对目标进行多层表示，以期通过多层的高层次特征来表示数据的抽象语义信息，获得更好的特征鲁棒性。</p>
+<p><strong>什么是卷积神经网络：</strong></p>
+<p>卷积神经网络是一种带有卷积结构的深度神经网络，卷积结构可以减少深层网络占用的内存量，其三个关键的操作， <strong>其一是局部感受野，其二是权值共享，其三是pooling层</strong>，有效的减少了网络的参数个数，缓解了模型的过拟合问题。</p>
+<p><strong>1）网络结构</strong></p>
+<p><strong>卷积神经网络整体架构：</strong>卷积神经网络是一种多层的监督学习神经网络，隐含层的卷积层和池采样层是实现卷积神经网络特征提取功能的核心模块。该网络模型通过采用梯度下降法最小化损失函数对网络中的权重参数逐层反向调节，通过频繁的迭代训练提高网络的精度。卷积神经网络的低隐层是由卷积层和最大池采样层交替组成，高层是全连接层对应传统多层感知器的隐含层和逻辑回归分类器。第一个全连接层的输入是由卷积层和子采样层进行特征提取得到的特征图像。最后一层输出层是一个分类器，可以采用逻辑回归，Softmax回归甚至是支持向量机对输入图像进行分类。</p>
+<p><strong>卷积神经网络结构包括：卷积层，降采样层，全链接层。每一层有多个特征图，每个特征图通过一种卷积滤波器提取输入的一种特征，每个特征图有多个神经元。</strong></p>
+<p>输入图像统计和滤波器进行卷积之后，提取该局部特征，一旦该局部特征被提取出来之后，它与其他特征的位置关系也随之确定下来了，每个神经元的输入和前一层的局部感受野相连，每个特征提取层都紧跟一个用来求局部平均与二次提取的计算层，也叫特征映射层，网络的每个计算层由多个特征映射平面组成，平面上所有的神经元的权重相等。</p>
+<p>通常将输入层到隐藏层的映射称为一个特征映射，也就是通过卷积层得到特征提取层，经过pooling之后得到特征映射层。</p>
+<p><strong>2）局部感受野与权值共享</strong></p>
+<p>卷积神经网络的核心思想就是局部感受野、是权值共享和pooling层，以此来达到简化网络参数并使得网络具有一定程度的位移、尺度、缩放、非线性形变稳定性。</p>
+<ul>
+<li><strong>局部感受野</strong>：由于图像的空间联系是局部的，每个神经元不需要对全部的图像做感受，只需要感受局部特征即可，然后在更高层将这些感受得到的不同的局部神经元综合起来就可以得到全局的信息了，这样可以减少连接的数目。</li>
+<li><strong>权值共享</strong>：不同神经元之间的参数共享可以减少需要求解的参数，使用多种滤波器去卷积图像就会得到多种特征映射。权值共享其实就是对图像用同样的卷积核进行卷积操作，也就意味着第一个隐藏层的所有神经元所能检测到处于图像不同位置的完全相同的特征。其主要的能力就能检测到不同位置的同一类型特征，也就是卷积网络能很好的适应图像的小范围的平移性，即有较好的平移不变性（比如将输入图像的猫的位置移动之后，同样能够检测到猫的图像）</li>
+</ul>
+<p><strong>3）卷积层、下采样层、全连接层</strong></p>
+<p><strong>卷积层</strong>：因为通过卷积运算我们可以提取出图像的特征，通过卷积运算可以使得原始信号的某些特征增强，并且降低噪声。</p>
+<ul>
+<li>用一个可训练的滤波器fx去卷积一个输入的图像（第一阶段是输入的图像，后面的阶段就是卷积特征map了），然后加一个偏置bx，得到卷积层Cx。</li>
+</ul>
+<p><strong>下采样层</strong>：因为对图像进行下采样，可以减少数据处理量同时保留有用信息，采样可以混淆特征的具体位置，因为某个特征找出来之后，它的位置已经不重要了，我们只需要这个特征和其他特征的相对位置，可以应对形变和扭曲带来的同类物体的变化。</p>
+<ul>
+<li>每邻域四个像素求和变为一个像素，然后通过标量Wx+1加权，再增加偏置bx+1，然后通过一个sigmoid激活函数，产生一个大概缩小四倍的特征映射图Sx+1。 *</li>
+</ul>
+<p><strong>全连接层</strong>：采用softmax全连接，得到的激活值即卷积神经网络提取到的图片特征。</p>
+<p><strong>卷积神经网络相比一般神经网络在图像理解中的优点：</strong></p>
+<ul>
+<li>网络结构能够较好的适应图像的结构</li>
+<li>同时进行特征提取和分类，使得特征提取有助于特征分类</li>
+<li>权值共享可以减少网络的训练参数，使得神经网络结构变得简单，适应性更强</li>
+</ul>
+<h3 id="3、如何利用CNN实现图像识别的任务"><a href="#3、如何利用CNN实现图像识别的任务" class="headerlink" title="3、如何利用CNN实现图像识别的任务"></a>3、如何利用CNN实现图像识别的任务</h3><p><strong>输入层读入经过规则化（统一大小）的图像，每一层的每个神经元将前一层的一组小的局部近邻的单元作为输入，也就是局部感受野和权值共享，神经元抽取一些基本的视觉特征，比如边缘、角点等，这些特征之后会被更高层的神经元所使用。卷积神经网络通过卷积操作获得特征图，每个位置，来自不同特征图的单元得到各自不同类型的特征。一个卷积层中通常包含多个具有不同权值向量的特征图，使得能够保留图像更丰富的特征。卷积层后边会连接池化层进行降采样操作，一方面可以降低图像的分辨率，减少参数量，另一方面可以获得平移和形变的鲁棒性。卷积层和池化层的交替分布，使得特征图的数目逐步增多，而且分辨率逐渐降低，是一个双金字塔结构。</strong></p>
+<h3 id="4、CNN的特征"><a href="#4、CNN的特征" class="headerlink" title="4、CNN的特征"></a>4、CNN的特征</h3><p>1）具有一些传统技术所没有的优点：良好的容错能力、并行处理能力和自学习能力，可处理环境信息复杂，背景知识不清楚，推理规则不明确情况下的问题，允许样品有较大的缺损、畸变，运行速度快，自适应性能好，具有较高的分辨率。它是通过结构重组和减少权值将特征抽取功能融合进多层感知器，省略识别前复杂的图像特征抽取过程。</p>
+<p>2）泛化能力要显著优于其它方法，卷积神经网络已被应用于模式分类，物体检测和物体识别等方面。利用卷积神经网络建立模式分类器，将卷积神经网络作为通用的模式分类器，直接用于灰度图像。</p>
+<p>3）是一个前溃式神经网络，能从一个二维图像中提取其拓扑结构，采用反向传播算法来优化网络结构，求解网络中的未知参数。</p>
+<p>4）一类特别设计用来处理二维数据的多层神经网络。CNN被认为是第一个真正成功的采用多层层次结构网络的具有鲁棒性的深度学习方法。CNN通过挖掘数据中的空间上的相关性，来减少网络中的可训练参数的数量，达到改进前向传播网络的反向传播算法效率，因为CNN需要非常少的数据预处理工作，所以也被认为是一种深度学习的方法。在CNN中，图像中的小块区域（也叫做”局部感知区域”）被当做层次结构中的底层的输入数据，信息通过前向传播经过网络中的各个层，在每一层中都由过滤器构成，以便能够获得观测数据的一些显著特征。因为局部感知区域能够获得一些基础的特征，比如图像中的边界和角落等，这种方法能够提供一定程度对位移、拉伸和旋转的相对不变性。</p>
+<p>5）CNN中层次之间的紧密联系和空间信息使得其特别适用于图像的处理和理解，并且能够自动的从图像抽取出丰富的相关特性。</p>
+<p>6）CNN通过结合局部感知区域、共享权重、空间或者时间上的降采样来充分利用数据本身包含的局部性等特征，优化网络结构，并且保证一定程度上的位移和变形的不变性。</p>
+<p>7）CNN是一种深度的监督学习下的机器学习模型，具有极强的适应性，善于挖掘数据局部特征，提取全局训练特征和分类，它的权值共享结构网络使之更类似于生物神经网络，在模式识别各个领域都取得了很好的成果。</p>
+<p>8） CNN可以用来识别位移、缩放及其它形式扭曲不变性的二维或三维图像。CNN的特征提取层参数是通过训练数据学习得到的，所以其避免了人工特征提取，而是从训练数据中进行学习；其次同一特征图的神经元共享权值，减少了网络参数，这也是卷积网络相对于全连接网络的一大优势。共享局部权值这一特殊结构更接近于真实的生物神经网络使CNN在图像处理、语音识别领域有着独特的优越性，另一方面权值共享同时降低了网络的复杂性，且多维输入信号（语音、图像）可以直接输入网络的特点避免了特征提取和分类过程中数据重排的过程。</p>
+<p>9）CNN的分类模型与传统模型的不同点在于其可以直接将一幅二维图像输入模型中，接着在输出端即给出分类结果。其优势在于不需复杂的预处理，将特征抽取，模式分类完全放入一个黑匣子中，通过不断的优化来获得网络所需参数，在输出层给出所需分类，网络核心就是网络的结构设计与网络的求解。这种求解结构比以往多种算法性能更高。</p>
+<p>10）隐层的参数个数和隐层的神经元个数无关，只和滤波器的大小和滤波器种类的多少有关。隐层的神经元个数,它和原图像，也就是输入的大小（神经元个数）、滤波器的大小和滤波器在图像中的滑动步长都有关。</p>
+<h3 id="5、CNN的求解"><a href="#5、CNN的求解" class="headerlink" title="5、CNN的求解"></a>5、CNN的求解</h3><p>CNN在本质上是一种输入到输出的映射，它能够学习大量的输入与输出之间的映射关系，而不需要任何输入和输出之间的精确的数学表达式，只要用已知的模式对卷积网络加以训练，网络就具有输入输出对之间的映射能力。</p>
+<p>卷积网络执行的是监督训练，所以其样本集是由形如：<strong>（输入向量，理想输出向量）</strong>的向量对构成的。所有这些向量对，都应该是来源于网络即将模拟系统的实际”运行”结构，它们可以是从实际运行系统中采集来。</p>
+<p><strong>1）参数初始化：</strong></p>
+<p>在开始训练前，所有的权都应该用一些不同的随机数进行初始化。”小随机数”用来保证网络不会因权值过大而进入饱和状态，从而导致训练失败；”不同”用来保证网络可以正常地学习。实际上，如果用相同的数去初始化权矩阵，则网络无学习能力。</p>
+<p><strong>2）训练过程包括四步</strong></p>
+<p><strong>① 第一阶段：前向传播阶段</strong></p>
+<ul>
+<li>从样本集中取一个样本，输入网络</li>
+<li>计算相应的实际输出；在此阶段信息从输入层经过逐级的变换，传送到输出层，这个过程也是网络在完成训练之后正常执行时执行的过程</li>
+</ul>
+<p><strong>② 第二阶段：后向传播阶段</strong></p>
+<ul>
+<li>计算实际输出与相应的理想输出的差</li>
+<li>按照极小化误差的方法调整权值矩阵 <em>*网络的训练过程如下：</em></li>
+</ul>
+<ol>
+<li>选定训练组，从样本集中分别随机地寻求N个样本作为训练组；</li>
+<li>将各权值、阈值，置成小的接近于0的随机值，并初始化精度控制参数和学习率；</li>
+<li>从训练组中取一个输入模式加到网络，并给出它的目标输出向量；</li>
+<li>计算出中间层输出向量，计算出网络的实际输出向量；</li>
+<li>将输出向量中的元素与目标向量中的元素进行比较，计算出输出误差；对于中间层的隐单元也需要计算出误差；</li>
+<li>依次计算出各权值的调整量和阈值的调整量；</li>
+<li>调整权值和调整阈值；</li>
+<li>当经历M后，判断指标是否满足精度要求，如果不满足，则返回(3)，继续迭代；如果满足就进入下一步；</li>
+<li>训练结束，将权值和阈值保存在文件中。这时可以认为各个权值已经达到稳定，分类器已经形成。再一次进行训练，直接从文件导出权值和阈值进行训练，不需要进行初始化。</li>
+</ol>
+<h3 id="6、卷积神经网络注意事项"><a href="#6、卷积神经网络注意事项" class="headerlink" title="6、卷积神经网络注意事项"></a>6、卷积神经网络注意事项</h3><p><strong>1）数据集的大小和分块</strong></p>
+<p>数据驱动的模型一般依赖于数据集的大小，CNN和其他经验模型一样，能够适用于任意大小的数据集，但用于训练的数据集应该足够大， 能够覆盖问题域中所有已知可能出现的问题，</p>
+<p>设计CNN的时候，数据集应该包含三个子集：训练集、测试集、验证集</p>
+<p><strong>训练集：包含问题域中的所有数据，并在训练阶段用来调整网络的权重</strong></p>
+<p><strong>测试集：在训练的过程中用于测试网络对训练集中未出现的数据的分类性能，根据网络在测试集上的性能情况，网络的结构可能需要作出调整，或者增加训练循环次数。</strong></p>
+<p><strong>验证集：验证集中的数据统一应该包含在测试集和训练集中没有出现过的数据，用于在网络确定之后能够更好的测试和衡量网络的性能</strong></p>
+<p><strong>Looney等人建议，数据集中65%的用于训练，25%的用于测试，10%用于验证</strong></p>
+<p><strong>2）数据预处理</strong></p>
+<p>为了加速训练算法的收敛速度，一般都会采用一些数据预处理技术，其中包括：去除噪声、输入数据降维、删除无关数据等。</p>
+<p>数据的平衡化在分类问题中异常重要，一般认为训练集中的数据应该相对于标签类别近似于平均分布，也就是每一个类别标签所对应的数据集在训练集中是基本相等的，以避免网络过于倾向于表现某些分类的特点。</p>
+<p>为了平衡数据集，应该移除一些过度富余的分类中的数据，并相应补充一些相对样例稀少的分类中的数据。</p>
+<p>还有一个方法就是复制一部分这些样例稀少分类中的数据，并在这些数据中加入随机噪声。</p>
+<p><strong>3）数据规则化</strong></p>
+<p>将数据规则化到统一的区间（如[0,1]）中具有很重要的优点：防止数据中存在较大数值的数据造成数值较小的数据对于训练效果减弱甚至无效化，一个常用的方法是将输入和输出数据按比例调整到一个和激活函数相对应的区间。</p>
+<p><strong>4）网络权值初始化</strong></p>
+<p>CNN的初始化主要是初始化卷积层和输出层的卷积核（权值）和偏置</p>
+<p>网络权值初始化就是将网络中的所有连接权重赋予一个初始值，如果初始权重向量处在误差曲面的一个相对平缓的区域的时候，网络训练的收敛速度可能会很缓慢，一般情况下网络的连接权重和阈值被初始化在一个具有0均值的相对小的区间内均匀分布。</p>
+<p><strong>5）BP算法的学习速率</strong></p>
+<p>如果学习速率选取的较大，则会在训练过程中较大幅度的调整权值w，从而加快网络的训练速度，但是这和造成网络在误差曲面上搜索过程中频繁抖动，且有可能使得训练过程不能收敛。</p>
+<p>如果学习速率选取的较小，能够稳定的使得网络逼近于全局最优点，但也可能陷入一些局部最优，并且参数更新速度较慢。</p>
+<p>自适应学习率设定有较好的效果。</p>
+<p><strong>6）收敛条件</strong></p>
+<p>有几个条件可以作为停止训练的判定条件，训练误差、误差梯度、交叉验证等。一般来说，训练集的误差会随着网络训练的进行而逐步降低。</p>
+<p><strong>7）训练方式</strong></p>
+<p><strong>训练样例可以有两种基本的方式提供给网络训练使用，也可以是两者的结合：逐个样例训练(EET)、批量样例训练(BT)。</strong></p>
+<p>在EET中，先将第一个样例提供给网络，然后开始应用BP算法训练网络，直到训练误差降低到一个可以接受的范围，或者进行了指定步骤的训练次数。然后再将第二个样例提供给网络训练。</p>
+<p>EET的优点是相对于BT只需要很少的存储空间，并且有更好的随机搜索能力，防止训练过程陷入局部最小区域。</p>
+<p>EET的缺点是如果网络接收到的第一个样例就是劣质（有可能是噪音数据或者特征不明显）的数据，可能使得网络训练过程朝着全局误差最小化的反方向进行搜索。</p>
+<p>相对的，BT方法是在所有训练样例都经过网络传播后才更新一次权值，因此每一次学习周期就包含了所有的训练样例数据。</p>
+<p>BT方法的缺点也很明显，需要大量的存储空间，而且相比EET更容易陷入局部最小区域。</p>
+<p>而随机训练（ST）则是相对于EET和BT一种折衷的方法，ST和EET一样也是一次只接受一个训练样例，但只进行一次BP算法并更新权值，然后接受下一个样例重复同样的步骤计算并更新权值，并且在接受训练集最后一个样例后，重新回到第一个样例进行计算。</p>
+<p>ST和EET相比，保留了随机搜索的能力，同时又避免了训练样例中最开始几个样例如果出现劣质数据对训练过程的过度不良影响。</p>
+<h3 id="7、CNN发展综合介绍"><a href="#7、CNN发展综合介绍" class="headerlink" title="7、CNN发展综合介绍"></a>7、CNN发展综合介绍</h3><p>CNN的开山之作是LeCun提出的LeNet-5，而其真正的爆发阶段是2012年AlexNet取得ImageNet比赛的分类任务的冠军，并且分类准确率远远超过利用传统方法实现的分类结果，该模型能够取得成功的原因主要有三个：</p>
+<ul>
+<li>海量的有标记的训练数据，也就是李飞飞团队提供的大规模有标记的数据集ImageNet</li>
+<li>计算机硬件的支持，尤其是GPU的出现，为复杂的计算提供了强大的支持</li>
+<li>算法的改进，包括网络结构加深、数据增强（数据扩充）、ReLU、Dropout等</li>
+</ul>
+<p>AlexNet之后，深度学习便一发不可收拾，分类准确率每年都被刷榜，下图展示了模型的变化情况，随着模型的变深，Top-5的错误率也越来越低，目前已经降低到了3.5%左右，同样的ImageNet数据集，人眼的辨识错误率大概为5.1%，也就是深度学习的识别能力已经超过了人类。</p>
+<p><img src="/2021/04/19/卷积神经网络超详细介绍/1618825748113.png" alt></p>
+<p><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-49-35.png" alt></p>
+<h3 id="8、LeNet-5结构分析"><a href="#8、LeNet-5结构分析" class="headerlink" title="8、LeNet-5结构分析"></a>8、LeNet-5结构分析</h3><p><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-50-03.png" alt></p>
+<p>LeNet-5共包含8层</p>
+<ul>
+<li>C1层是一个卷积层，由6个特征图Feature Map构成。特征图中每个神经元与输入为5 <em>5的邻域相连。特征图的大小为28_28，这样能防止输入的连接掉到边界之外（32-5+1=28）。C1有156个可训练参数（每个滤波器5 _5=25个unit参数和一个bias参数，一共6个滤波器，共(5_5+1) _6=156个参数），共156</em>(28*28)=122,304个连接。</li>
+<li>S2层是一个下采样层，有6个14 <em>14的特征图。特征图中的每个单元与C1中相对应特征图的2_2邻域相连接。S2层每个单元的4个输入相加，乘以一个可训练参数，再加上一个可训练偏置。每个单元的2 _2感受野并不重叠，因此S2中每个特征图的大小是C1中特征图大小的1/4（行和列各1/2）。S2层有12（6</em>（1+1）=12）个可训练参数和5880（14 <em>14</em>（2<em>2+1）</em>6=5880）个连接。</li>
+<li>C3层也是一个卷积层，它同样通过5x5的卷积核去卷积层S2，然后得到的特征map就只有10x10个神经元，但是它有16种不同的卷积核，所以就存在16个特征map了。 C3中每个特征图由S2中所有6个或者几个特征map组合而成。为什么不把S2中的每个特征图连接到每个C3的特征图呢？原因有2点。第一，不完全的连接机制将连接的数量保持在合理的范围内。第二，也是最重要的，其破坏了网络的对称性。由于不同的特征图有不同的输入，所以迫使他们抽取不同的特征（希望是互补的）。</li>
+</ul>
+<p>例如，存在的一个方式是：C3的前6个特征图以S2中3个相邻的特征图子集为输入。接下来6个特征图以S2中4个相邻特征图子集为输入。然后的3个以不相邻的4个特征图子集为输入。最后一个将S2中所有特征图为输入。这样C3层有1516（6*（3 <em>25+1）+6</em>（4 <em>25+1）+3</em>（4 _25+1）+（25_6+1）=1516）个可训练参数和151600（10 _10_1516=151600）个连接。</p>
+<ul>
+<li>S4层是一个下采样层，由16个5 _5大小的特征图构成。特征图中的每个单元与C3中相应特征图的2_2邻域相连接，跟C1和S2之间的连接一样。S4层有32个可训练参数（每个特征图1个因子和一个偏置16<em>（1+1）=32）和2000（16</em>（2*2+1） _5_5=2000）个连接。</li>
+<li>C5层是一个卷积层，有120个特征图。每个单元与S4层的全部16个单元的5 _5邻域相连。由于S4层特征图的大小也为5_5（同滤波器一样），故C5特征图的大小为1 _1（5-5+1=1）：这构成了S4和C5之间的全连接。之所以仍将C5标示为卷积层而非全相联层，是因为如果LeNet-5的输入变大，而其他的保持不变，那么此时特征图的维数就会比1_1大。C5层有48120（120*（16 _5_5+1）=48120由于与全部16个单元相连，故只加一个偏置）个可训练连接。</li>
+<li>F6层有84个单元（之所以选这个数字的原因来自于输出层的设计），与C5层全相连。有10164（84<em>(120</em>(1*1)+1)=10164）个可训练参数。如同经典神经网络，F6层计算输入向量和权重向量之间的点积，再加上一个偏置。然后将其传递给sigmoid函数产生单元i的一个状态。</li>
+<li>最后，输出层由欧式径向基函数（Euclidean Radial Basis Function）单元组成，每类一个单元，每个有84个输入。</li>
+</ul>
+<p><strong>1、输入层：N个32x32的训练样本</strong></p>
+<p>输入图像大小为32x32，比MNIST数据库中的字母大，这样做的原因是希望潜在的明显特征，如笔画断点或角点能够出现在最高层特征监测子感受野的中心。</p>
+<p><strong>2、C1层</strong></p>
+<ul>
+<li>输入图像大小：32x32</li>
+<li>卷积核大小：5x5</li>
+<li>卷积核个数：6</li>
+<li>输出特征图数量：6</li>
+<li>输出特征图大小：28x28（32-5+1）</li>
+<li>神经元数量：4707（28x28x6）</li>
+<li>连接数：122304（（28x28x5x5x6）+（28x28x6））</li>
+<li>可训练参数：156（5x5x6+6，权值+偏置）</li>
+</ul>
+<p><strong>3、S2层</strong></p>
+<ul>
+<li>输入图像大小：（28x28x6）</li>
+<li>卷积核大小：2x2</li>
+<li>卷积核个数：6</li>
+<li>输出特征图数量：6</li>
+<li>输出特征图大小：14x14（28/2,28/2）</li>
+<li>神经元数量：1176（14x14x6）</li>
+<li>连接数：5880（（2x2x14x14x6）+（14x14x6））</li>
+<li>可训练参数：12（1x6+6，权值+偏置）</li>
+</ul>
+<p>备注：S2层每个单元的4个输入相加，乘以一个可训练参数，再加上一个可训练偏置。结果通过sigmoid函数计算。可训练系数和偏置控制着sigmoid函数的非线性程度。</p>
+<p>如果系数比较小，那么运算近似于线性运算，下采样相当于模糊图像。</p>
+<p>如果系数比较大，根据偏置的大小下采样可以被看成是有噪声的”或”运算或者有噪声的”与”运算。</p>
+<p>每个单元的2*2感受野并不重叠，因此S2中每个特征图的大小是C1中特征图大小的1/4（行和列各1/2）。</p>
+<p><strong>4、C3层</strong></p>
+<ul>
+<li>输入图像大小：（14x14x6）</li>
+<li>卷积核大小：5x5</li>
+<li>卷积核个数：16</li>
+<li>输出特征图数量：16</li>
+<li>输出特征图大小：10x10（14-5+1）</li>
+<li>神经元数量：1600（10x10x16）</li>
+<li>连接数：151600（1516x10x10）</li>
+<li>可训练参数：1516</li>
+</ul>
+<p>备注：C3层也是一个卷积层，通过5x5的卷积核去卷积S2层，然后得到的特征图map就有10x10个神经元，但是有16种不同的卷积核，就存在16个不同的特征map。</p>
+<p>C3中每个特征图由S2中的所有6个或几个特征图组合而成，为什么不把S2中的所有特征图都连接到C3的特征图呢：</p>
+<ul>
+<li>第一，不完全的连接机制将连接的数量保持在合理的范围内</li>
+<li>第二，也是最重要的，这样一来就可以破坏网络的对称性，由于不同的特征图有不同的输入，所以迫使他们抽取不同的特征。</li>
+</ul>
+<p><strong>5、S4层</strong></p>
+<ul>
+<li>输入图像大小：（10x10x16）</li>
+<li>卷积核大小：2x2</li>
+<li>卷积核个数：16</li>
+<li>输出特征图数量：16</li>
+<li>输出特征图大小：5x5x16</li>
+<li>神经元数量：400（5x5x16）</li>
+<li>连接数：2000（（2x2x5x5x16）+(5x5x16））</li>
+<li>可训练参数：32（（1+1）x16）</li>
+</ul>
+<p>备注：S4是一个下采样层，由16个5x5大小的特征图构成，特征图的每个单元与C3中相应的特征图的2x2邻域相连，S4层有32个可训练参数（每个特征图1个因子和一个偏置）和2000个连接。</p>
+<p><strong>6、C5层</strong></p>
+<ul>
+<li>输入图像大小：5x5x16</li>
+<li>卷积核大小：5x5</li>
+<li>卷积核个数：120</li>
+<li>输出特征图数量：120</li>
+<li>输出特征图大小：1X1（5-5+1）</li>
+<li>神经元数量：120（1x120）</li>
+<li>连接数：48120（5x5x16x120x1+120x1）</li>
+<li>可训练参数：48120（5x5x16x120+120）</li>
+</ul>
+<p>备注：C5层是一个卷积层，有120个特征图，每个单元与S4层的全部16个单元的5x5邻域相连，构成了S4和C5的全连接，之所以仍将C5标识为卷积层而非全连接层是因为如果LeNet-5的输入变大，而其他的保持不变，那么此时特征图的维数就会比1x1大。</p>
+<p><strong>7、F6层</strong></p>
+<ul>
+<li>输入图像大小：（1x1x120）</li>
+<li>卷积核大小：1x1</li>
+<li>卷积核个数：84</li>
+<li>输出特征图数量：1</li>
+<li>输出特征图大小：84</li>
+<li>神经元数量：84</li>
+<li>连接数：10164（120x84+84）</li>
+<li>可训练参数：10164（120x84+84）</li>
+</ul>
+<p>备注：F6有84个单元（之所以选择84是源于输出层的设计），与C5层相连，有10164个可训练参数，类似经典的全连接神经网络，F6层计算输入向量和权重向量之间的点积，再加上一个偏置，之后将其传递给sigmoid函数产生一个单元i的状态。</p>
+<p><strong>8、output层</strong></p>
+<ul>
+<li>输入图像大小：1x84</li>
+<li>输出特征图数量：1x10</li>
+</ul>
+<h3 id="9、AlexNet"><a href="#9、AlexNet" class="headerlink" title="9、AlexNet"></a>9、AlexNet</h3><p><a href="https://blog.csdn.net/zyqdragon/article/details/72353420" target="_blank" rel="noopener">超详细介绍AlexNet</a></p>
+<p>这篇论文，题目叫做”ImageNet Classification with Deep Convolutional Networks”，迄今被引用6184次，被业内普遍视为行业最重要的论文之一。Alex Krizhevsky、Ilya Sutskever和 Geoffrey Hinton创造了一个”大型的深度卷积神经网络”，赢得了2012 ILSVRC(2012年ImageNet 大规模视觉识别挑战赛)。稍微介绍一下，这个比赛被誉为计算机视觉的年度奥林匹克竞赛，全世界的团队相聚一堂，看看是哪家的视觉模型表现最为出色。2012年是CNN首次实现Top 5误差率15.4%的一年(Top 5误差率是指给定一张图像，其标签不在模型认为最有可能的5个结果中的几率)，当时的次优项误差率为26.2%。这个表现不用说震惊了整个计算机视觉界。可以说，是自那时起，CNN才成了家喻户晓的名字。</p>
+<p>ImageNet 2012比赛分类任务的冠军，将分类错误率降低到了15.315%，使用传统计算机视觉的第二名小组的分类错误率为26.172%。</p>
+<p><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-50-45.png" alt></p>
+<p>上图所示是caffe中alexnet的网络结构，上图采用是两台GPU服务器，所有会看到两个流程图。下边把AlexNet的网络结构示意一下：<br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-51-12.png" alt></p>
+<p>简化的结构：<br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-51-36.png" alt></p>
+<p><strong>架构：</strong></p>
+<p>因为使用了两台GPU训练，因而有两股”流”。使用两台GPU训练的原因是计算量太大，只能拆开来。</p>
+<p><strong>要点：</strong></p>
+<p>数据集：ImageNet数据集，含1500多万个带标记的图像，超过2.2万个类别<br>激活函数：ReLU（训练速度快，一定程度上减小了梯度消失的问题）<br>数据增强：平移、镜像、缩放等<br>过拟合：dropout<br>如何训练：批处理梯度下降训练模型，注明了动量衰减值和权值衰减值<br>训练时间：使用两台GTX 580 GPU，训练了5到6天</p>
+<p><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-51-52.png" alt></p>
+<p><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-52-08.png" alt></p>
+<p><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-52-19.png" alt></p>
+<p>Alex Krizhevsky等人于2012年的ImageNet比赛中提出了新型卷积神经网络AlexNet，并获得了图像分类问题的最好成绩（Top-5错误率为15.3%）。</p>
+<p><strong>网络结构：</strong></p>
+<p>其实AlexNet的结构很简单，只是LeNet的放大版，输入是一个224x224的图像，经过5个卷积层，3个全连接层（包含一个分类层），达到了最后的标签空间。</p>
+<p><strong>AlexNet学习出来的特征是什么样子的？</strong></p>
+<ul>
+<li>第一层：都是一些填充的块状物和边界等特征</li>
+<li>中间层：学习一些纹理特征</li>
+<li>更高层：接近于分类器的层级，可以明显的看到物体的形状特征</li>
+<li>最后一层：分类层，完全是物体的不同的姿态，根据不同的物体展现出不同姿态的特征了。</li>
+</ul>
+<p>即无论对什么物体，学习过程都是：边缘→ \to →部分→ \to →整体</p>
+<p>该方法训练了一个端到端的卷积神经网络实现对图像特征提取和分类，网络结构共7层，包含5层卷积层和2层全连接层。</p>
+<p>AlexNet包含了6亿三千万个连接，6000万个参数和65万个神经元，拥有5个卷积层，其中3个卷积层后面连接了最大池化层，最后还有3个全连接层。</p>
+<p>AlexNet可以说是神经网络在低谷期后的第一次发声，确立了深度学习（深度卷积神经网络）在计算机界的统治地位，同时也推动了深度学习在语音识别、自然语言处理、强化学习等方面的拓展。</p>
+<p><strong>训练技巧：dropout防止过拟合，提高泛化能力</strong></p>
+<p>训练阶段使用了Dropout技巧随机忽略一部分神经元，缓解了神经网络的过拟合现象，和防止对网络参数优化时陷入局部最优的问题，Dropout虽有单独的论文论述，但是AlexNet将其实用化，通过实践证实了它的效果。在AlexNet中主要是最后几个全连接层使用了Dropout。</p>
+<p>该网络是利用Dropout在训练过程中将输入层和中间层的一些神经元随机置零，使得训练过程收敛的更慢，但得到的网络模型更加具有鲁棒性。</p>
+<p><strong>数据扩充 / 数据增强：防止过拟合</strong></p>
+<p>通过图像平移、水平翻转、调整图像灰度等方法扩充样本训练集，扩充样本训练集，使得训练得到的网络对局部平移、旋转、光照变化具有一定的不变性，数据经过扩充以后可以达到减轻过拟合并提升泛化能力。进行预测时，则是取图像的四个角加上中间共5个位置，并进行左右翻转，一共获得10张图像，对它们进行预测并对10次结果求均值。</p>
+<ul>
+<li><p>水平翻转：<br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-53-02.png" alt></p>
+</li>
+<li><p>随机裁剪、平移旋转：<br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-53-20.png" alt></p>
+</li>
+<li><p>颜色变换：<br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-53-32.png" alt></p>
+</li>
+</ul>
+<p><strong>池化方式：</strong></p>
+<p>AlexNet全部使用最大池化的方式，避免了平均池化所带来的模糊化的效果，并且步长&lt;池化核的大小，这样一来池化层的输出之间会有重叠和覆盖，提升了特征的丰富性。</p>
+<p>此前的CNN一直使用平均池化的操作。</p>
+<p><strong>激活函数：ReLU</strong></p>
+<p>Relu函数：f(x)=max(0,x)</p>
+<p>采用非饱和线性单元——ReLU代替传统的经常使用的tanh和sigmoid函数，加速了网络训练的速度，降低了计算的复杂度，对各种干扰更加具有鲁棒性，并且在一定程度上避免了梯度消失问题。<br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-56-47.png" alt></p>
+<p><strong>优势：</strong></p>
+<ol>
+<li>ReLU本质上是分段线性模型，前向计算非常简单，无需指数之类操作；</li>
+<li>ReLU的偏导也很简单，反向传播梯度，无需指数或者除法之类操作；</li>
+<li>ReLU不容易发生梯度发散问题，Tanh和Logistic激活函数在两端的时候导数容易趋近于零，多级连乘后梯度更加约等于0；</li>
+<li>ReLU关闭了右边，从而会使得很多的隐层输出为0，即网络变得稀疏，起到了类似L1的正则化作用，可以在一定程度上缓解过拟合。</li>
+</ol>
+<p><strong>缺点：</strong><br>当然，ReLU也是有缺点的，比如左边全部关了很容易导致某些隐藏节点永无翻身之日，所以后来又出现pReLU、random ReLU等改进，而且ReLU会很容易改变数据的分布，因此ReLU后加Batch Normalization也是常用的改进的方法。</p>
+<p><strong>提出了LRN层（Local Response Normalization）：</strong></p>
+<p>LRN即Local Response Normalization，局部响应归一化处理，实际就是利用临近的数据做归一化，该策略贡献了1.2%的准确率，该技术是深度学习训练时的一种提高准确度的技术方法，LRN一般是在激活、池化后进行的一种处理方法。</p>
+<p>LRN是对局部神经元的活动创建竞争机制，使得其中响应较大的值变得相对更大，并抑制其他反馈较小的神经元，增强了模型的泛化能力。</p>
+<p><strong>为什么输入数据需要归一化（Normalized Data）？</strong></p>
+<p>归一化后有什么好处呢？原因在于神经网络学习过程本质就是为了学习数据分布，一旦训练数据与测试数据的分布不同，那么网络的泛化能力也大大降低；另外一方面，一旦每批训练数据的分布各不相同(batch 梯度下降)，那么网络就要在每次迭代都去学习适应不同的分布，这样将会大大降低网络的训练速度，这也正是为什么我们需要对数据都要做一个归一化预处理的原因。</p>
+<p>对于深度网络的训练是一个复杂的过程，只要网络的前面几层发生微小的改变，那么后面几层就会被累积放大下去。一旦网络某一层的输入数据的分布发生改变，那么这一层网络就需要去适应学习这个新的数据分布，所以如果训练过程中，训练数据的分布一直在发生变化，那么将会影响网络的训练速度。</p>
+<p><strong>分布式计算：</strong></p>
+<p>AlexNet使用CUDA加速深度卷积网络的训练，利用GPU强大的并行计算能力，处理神经网络训练时大量的矩阵运算，AlexNet使用两个GTX580的GPU进行训练，单个GTX580只有3GB的显存，限制了可训练网络的最大规模，因此将其分布在两个GPU上，在每个GPU的显存中储存一般的神经元参数。</p>
+<p><strong>有多少层需要训练</strong></p>
+<p>整个AlexNet有8个需要训练参数的层，不包括池化层和LRN层，前5层为卷积层，后3层为全连接层，AlexNet的最后一层是由1000类输出的Softmax层用作分类，LRN层出现在第一个和第二个卷积层之后，最大池化层出现在两个LRN之后和最后一个卷积层之后。</p>
+<p><strong>每层的超参数、参数量、计算量：</strong><br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-17-58-48.png" alt></p>
+<p>虽然前几个卷积层的计算量很大，但是参数量都很小，在1M左右甚至更小。只占AlexNet总参数量的很小一部分，这就是卷积层的作用，可以通过较小的参数量有效的提取特征。</p>
+<p><strong>为什么使用多层全连接：</strong></p>
+<ul>
+<li>全连接层在CNN中起到分类器的作用，前面的卷积层、池化层和激活函数层等操作是将原始数据映射到隐层特征空间，全连接层是将学到的特征映射映射到样本标记空间，就是矩阵乘法，再加上激活函数的非线性映射，多层全连接层理论上可以模拟任何非线性变换。但缺点也很明显: 无法保持空间结构。</li>
+<li>由于全连接网络的冗余（占整个我拿过来参数的80%），近期一些好的网络模型使用全局平均池化（GAP）取代FC来融合学到的深度特征，最后使用softmax等损失函数作为网络目标函数来指导学习过程，用GAP替代FC的网络通常有较好的预测性能。</li>
+<li>全连接的一个作用是维度变换，尤其是可以把高维变到低维，同时把有用的信息保留下来。全连接另一个作用是隐含语义的表达(embedding)，把原始特征映射到各个隐语义节点(hidden node)。对于最后一层全连接而言，就是分类的显示表达。不同channel同一位置上的全连接等价与1x1的卷积。N个节点的全连接可近似为N个模板卷积后的均值池化(GAP)。</li>
+</ul>
+<p><strong>GAP：假如最后一层的数据是10个66的特征图，global average pooling是将每个特征图计算所有像素点的均值，输出一个数据值，10个特征图就会输出10个值，组成一个110的特征向量。</strong></p>
+<ul>
+<li>用特征图直接表示属于某类的置信率，比如有10个输出，就在最后输出10个特征图，每个特征图的值加起来求均值，然后将均值作为其属于某类的置信值，再输入softmax中，效果较好。</li>
+<li>因为FC的参数众多，这么做就减少了参数的数量（在最近比较火的模型压缩中，这个优势可以很好的压缩模型的大小）。</li>
+<li>因为减少了参数的数量，可以很好的减轻过拟合的发生。</li>
+</ul>
+<p><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-18-00-07.png" alt><br><strong>为什么过了20年才卷土重来：</strong></p>
+<ol>
+<li>大规模有标记数据集的出现，防止以前不可避免的过拟合现象</li>
+</ol>
+<p><strong>2. 计算机硬件的突飞猛进，卷积神经网络对计算机的运算要求比较高，需要大量重复可并行化的计算，在当时CPU只有单核且运算能力比较低的情况下，不可能进行个很深的卷积神经网络的训练。随着GPU计算能力的增长，卷积神经网络结合大数据的训练才成为可能。 </strong></p>
+<ol>
+<li>卷积神经网络有一批一直在坚持的科学家（如Lecun）才没有被沉默，才没有被海量的浅层方法淹没。然后最后终于看到卷积神经网络占领主流的曙光。</li>
+</ol>
+<h3 id="10、ZFNet"><a href="#10、ZFNet" class="headerlink" title="10、ZFNet"></a>10、ZFNet</h3><p>和AlexNet很像，只是把参数优化了。</p>
+<p>2012年AlexNet出尽了风头，ILSVRC 2013就有一大批CNN模型冒了出来。2013年的冠军是纽约大学Matthew Zeiler 和 Rob Fergus设计的网络 ZF Net，错误率 11.2%。ZF Net模型更像是AlexNet架构的微调优化版，但还是提出了有关优化性能的一些关键想法。还有一个原因，这篇论文写得非常好，论文作者花了大量时间阐释有关卷积神经网络的直观概念，展示了将滤波器和权重可视化的正确方法。</p>
+<p>在这篇题为“Visualizing and Understanding Convolutional Neural Networks”的论文中，Zeiler和Fergus从大数据和GPU计算力让人们重拾对CNN的兴趣讲起，讨论了研究人员对模型内在机制知之甚少，一针见血地指出“发展更好的模型实际上是不断试错的过程”。虽然我们现在要比3年前知道得多一些了，但论文所提出的问题至今仍然存在!这篇论文的主要贡献在于提出了一个比AlexNet稍微好一些的模型并给出了细节，还提供了一些制作可视化特征图值得借鉴的方法。</p>
+<h4 id="10-1-意义"><a href="#10-1-意义" class="headerlink" title="10.1 意义"></a>10.1 意义</h4><p>该论文是在AlexNet基础上进行了一些细节的改动，网络结构上并没有太大的突破。该论文最大的贡献在于通过使用可视化技术揭示了神经网络各层到底在干什么，起到了什么作用。</p>
+<p>从科学的观点出发，如果不知道神经网络为什么取得了如此好的效果，那么只能靠不停的实验来寻找更好的模型。</p>
+<p>使用一个多层的反卷积网络来可视化训练过程中特征的演化及发现潜在的问题；同时根据遮挡图像局部对分类结果的影响来探讨对分类任务而言到底那部分输入信息更重要。</p>
+<h4 id="10-2-实现方法"><a href="#10-2-实现方法" class="headerlink" title="10.2 实现方法"></a>10.2 实现方法</h4><p><strong>训练过程：</strong></p>
+<p>对前一层的输入进行卷积 -&gt; relu -&gt; max pooling(可选) -&gt; 局部对比操作(可选) -&gt; 全连接层 -&gt; softmax分类器。</p>
+<p>输入是(x,y)，计算y与y的估计值之间的交叉熵损失，反向传播损失值的梯度，使用随机梯度下降算法来更新参数（w和b）以完成模型的训练。</p>
+<p><strong>反卷积可视化：</strong></p>
+<p>一个卷积层加一个对应的反卷积层；</p>
+<p>输入是feature map，输出是图像像素；</p>
+<p>过程包括反池化操作、relu和反卷积过程。</p>
+<p><strong>反池化：</strong></p>
+<p>严格意义上的反池化是无法实现的。作者采用近似的实现，在训练过程中记录每一个池化操作的一个z*z的区域内输入的最大值的位置，这样在反池化的时候，就将最大值返回到其应该在的位置，其他位置的值补0。</p>
+<p><strong>relu:</strong></p>
+<p>卷积神经网络使用relu非线性函数来保证输出的feature map总是为正数。在反卷积的时候，也需要保证每一层的feature map都是正值，所以这里还是使用relu作为非线性激活函数。</p>
+<p><strong>滤波：</strong></p>
+<p>使用原卷积核的转秩和feature map进行卷积。反卷积其实是一个误导，这里真正的名字就是转秩卷积操作。<br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-18-02-32.png" alt></p>
+<p>上图左边是一个解卷积层，右边为一个卷积层，解卷积层将会重建一个来自下一层的卷积特征近似版本，图中使用switch来记录在卷积网中进行最大池化操作时每个池化区域的局部最大值的位置，经过非池化操作后，原来的非最大值的位置全都置为0。</p>
+<p><strong>预处理：</strong></p>
+<p>网络对输入图片进行预处理，裁剪图片中间的256x256区域，并减去整个图像每个像素的均值，然后用10个不同的对256x256图像进行224x224的裁剪（中间区域加上四个角落，以及他们的水平翻转图像），对以128个图片分的块进行随机梯度下降法来更新参数。起始学习率为$10 ^{−2} $ ，动量为0.9，当验证集误差停滞时，手动调整学习率。在全连接网络中使用概率为0.5的dropout，并且所有权值都初始化为$10 ^{−2} $ ，偏置设为0。</p>
+<p>在训练时第一层的可视化揭露了一些占主导的因素，为了了解这些，我们采用重新归一化每个卷积层的滤波器，这些滤波器的均方根值超过了一个固定半径的$10 ^{−1} $ 。这是非常关键的，尤其是在模型中的第一层，因为输出图片大约在[-128,128]的范围内。</p>
+<p><strong>特征可视化：</strong></p>
+<p>每个特征单独投影到像素空间揭露了不同的结构能刺激不同的一个给定的特征图，因此展示了它对于变形的输入内在的不变性。下图即在一个已经训练好的网络中可视化后的图。</p>
+<h4 id="10-3-训练细节"><a href="#10-3-训练细节" class="headerlink" title="10.3 训练细节"></a>10.3 训练细节</h4><p>网络结构类似于AlexNet，有两点不同，一是将3，4，5层的变成了全连接，二是卷积核的大小减小。</p>
+<p>图像预处理和训练过程中的参数设置也和AlexNet很像。</p>
+<ul>
+<li>AlexNet用了1500万张图像，ZFNet用了130万张图像。</li>
+<li>AlexNet在第一层中使用了大小为11×11的滤波器，而ZF使用的滤波器大小为7x7，整体处理速度也有所减慢。做此修改的原因是，对于输入数据来说，第一层卷积层有助于保留大量的原始象素信息。11×11的滤波器漏掉了大量相关信息，特别是因为这是第一层卷积层。</li>
+<li>随着网络增大，使用的滤波器数量增多。</li>
+<li>利用ReLU的激活函数，将交叉熵代价函数作为误差函数，使用批处理随机梯度下降进行训练。</li>
+<li>使用一台GTX 580 GPU训练了12天。</li>
+<li>开发可视化技术“解卷积网络”(Deconvolutional Network)，有助于检查不同的特征激活和其对输入空间关系。名字之所以称为“deconvnet”，是因为它将特征映射到像素(与卷积层恰好相反)。<br><img src="/2021/04/19/卷积神经网络超详细介绍/2021-04-19-18-04-12.png" alt></li>
+</ul>
+<p><strong>解卷积层DeConvNet：</strong></p>
+<p>DeConvNet工作的基本原理是，每层训练过的CNN后面都连一层“deconvet”，它会提供一条返回图像像素的路径。输入图像进入CNN之后，每一层都计算激活。然而向前传递。现在，假设我们想知道第4层卷积层某个特征的激活值，我们将保存这个特征图的激活值，并将这一层的其他激活值设为0，再将这张特征图作为输入送入deconvnet。Deconvnet与原来的CNN拥有同样的滤波器。输入经过一系列unpool(maxpooling倒过来)，修正，对前一层进行过滤操作，直到输入空间满。</p>
+<p>这一过程背后的逻辑在于，我们想要知道是激活某个特征图的是什么结构。下面来看第一层和第二层的可视化。</p>
+
+    </div>
+
+    
+    
+    
+
+	
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Snow</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/" title="卷积神经网络超详细介绍">https://behappy00.github.io/2021/04/19/卷积神经网络超详细介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/转载/" rel="tag"># 转载</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/04/18/BiGRU-Attention 模型/" rel="next" title="BiGRU-Attention 模型">
+                  <i class="fa fa-chevron-left"></i> BiGRU-Attention 模型
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/04/20/剑指offer/" rel="prev" title="剑指offer">
+                  剑指offer <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+		
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、卷积神经网络的概念"><span class="nav-number">1.</span> <span class="nav-text">1、卷积神经网络的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、-发展过程"><span class="nav-number">2.</span> <span class="nav-text">2、 发展过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、如何利用CNN实现图像识别的任务"><span class="nav-number">3.</span> <span class="nav-text">3、如何利用CNN实现图像识别的任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、CNN的特征"><span class="nav-number">4.</span> <span class="nav-text">4、CNN的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、CNN的求解"><span class="nav-number">5.</span> <span class="nav-text">5、CNN的求解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、卷积神经网络注意事项"><span class="nav-number">6.</span> <span class="nav-text">6、卷积神经网络注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、CNN发展综合介绍"><span class="nav-number">7.</span> <span class="nav-text">7、CNN发展综合介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、LeNet-5结构分析"><span class="nav-number">8.</span> <span class="nav-text">8、LeNet-5结构分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、AlexNet"><span class="nav-number">9.</span> <span class="nav-text">9、AlexNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、ZFNet"><span class="nav-number">10.</span> <span class="nav-text">10、ZFNet</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#10-1-意义"><span class="nav-number">10.1.</span> <span class="nav-text">10.1 意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-2-实现方法"><span class="nav-number">10.2.</span> <span class="nav-text">10.2 实现方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-3-训练细节"><span class="nav-number">10.3.</span> <span class="nav-text">10.3 训练细节</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Snow</p>
+  <div class="site-description" itemprop="description">计算机 Hiter</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+	 <!-- 添加近期文章 -->
+	 
+	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
+		 <div class="links-of-blogroll-title">
+		   <!-- modify icon to fire by szw -->
+		   <i class="fa fa-history fa-" aria-hidden="true"></i>
+		   近期文章
+		 </div>
+		 <ul class="links-of-blogroll-list">
+		   
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown使用TOC自动生成导航栏/" title="Markdown使用TOC自动生成导航栏" target="_blank">Markdown使用TOC自动生成导航栏</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown让文字居中和带颜色/" title="markdown让文字居中和带颜色" target="_blank">markdown让文字居中和带颜色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown-文本内跳转-生成目录/" title="markdown 文本内跳转,生成目录" target="_blank">markdown 文本内跳转,生成目录</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown-前景色、背景色/" title="Markdown 前景色、背景色" target="_blank">Markdown 前景色、背景色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown-图片设置（大小，居中）/" title="Markdown-图片设置（大小，居中）" target="_blank">Markdown-图片设置（大小，居中）</a>
+			 </li>
+		   
+		 </ul>
+	   </div>
+	 
+	  
+	  <!-- 添加网易云播放歌曲 -->
+	  <div id="music163player">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
+		</iframe>
+	  </div>
+  
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Snow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">493k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:29</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="我的第 undefined 位朋友，">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--
+
+<script>
+  $(document).ready(function () {
+    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
+  });
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+  <script>
+    function timer() {
+      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
+      ages = ages.replace(/years?/, "年");
+      ages = ages.replace(/months?/, "月");
+      ages = ages.replace(/days?/, "天");
+      ages = ages.replace(/hours?/, "小时");
+      ages = ages.replace(/minutes?/, "分");
+      ages = ages.replace(/seconds?/, "秒");
+      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
+      div.innerHTML = `我已在此等候你 ${ages}`;
+    }
+    var div = document.createElement("div");
+    //插入到copyright之后
+    var copyright = document.querySelector(".copyright");
+    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+    timer();
+    setInterval("timer()",1000)
+  </script>
+-->
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
+    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-CN' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  
+  <!--页面点击出现富强民主文明和谐-->
+ <script type="text/javascript" src="/js/words-click.js"></script > 
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <!--
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+  -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
+

@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="论文： Hierarchical Attention Networks for Document Classification">
+<meta name="keywords" content="转载,文本分类模型,python,论文阅读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HAN_论文阅读">
+<meta property="og:url" content="https://behappy00.github.io/2021/01/05/HAN_论文阅读/index.html">
+<meta property="og:site_name" content="Snow">
+<meta property="og:description" content="论文： Hierarchical Attention Networks for Document Classification">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://behappy00.github.io/2021/01/05/HAN_论文阅读/2021-01-06-10-18-34.png">
+<meta property="og:image" content="https://behappy00.github.io/2021/01/05/HAN_论文阅读/2021-01-05-21-49-45.png">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=r_%7Bt%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=z_%7Bt%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=h_%7Bt%7D+%3D%281-z_%7Bt%7D%29%5Codot+h_%7Bt-1%7D+%2Bz_%7Bt%7D%5Codot++%5Ctilde%7Bh_t+%7D+++++++++++">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=z_%7Bt%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=z_%7Bt%7D+%3D%5Csigma+%28W_%7Bz%7Dx_%7Bt%7D+%2BU_%7Bz%7Dh_%7Bt-1%7D+%2Bb_%7Bz%7D++%29">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=x_%7Bt%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Ctilde%7Bh_%7Bt%7D+%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Ctilde%7Bh_%7Bt%7D+%7D%3Dtanh%28W_%7Bh%7Dx_%7Bt%7D%2Br_%7Bt%7D%5Codot+%28U_%7Bh%7Dh_%7Bt-1%7D++%29+%2Bb_%7Bh%7D+++%29+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=r_%7Bt%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=r_%7Bt%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=r_%7Bt%7D%3D%5Csigma%28W_%7Br%7Dx_%7Bt%7D%2BU_%7Br%7Dh_%7Bt-1%7D%2Bb_%7Br%7D+%29">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=w_%7Bit%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=t%5Cin+%5B0%2CT%5D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=x_%7Bit%7D%3DW_%7Be%7Dw_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=x_%7Bit%7D%3DW_%7Be%7Dw_%7Bit%7D%2Ct%5Cin%5B1%2CT%5D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverrightarrow%7Bh_%7Bit%7D%7D%3D%5Coverrightarrow%7BGRU%7D%28%7Bx_%7Bit%7D%7D%29">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverleftarrow%7Bh_%7Bit%7D%7D%3D%5Coverleftarrow%7BGRU%7D%28%7Bx_%7Bit%7D%7D%29">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=w_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=h_%7Bit%7D%3D%5B%5Coverrightarrow%7Bh_%7Bit%7D%7D%2C%5Coverleftarrow%7Bh_%7Bit%7D%7D%5D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=h_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=w_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=h_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=u_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=h_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=u_%7Bit%7D%3Dtanh%28W_%7Bw%7Dh_%7Bit%7D%2Bb_%7Bw%7D%29">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=u_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=u_%7Bw%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Calpha+_%7Bit%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Calpha+_%7Bit%7D%3D%5Cfrac%7Bexp%5Cleft%28+u_%7Bit%7D%5E%7B%5Ctop+%7D+u_%7Bw%7D%5Cright%29+%7D%7B%5Csum_%7Bt%7D%5E%7B%7D%7Bexp%5Cleft%28+u_%7Bit%7D%5E%5Ctop+u_%7Bw%7D+%5Cright%29+%7D+%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=s_%7Bi%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=u_%7Bw%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=u_%7Bw%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=s_%7Bi%7D%3D%5Csum_%7Bt%7D%7B%5Calpha_%7Bit%7Dh_%7Bit%7D%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=s_%7Bi%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverrightarrow%7Bh_%7Bi%7D%7D%3D%5Coverrightarrow%7BGRU%7D%28s_%7Bi%7D%29%2Ci%5Cin%5B1%2CL%5D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Coverleftarrow%7Bh_%7Bi%7D%7D%3D%5Coverleftarrow%7BGRU%7D%28s_%7Bi%7D%29%2Ci%5Cin%5BL%2C1%5D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=s_%7Bi%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=h_%7Bi%7D%3D%5B%5Coverrightarrow%7Bh_%7Bi%7D%7D%2C%5Coverleftarrow%7Bh_%7Bi%7D%7D%5D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=u_%7Bs%7D">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=u_%7Bi%7D%3Dtanh%28W_%7Bs%7Dh_%7Bi%7D%2Bb_%7Bs%7D%29">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%5Calpha_%7Bi%7D%3D%5Cfrac%7Bexp%5Cleft%28+u_%7Bi%7D%5E%5Ctop+u_%7Bs%7D+%5Cright%29+%7D%7B%5Csum_%7Bt%7D%5E%7B%7D%7Bexp%5Cleft%28+u_%7Bt%7D%5E%5Ctop+u_%7Bs%7D+%5Cright%29+%7D+%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=v%3D%5Csum_%7Bi%7D%7B%5Calpha_%7Bi%7Dh_%7Bi%7D%7D+">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=v">
+<meta property="og:updated_time" content="2023-04-03T13:58:28.049Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HAN_论文阅读">
+<meta name="twitter:description" content="论文： Hierarchical Attention Networks for Document Classification">
+<meta name="twitter:image" content="https://behappy00.github.io/2021/01/05/HAN_论文阅读/2021-01-06-10-18-34.png">
+  <link rel="canonical" href="https://behappy00.github.io/2021/01/05/HAN_论文阅读/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>HAN_论文阅读 | Snow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Snow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">光而不耀</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2021/01/05/HAN_论文阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">HAN_论文阅读
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-05 13:23:04" itemprop="dateCreated datePublished" datetime="2021-01-05T13:23:04+08:00">2021-01-05</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-03 21:58:28" itemprop="dateModified" datetime="2023-04-03T21:58:28+08:00">2023-04-03</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2021/01/05/HAN_论文阅读/" class="post-meta-item leancloud_visitors" data-flag-title="HAN_论文阅读" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/05/HAN_论文阅读/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2021/01/05/HAN_论文阅读/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>2.9k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>3 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>论文：</strong> Hierarchical Attention Networks for Document Classification</p><a id="more"></a>
+<p><strong>发表会议：</strong> <em>NAACL2016</em></p>
+<p><strong>作者：</strong><br><img src="/2021/01/05/HAN_论文阅读/2021-01-06-10-18-34.png" alt></p>
+<p><strong>单位：</strong> 1.Carnegie Mellon University 2.Microsoft Research, Redmond</p>
+<p><strong>链接：</strong> <a href="https://www.cc.gatech.edu/~dyang888/docs/naacl16.pdf" target="_blank" rel="noopener">Hierarchical Attention Networks for Document Classification</a></p>
+<p><strong>前言：</strong> 本文针对文本分类任务提出了一个层次化attention机制模型(<strong>HAN</strong>)，有两个显著的特点：</p>
+<ul>
+<li>(1)采用”词-句子-文章”的层次化结构来表示一篇文本。</li>
+<li>(2)该模型有两个层次的attention机制，分别存在于词层次(word level)和句子层次(sentence level)。从而使该模型具有对文本中重要性不同的句子和词的能力给予不同”注意力”的能力。作者在6个数据集合上进行了测试，并且相较以往的模型效果提升显著。最后，通过可视化说明该模型可以选择出含有丰富信息的词语和句子。</li>
+</ul>
+<p><strong>一 、写作动机</strong></p>
+<p>文本分类是一项基础的NLP任务，在主题分类，情感分析，垃圾邮件检测等应用上有广泛地应用。其目标是給每篇文本分配一个类别标签。本文中模型的直觉是，不同的词和句子对文本信息的表达有不同的影响，词和句子的重要性是严重依赖于上下文的，即使是相同的词和句子，在不同的上下文中重要性也不一样。就像人在阅读一篇文本时，对文本不同的内容是有着不同的注意度的。而本文在attention机制的基础上，联想到文本是一个层次化的结构，提出用词向量来表示句子向量，再由句子向量表示文档向量，并且在词层次和句子层次分别引入attention操作的模型。</p>
+<p><strong>二、模型构建</strong></p>
+<p>HAN的模型结构如图所示，它包含一个词序列编码器，一个词层面的attention层，一个句子序列编码器，一个句子层级的attention层。<br><img src="/2021/01/05/HAN_论文阅读/2021-01-05-21-49-45.png" alt></p>
+<p><strong>1. 基于GRU的词序列编码器</strong></p>
+<p>GRU是RNN的一个变种，使用门机制来记录序列当前的状态。隐藏层有两个门(gate)，重置门(reset gate)<img src="https://www.zhihu.com/equation?tex=r_%7Bt%7D+" alt>和更新门(update gate)<img src="https://www.zhihu.com/equation?tex=z_%7Bt%7D+" alt>。<br>这两个门一起来控制当前状态有多少信息要更新。在时刻t，隐藏层状态的计算公式：<br><img src="https://www.zhihu.com/equation?tex=h_%7Bt%7D+%3D%281-z_%7Bt%7D%29%5Codot+h_%7Bt-1%7D+%2Bz_%7Bt%7D%5Codot++%5Ctilde%7Bh_t+%7D+++++++++++" alt></p>
+<p>更新门(update gate)<img src="https://www.zhihu.com/equation?tex=z_%7Bt%7D+" alt>是用来决定有多少过去的信息被保留，以及有多少新信息被加进来：<br><img src="https://www.zhihu.com/equation?tex=z_%7Bt%7D+%3D%5Csigma+%28W_%7Bz%7Dx_%7Bt%7D+%2BU_%7Bz%7Dh_%7Bt-1%7D+%2Bb_%7Bz%7D++%29" alt></p>
+<p>这里<img src="https://www.zhihu.com/equation?tex=x_%7Bt%7D+" alt>是在时刻t输入的单词的词向量，候选状态<img src="https://www.zhihu.com/equation?tex=%5Ctilde%7Bh_%7Bt%7D+%7D+" alt>的计算方法和普通的RNN相似：<br><img src="https://www.zhihu.com/equation?tex=%5Ctilde%7Bh_%7Bt%7D+%7D%3Dtanh%28W_%7Bh%7Dx_%7Bt%7D%2Br_%7Bt%7D%5Codot+%28U_%7Bh%7Dh_%7Bt-1%7D++%29+%2Bb_%7Bh%7D+++%29+" alt></p>
+<p>重置门<img src="https://www.zhihu.com/equation?tex=r_%7Bt%7D+" alt>决定有多少过去的信息作用于候选状态，如果<img src="https://www.zhihu.com/equation?tex=r_%7Bt%7D+" alt>是0，即忘记之前的所有状态：<br><img src="https://www.zhihu.com/equation?tex=r_%7Bt%7D%3D%5Csigma%28W_%7Br%7Dx_%7Bt%7D%2BU_%7Br%7Dh_%7Bt-1%7D%2Bb_%7Br%7D+%29" alt></p>
+<p><strong>2 层次化attention</strong></p>
+<p><strong>2.1 词编码器（Word Encoder）</strong></p>
+<p>由词序列组成<img src="https://www.zhihu.com/equation?tex=w_%7Bit%7D+" alt>,<img src="https://www.zhihu.com/equation?tex=t%5Cin+%5B0%2CT%5D" alt>组成的句子,首先把词转化成词向量，<img src="https://www.zhihu.com/equation?tex=x_%7Bit%7D%3DW_%7Be%7Dw_%7Bit%7D" alt>,然后用双向的GRU网络,可以将正向和反向的上下文信息结合起来，获得隐藏层输出。<br><img src="https://www.zhihu.com/equation?tex=x_%7Bit%7D%3DW_%7Be%7Dw_%7Bit%7D%2Ct%5Cin%5B1%2CT%5D" alt><br><img src="https://www.zhihu.com/equation?tex=%5Coverrightarrow%7Bh_%7Bit%7D%7D%3D%5Coverrightarrow%7BGRU%7D%28%7Bx_%7Bit%7D%7D%29" alt><br><img src="https://www.zhihu.com/equation?tex=%5Coverleftarrow%7Bh_%7Bit%7D%7D%3D%5Coverleftarrow%7BGRU%7D%28%7Bx_%7Bit%7D%7D%29" alt></p>
+<p>对于一个给定的词语<img src="https://www.zhihu.com/equation?tex=w_%7Bit%7D" alt>,经过GRU网络后，我们获得了一种新的表示：<img src="https://www.zhihu.com/equation?tex=h_%7Bit%7D%3D%5B%5Coverrightarrow%7Bh_%7Bit%7D%7D%2C%5Coverleftarrow%7Bh_%7Bit%7D%7D%5D" alt></p>
+<p><img src="https://www.zhihu.com/equation?tex=h_%7Bit%7D" alt>包含了<img src="https://www.zhihu.com/equation?tex=w_%7Bit%7D" alt>周围两个方向的信息。</p>
+<p><strong>2.2 词级别的attention机制</strong></p>
+<p>attention机制的目的是要把一个句子中，对句子的含义最重要，贡献最大的词语找出来。我们通过将<img src="https://www.zhihu.com/equation?tex=h_%7Bit%7D" alt>输入到一个单层的感知机(MLP)中得到的结果<img src="https://www.zhihu.com/equation?tex=u_%7Bit%7D" alt>作为<img src="https://www.zhihu.com/equation?tex=h_%7Bit%7D" alt>的隐含表示。<br><img src="https://www.zhihu.com/equation?tex=u_%7Bit%7D%3Dtanh%28W_%7Bw%7Dh_%7Bit%7D%2Bb_%7Bw%7D%29" alt></p>
+<p>为了衡量单词的重要性,我们用<img src="https://www.zhihu.com/equation?tex=u_%7Bit%7D" alt>和一个随机初始化的上下文向量<img src="https://www.zhihu.com/equation?tex=u_%7Bw%7D" alt>的相似度来表示，然后经过softmax操作获得了一个归一化的attention权重矩阵<img src="https://www.zhihu.com/equation?tex=%5Calpha+_%7Bit%7D" alt>，代表句子i中第t个词的权重。<br><img src="https://www.zhihu.com/equation?tex=%5Calpha+_%7Bit%7D%3D%5Cfrac%7Bexp%5Cleft%28+u_%7Bit%7D%5E%7B%5Ctop+%7D+u_%7Bw%7D%5Cright%29+%7D%7B%5Csum_%7Bt%7D%5E%7B%7D%7Bexp%5Cleft%28+u_%7Bit%7D%5E%5Ctop+u_%7Bw%7D+%5Cright%29+%7D+%7D+" alt></p>
+<p>有了attention权重矩阵以后，我们可以将句子向量<img src="https://www.zhihu.com/equation?tex=s_%7Bi%7D" alt>看作组成这些句子的词向量的加权求和。这里的上下文向量<img src="https://www.zhihu.com/equation?tex=u_%7Bw%7D" alt>是在训练网络的过程中学习获得的。我们可以把<img src="https://www.zhihu.com/equation?tex=u_%7Bw%7D" alt>当作一种询问的高级表示，比如”哪些词含有比较重要的信息？”<br><img src="https://www.zhihu.com/equation?tex=s_%7Bi%7D%3D%5Csum_%7Bt%7D%7B%5Calpha_%7Bit%7Dh_%7Bit%7D%7D+" alt></p>
+<p><strong>2.3 语句编码器(Sentence Encoder)</strong></p>
+<p>得到了句子向量表示<img src="https://www.zhihu.com/equation?tex=s_%7Bi%7D" alt>以后，我们用类似的办法获得文档向量：<br><img src="https://www.zhihu.com/equation?tex=%5Coverrightarrow%7Bh_%7Bi%7D%7D%3D%5Coverrightarrow%7BGRU%7D%28s_%7Bi%7D%29%2Ci%5Cin%5B1%2CL%5D" alt><br><img src="https://www.zhihu.com/equation?tex=%5Coverleftarrow%7Bh_%7Bi%7D%7D%3D%5Coverleftarrow%7BGRU%7D%28s_%7Bi%7D%29%2Ci%5Cin%5BL%2C1%5D" alt></p>
+<p>对于给定的句子<img src="https://www.zhihu.com/equation?tex=s_%7Bi%7D" alt>我们得到了相应的句子表示<img src="https://www.zhihu.com/equation?tex=h_%7Bi%7D%3D%5B%5Coverrightarrow%7Bh_%7Bi%7D%7D%2C%5Coverleftarrow%7Bh_%7Bi%7D%7D%5D" alt>。这样获得的表示可以包含两个方向的上下文信息。</p>
+<p><strong>2.4 句子级别的attention</strong></p>
+<p>和词级别的attention类似，我们也提出了一个句子级别的上下文向量<img src="https://www.zhihu.com/equation?tex=u_%7Bs%7D" alt>,来衡量一个句子在整篇文本的重要性。<br><img src="https://www.zhihu.com/equation?tex=u_%7Bi%7D%3Dtanh%28W_%7Bs%7Dh_%7Bi%7D%2Bb_%7Bs%7D%29" alt><br><img src="https://www.zhihu.com/equation?tex=%5Calpha_%7Bi%7D%3D%5Cfrac%7Bexp%5Cleft%28+u_%7Bi%7D%5E%5Ctop+u_%7Bs%7D+%5Cright%29+%7D%7B%5Csum_%7Bt%7D%5E%7B%7D%7Bexp%5Cleft%28+u_%7Bt%7D%5E%5Ctop+u_%7Bs%7D+%5Cright%29+%7D+%7D+" alt><br><img src="https://www.zhihu.com/equation?tex=v%3D%5Csum_%7Bi%7D%7B%5Calpha_%7Bi%7Dh_%7Bi%7D%7D+" alt></p>
+<p>我们获得了整篇文章的向量表示<img src="https://www.zhihu.com/equation?tex=v" alt>,最后可以使用全链接的softmax层进行分类。</p>
+<p><strong>三、实验</strong></p>
+<p><strong>1 数据集</strong></p>
+<p>论文中使用了六个数据集，Yelp reviews2013,2014,2015;IMDB reviews;Yahoo Answers;Amazon reviews。每个数据集合中80%的数据用作训练集合，10%的数据用作验证集合，剩余10%的集合用作测试集合。</p>
+<p><strong>2 实验指标与对比模型</strong></p>
+<ul>
+<li><strong>线性模型：</strong>使用手工构建的统计数据作为特征，多项式logistic回归作为分类器</li>
+<li><strong>SVM：</strong>支持向量机+unigr，bigrams</li>
+<li><strong>word-based CNN:</strong>基于词的卷积神经网络</li>
+<li><strong>Character-based CNN：</strong>字符级别的卷积神经网络</li>
+<li><strong>Conv/LSTM-GRNN：</strong>使用”词-句子-文本”的层次化结构表示文档，然后用带有门限制的RNN做分类。</li>
+</ul>
+<p><strong>3 实验结果</strong></p>
+<p><strong>4 结果分析</strong></p>
+<p>根据上表的实验结果可以看出来，层次化attention模型在所有的六个数据集合上均取得了最好的效果。这种效果的提升是不受数据集大小限制的。在相对较小的数据集比如Yelp2013和IMDB上，我们的HAN模型超过基准模型的最好表现的比率分别为3.1%和4.1%。相同的在，大数据集上，我们的模型优于之前的最好模型的比例分别为3.2%，3.4%，4.6%，6.0%，分别在Yelp2014，Yelp2015，Yahoo Answer,Amazon Answer。</p>
+<p>一些没有使用层次结构来表示文本的神经网络分类算法比如CNN-word，CNN-char，LSTM在一些大数据集合上并没有超过基准模型太多。单从文本的结构化表示来看，HN-MAX,HN-AVG都可以显著提升CNN-word，LSTM等模型的性能。我们将层次话结构和Attention机制联合起来的模型，更是超过了单纯的层次化模型LSTM-GRNN。</p>
+<p><strong>5 可视化分析</strong></p>
+<p>上图是词”good”在IMDB数据集合种的的attention权值分布，可以看出，当评价等级为1时Fig3（b）,good的权值集中在比较低的一端，当评论的变得向好评方向时，good的权重也开始在高的一端分布。</p>
+<p>相反的，词”bad”在评价等级较低的评论里权值较大，在评价高的评论里权值小。</p>
+<p>情感分析任务种，从上图我们可以看到，在好评里，delicious,fun,amazing,recommend 等词所在的句子颜色深，权值大。在差评里，terrible，not等词占的比重大。</p>
+<p>在主题分类任务中，在科学自然类别里，权值比较大的词zebra,strips,camouflage,predator。 在计算机网络类别里web,searches, browsers的权值较大。</p>
+<p><strong>四 总结</strong></p>
+<p>本文提出了一种基于层次化attention的文本分类模型，可以利用attention机制识别出一句话中比较重要的词语，利用重要的词语形成句子的表示，同样识别出重要的句子，利用重要句子表示来形成整篇文本的表示。实验证明，该模型确实比基准模型获得了更好的效果，可视化分析也表明，该模型能很好地识别出重要的句子和词语。</p>
+<p>转载于 <a href="https://zhuanlan.zhihu.com/p/26892711" target="_blank" rel="noopener">知乎</a></p>
+
+    </div>
+
+    
+    
+    
+
+	
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Snow</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://behappy00.github.io/2021/01/05/HAN_论文阅读/" title="HAN_论文阅读">https://behappy00.github.io/2021/01/05/HAN_论文阅读/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/转载/" rel="tag"># 转载</a>
+            
+              <a href="/tags/文本分类模型/" rel="tag"># 文本分类模型</a>
+            
+              <a href="/tags/python/" rel="tag"># python</a>
+            
+              <a href="/tags/论文阅读/" rel="tag"># 论文阅读</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/01/03/python_torchtext学习笔记_1/" rel="next" title="python_torchtext学习笔记_1">
+                  <i class="fa fa-chevron-left"></i> python_torchtext学习笔记_1
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/01/05/把简书、掘金、CSDN上一些优秀的文章保存成markdown文件/" rel="prev" title="把简书、掘金、CSDN上一些优秀的文章保存成markdown文件">
+                  把简书、掘金、CSDN上一些优秀的文章保存成markdown文件 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+		
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Snow</p>
+  <div class="site-description" itemprop="description">计算机 Hiter</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+	 <!-- 添加近期文章 -->
+	 
+	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
+		 <div class="links-of-blogroll-title">
+		   <!-- modify icon to fire by szw -->
+		   <i class="fa fa-history fa-" aria-hidden="true"></i>
+		   近期文章
+		 </div>
+		 <ul class="links-of-blogroll-list">
+		   
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown使用TOC自动生成导航栏/" title="Markdown使用TOC自动生成导航栏" target="_blank">Markdown使用TOC自动生成导航栏</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown让文字居中和带颜色/" title="markdown让文字居中和带颜色" target="_blank">markdown让文字居中和带颜色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown-文本内跳转-生成目录/" title="markdown 文本内跳转,生成目录" target="_blank">markdown 文本内跳转,生成目录</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown-前景色、背景色/" title="Markdown 前景色、背景色" target="_blank">Markdown 前景色、背景色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown-图片设置（大小，居中）/" title="Markdown-图片设置（大小，居中）" target="_blank">Markdown-图片设置（大小，居中）</a>
+			 </li>
+		   
+		 </ul>
+	   </div>
+	 
+	  
+	  <!-- 添加网易云播放歌曲 -->
+	  <div id="music163player">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
+		</iframe>
+	  </div>
+  
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Snow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">493k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:29</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="我的第 undefined 位朋友，">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--
+
+<script>
+  $(document).ready(function () {
+    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
+  });
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+  <script>
+    function timer() {
+      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
+      ages = ages.replace(/years?/, "年");
+      ages = ages.replace(/months?/, "月");
+      ages = ages.replace(/days?/, "天");
+      ages = ages.replace(/hours?/, "小时");
+      ages = ages.replace(/minutes?/, "分");
+      ages = ages.replace(/seconds?/, "秒");
+      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
+      div.innerHTML = `我已在此等候你 ${ages}`;
+    }
+    var div = document.createElement("div");
+    //插入到copyright之后
+    var copyright = document.querySelector(".copyright");
+    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+    timer();
+    setInterval("timer()",1000)
+  </script>
+-->
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
+    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-CN' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  
+  <!--页面点击出现富强民主文明和谐-->
+ <script type="text/javascript" src="/js/words-click.js"></script > 
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <!--
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+  -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
+

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Snow" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-center-atom.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="一. 错误现象 二. 解决办法 三. 扩展阅读（Git 合并多个Commit 提交） 写在前面： 如本文描述有错误，希望读到这篇文章的您能够提出批评指正。 联系方式：172310978@qq.com">
+<meta name="keywords" content="转载,github">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gerrit: remote rejected HEAD-&gt;refs&#x2F;for&#x2F;master (change closed)  的问题 - 夜行过客 ">
+<meta property="og:url" content="https://behappy00.github.io/2023/10/02/Gerrit-remote-rejected-HEAD-refs-for-master-change-closed-的问题-夜行过客/index.html">
+<meta property="og:site_name" content="Snow">
+<meta property="og:description" content="一. 错误现象 二. 解决办法 三. 扩展阅读（Git 合并多个Commit 提交） 写在前面： 如本文描述有错误，希望读到这篇文章的您能够提出批评指正。 联系方式：172310978@qq.com">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327161607514-1771990767.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327162214669-1520808690.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327162653135-409108108.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327164400864-379817439.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327164253242-257939169.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327165851389-1889575409.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327172905728-528355708.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327173702901-1525079842.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327173853026-1522989359.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327174023463-290977466.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327174609568-1698912637.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327174726593-937975451.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327175044921-858713702.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327175329543-399090081.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327175542251-1385198068.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327180155784-840530799.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327180242469-748489133.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327180410980-165886966.png">
+<meta property="og:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327180531069-910287259.png">
+<meta property="og:updated_time" content="2023-10-02T06:01:59.541Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gerrit: remote rejected HEAD-&gt;refs&#x2F;for&#x2F;master (change closed)  的问题 - 夜行过客 ">
+<meta name="twitter:description" content="一. 错误现象 二. 解决办法 三. 扩展阅读（Git 合并多个Commit 提交） 写在前面： 如本文描述有错误，希望读到这篇文章的您能够提出批评指正。 联系方式：172310978@qq.com">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327161607514-1771990767.png">
+  <link rel="canonical" href="https://behappy00.github.io/2023/10/02/Gerrit-remote-rejected-HEAD-refs-for-master-change-closed-的问题-夜行过客/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Gerrit: remote rejected HEAD->refs/for/master (change closed)  的问题 - 夜行过客  | Snow</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Snow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">光而不耀</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/behappy00" class="github-corner" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://behappy00.github.io/2023/10/02/Gerrit-remote-rejected-HEAD-refs-for-master-change-closed-的问题-夜行过客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snow">
+      <meta itemprop="description" content="计算机 Hiter">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Gerrit: remote rejected HEAD->refs/for/master (change closed)  的问题 - 夜行过客 
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2023-10-02 11:25:29 / 修改时间：14:01:59" itemprop="dateCreated datePublished" datetime="2023-10-02T11:25:29+08:00">2023-10-02</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/解决方案/" itemprop="url" rel="index"><span itemprop="name">解决方案</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2023/10/02/Gerrit-remote-rejected-HEAD-refs-for-master-change-closed-的问题-夜行过客/" class="post-meta-item leancloud_visitors" data-flag-title="Gerrit: remote rejected HEAD->refs/for/master (change closed)  的问题 - 夜行过客 " title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/10/02/Gerrit-remote-rejected-HEAD-refs-for-master-change-closed-的问题-夜行过客/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2023/10/02/Gerrit-remote-rejected-HEAD-refs-for-master-change-closed-的问题-夜行过客/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>8.2k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>7 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr><ul>
+<li><a href="#一-错误现象">一. 错误现象</a></li>
+<li><a href="#二-解决办法">二. 解决办法</a></li>
+<li><a href="#三-扩展阅读git-合并多个commit-提交">三. 扩展阅读（Git 合并多个Commit 提交）</a></li>
+</ul><hr><p>写在前面：</p><blockquote>
+<p>如本文描述有错误，希望读到这篇文章的您能够提出批评指正。 联系方式：172310978@qq.com</p>
+</blockquote><a id="more"></a>
+<!-- TOC -->
+
+<!-- /TOC -->
+
+
+
+<p>参考文章：</p>
+<ol>
+<li><a href="https://www.cnblogs.com/yongdaimi/p/12583189.html" target="_blank" rel="noopener">https://www.cnblogs.com/yongdaimi/p/12583189.html</a></li>
+</ol>
+<p>好久没有提交code了，主要最近一直在测试，今天把分支的代码merge一下，提交了一版code, 结果Gerrit来了个这么个问题，搞了大半天终于解决了，为了避免下次再遇到所以记录下。现象是这个样子的：</p>
+<h3 id="一-错误现象"><a href="#一-错误现象" class="headerlink" title="一. 错误现象"></a>一. 错误现象</h3><p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327161607514-1771990767.png" alt></p>
+<p>如图：Gerrit 扔了一个</p>
+<p>! [remote rejected] HEAD -&gt; refs/for/master (change <a href="http://btsw5.sdlc.rd.realtek.com/gerrit/2323" target="_blank" rel="noopener">http://btsw5.sdlc.rd.realtek.com/gerrit/2323</a> closed)<br>error: failed to push some refs to ‘ssh://nisha_chen@btsw5.sdlc.rd.realtek.com:29418/8761BUR/app’</p>
+<p>的错误，我第一眼看到这个错误，直觉就是是不是哪次commit没有了？因为Gerrit上提示了：change <a href="http://btsw5.sdlc.rd.realtek.com/gerrit/2323" target="_blank" rel="noopener">http://btsw5.sdlc.rd.realtek.com/gerrit/2323</a> closed ， 然后我就到Gerrit 的web 页面上找2323的这次commit, 果不其然，这次commit 已经被别人merge了：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327162214669-1520808690.png" alt></p>
+<p>而且我注意到，这次commit已经不是最新的了，因为别的同事已经在这次commit之后，提交了新的代码：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327162653135-409108108.png" alt></p>
+<p> 那怎么办呢，虽然我Gerrit不敢说用的有多熟练，但是平时commit 成功的情况都是：本地的commit必须基于Gerrit的最新commit这样才能正常push 过去的。但是我的现在的commit却不是这个样子的：通过执行  git log —oneline 命令发现</p>
+<p>我本地的commit 日志是这个样子的：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327164400864-379817439.png" alt></p>
+<p>而Gerrit 服务器上最新的提交日志是这个样子的：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327164253242-257939169.png" alt></p>
+<p> 从图上很明显可以看出来，我的commit记录和Gerrit服务器上的commit记录已经完全不对应了，我本地merge代码后最新的commit记录是 <strong>65f6931</strong>,(因为之前已经拉过Gerrit上的代码) ，而Gerrit上的最新记录 是<strong>de5164e</strong>，且Gerrit上 efce048, ef08223, 34fbd21 这几次提交记录都是位于 <strong>de5164e</strong>这条提交记录<strong>之下</strong>的，我本地则刚好相反， efce048, ef08223, 34fbd21 这几次提交记录都是位于de5164e这条提交记录<strong>之上</strong>的。这就尴尬了，提交记录都不对应，合不进去是肯定的。那怎么解决呢，总不能把工作目录拷贝一份，然后从Gerrit上拉最新代码，然后再把不同的文件覆盖掉，再提交吧，我改了好多东西呢，这样太麻烦了。万般无奈，只能求助于Google：</p>
+<h3 id="二-解决办法"><a href="#二-解决办法" class="headerlink" title="二. 解决办法"></a>二. 解决办法</h3><p>在Google上搜索“[remote rejected] head -&gt; refs/for/master (change closed)”，发现匹配的结果确实有不少，看来有不少人像我一样遇到过这个问题呀</p>
+<p>打开第一条搜索结果：<a href="https://stackoverflow.com/questions/11972384/git-push-remote-rejected-change-closed" target="_blank" rel="noopener">https://stackoverflow.com/questions/11972384/git-push-remote-rejected-change-closed</a> ， 发现这哥们出错的结果与我很类似：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327165851389-1889575409.png" alt></p>
+<p> 底下的高赞答案建议这么修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">I got the same message. And it was because I have managed to get the same Change-Id for two commits.   </span><br><span class="line">Maybe due to some cherry-picking or similar between my local branches. Solved by removing the Change-Id from the commit message, a new Id then was added by the commit hook.</span><br></pre></td></tr></table></figure>
+<p>大概意思就是删除commit message中的 Change id, 我想那行呀，于是执行git commit —amend, 找到Change-Id, 把 Change-id 删了再次提交，结果很遗憾，错误还是一样，不行。</p>
+<p>打开第二条搜索结果：<a href="https://blog.csdn.net/u014418064/article/details/79039332" target="_blank" rel="noopener">https://blog.csdn.net/u014418064/article/details/79039332</a> ， 看着他描述的错误信息跟我是一样的，但是不知道他说直接abandon掉，不知道要abandon什么，看不懂，不行。</p>
+<p>打开第三条搜索结果：<a href="https://www.cnblogs.com/yanchengwang/p/6947221.html" target="_blank" rel="noopener">https://www.cnblogs.com/yanchengwang/p/6947221.html</a> ， 这哥们直接采用 git push -f  命令，姑且先不说行不行，git push -f 命令我是很不喜欢用的，具体什么原因大家都清楚，强行push commit 一般在公司里是不允许的，可能会引发很严重的问题。</p>
+<p>翻来翻去没什么特别好的答案，大多数都是像第一条搜索结果一样，建议直接删除 Change id, 再次push, 可我试了，不行呀。百无聊赖之下，重新打开第一条搜索记录，找找看有没有什么其它的解决办法，我一般看StackOverFlow, 如果高赞答案解决不了问题的时候，喜欢往下再看几条，有时候有些低赞答案才是解决问题的关键，毕竟每个人遇到的问题都不一样，解决途径肯定也不一样。看着看着，有一条结果引起了我的兴趣：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327172905728-528355708.png" alt></p>
+<p> 他给的解决方案大概是说，合并最近的几次提交为一个，合并完了之后再删除合并完的 Commit Message的 Change id, 我想了想，他说的也有道理，我最近的几次提交中有几个已经被Gerrit merge了，但是在我本地看，这些已经被merge的commit 却在Gerrit最新的提交记录之上，要是能把它们合并成一条记录，这样如果将来真的能够push 成功，最起码能够保证 Gerrit 的commit 记录上不会出现一些相同的Commit Message, 那就试试吧，反正死马当活马医呗，实在不行用git reset —hard 恢复就行了。</p>
+<p>使用 git log —oneline 命令查看，目前在我本地位于Gerrit最新的Commit之上的记录一共有4条：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327173702901-1525079842.png" alt></p>
+<p>合并这四条记录 git rebase -i HEAD~4  :</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327173853026-1522989359.png" alt></p>
+<p>执行该命令之后，Git出现如下界面，让你选择针对每次提交的操作方式：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327174023463-290977466.png" alt></p>
+<p>我选择的合并策略是保留第一次提交的记录，并且丢掉后面几次提交的Commit 记录（注意，仅仅是丢掉commit的日志，这条记录对应的修改仍然会被应用，所以不必担心这几次提交的修改会丢失）,也就是 102ab44 记录我仍然保持为Pick , 35e44af, 4e45785, 65f6931 这几条记录我修改为 f，修改完毕之后使用wq退出保存：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327174609568-1698912637.png" alt></p>
+<p> Git 提示合并已经成功，这个时候git log 再看一下本地的log记录：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327174726593-937975451.png" alt></p>
+<p>！！！ 那几条已经被Merge 的记录没有了！而且我本地的最新记录位于Gerrit的最新提交记录之上！这才是正常的提交现象嘛，平时都是这样才能push 成功的，满怀心喜的又提交了一次，结果：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327175044921-858713702.png" alt></p>
+<p>Why? 看起来不是已经正常了么？怎么Gerrit还是拒绝我提交呀，满怀失落的我再次运行git log 看了一下：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327175329543-399090081.png" alt></p>
+<p> 无意中发现这条Change-Id 怎么这么眼熟？好像在哪里见过似的，于是打开Gerrit 的web 界面， 找到那个已经被别人Merge的Change-ID:</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327175542251-1385198068.png" alt></p>
+<p>居然一模一样！那肯定是不行的，Change-Id 必须是唯一的，这条Commit既然已经被Merge了，再提交一个相同Change-Id的Commit肯定是不行的呀。于是我突然明白了最开始看的那条高赞答案删除Change-Id的意义，它删除Change-Id的目的原来是为了生成一个新的Change-Id,如果新的Change-Id和已Merge的那条记录的Change-id不一样，那么有可能会成功的。于是我用git commit —amend 再次打开最后一次提交的记录<img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327180155784-840530799.png" alt></p>
+<p> 对之前的Commit信息进行再一次修改之后，删除这里的Change-Id:</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327180242469-748489133.png" alt></p>
+<p> wq, 保存退出，再次push :</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327180410980-165886966.png" alt></p>
+<p> 看到Git提示终于成功了，打开Gerrit 的web管理界面：</p>
+<p><img src="https://img2020.cnblogs.com/i-beta/653161/202003/653161-20200327180531069-910287259.png" alt></p>
+<p>界面显示我本次的提交处于：Need Verfied Label 状态，这样才对嘛，我平时看到的提交成功之后的状态就是这个样子。</p>
+<p>问题解决完了，心里还是很佩服Git/Gerrit的设计者, 其实工作中遇到的Git问题Git基本都有解，只是一些Git的命令或者是操作方式我们自己不知道罢了，还是那句话，有事不明多Google， 通过这次踩坑之旅我又一次见识了Git的强大。</p>
+<h3 id="三-扩展阅读（Git-合并多个Commit-提交）"><a href="#三-扩展阅读（Git-合并多个Commit-提交）" class="headerlink" title="三. 扩展阅读（Git 合并多个Commit 提交）"></a>三. 扩展阅读（Git 合并多个Commit 提交）</h3><p>这篇文章讲解了如何使用 git rebase 指令来合并多个Commit, 个人觉得还不错，特此分享过来，URL： <a href="https://www.jianshu.com/p/29bb983ec48a" target="_blank" rel="noopener">https://www.jianshu.com/p/29bb983ec48a</a>, 不过他的文章里有些小问题，我会在后面指出。</p>
+<p>当你提交代码进行代码审查时或者创建一次pull request (这在开源项目中经常发生)，你的代码在被接受之前会被要求做一些变更。于是你进行了变更，并且直到下一次审查之前你没有再次被要求进行变更过。在你知道又要进行变更之前，你已经有了一些额外的commit。理想情况下，你可以用rebase命令把多个commit压缩成一个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~\[number\_of\_commits\]</span><br></pre></td></tr></table></figure>
+<p>如果你想要压缩最后三个commit，你需要运行下列命令（<em>注意：如果一共有4次提交，则只能压缩后3次提交！不能执行  git rebase -i HEAD~4</em> ）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3</span><br></pre></td></tr></table></figure>
+<p>为了模拟实际git rebase效果，我们先在git上提交两个修改。git log如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">commit 7b16b280f22fe4ff57c1879867a624f6f0f14398Author: pan Date:   Sun Apr 22 08:55:32 2018 +0800    update3</span><br><span class="line">commit a7186d862b95efc5cc1d7c98277af4c72bac335dAuthor: pan Date:   Sun Apr 22 08:55:16 2018 +0800    update2 </span><br><span class="line">commit 16a9a4749f8ee25ab617c46925f57c2fa8a4937eAuthor: pan Date:   Sun Apr 22 08:54:55 2018 +0800    update1</span><br></pre></td></tr></table></figure>
+<p>假设合并这3个提交，可以按照下面过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3</span><br></pre></td></tr></table></figure>
+<p>执行命令后终端会出输出： (注意：这里输出的顺序刚好和执行git log命令输出的顺序是<strong>相反</strong>的！【也就是说 ，<strong>旧Commit在前，新的Commit在后</strong>】笔者做了多次实验，得出的结果依然如此，而且通过commit id也可以看出来，原文作者在这里是有问题的，大家不要被误导)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pick 16a9a47 update1 </span><br><span class="line">pick a7186d8 update2</span><br><span class="line">pick 7b16b28 update3</span><br><span class="line"> # Rebase a9269a3..7b16b28 onto a9269a3 (3 commands)</span><br><span class="line"> #</span><br><span class="line"> # Commands:</span><br><span class="line"> # p, pick \= use commit</span><br><span class="line"> # r, reword \= use commit, but edit the commit message</span><br><span class="line"># e, edit \= use commit, but stop for amending</span><br><span class="line"># s, squash \= use commit, but meld into previous commit</span><br><span class="line"># f, fixup \= like &quot;squash&quot;, but discard this commit&apos;s log message</span><br><span class="line"># x, exec = run command (the rest of the line) using shell</span><br><span class="line"># d, drop \= remove commit</span><br><span class="line">#</span><br><span class="line"># These lines can be re\-ordered; they are executed from top to bottom.</span><br><span class="line">#</span><br><span class="line"># If you remove a line here THAT COMMIT WILL BE LOST.</span><br><span class="line">#</span><br><span class="line"># However, if you remove everything, the rebase will be aborted.</span><br><span class="line">#</span><br><span class="line"># Note that empty commits are commented out~</span><br></pre></td></tr></table></figure>
+<p>注：</p>
+<p>第一列是rebase具体执行的操作，其中操作可以选择，其中含义如下：</p>
+<p><strong>选择pick操作</strong>，git会应用这个补丁，以同样的提交信息（commit message）保存提交</p>
+<p><strong>选择reword操作</strong>，git会应用这个补丁，但需要重新编辑提交信息</p>
+<p><strong>选择edit操作</strong>，git会应用这个补丁，但会因为amending而终止</p>
+<p><strong>选择squash操作</strong>，git会应用这个补丁，但会与之前的提交合并</p>
+<p><strong>选择fixup操作</strong>，git会应用这个补丁，但会丢掉提交日志</p>
+<p><strong>选择exec操作</strong>，git会在shell中运行这个命令</p>
+<p>对比之前的两个提交提交，我觉得第一个提交可以保留，第二个和第三个合并到第一个就可以了。</p>
+<p>将第二个和第三个pick改成squash或者s，然后保存退出。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pick 16a9a47 update1 </span><br><span class="line">s a7186d8 update2</span><br><span class="line">s 7b16b28 update3</span><br></pre></td></tr></table></figure>
+<p>此时git会自动将第二个提交合并到第一个提交，并弹出合并提示信息，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">\# This is a combination of 3 commits.</span><br><span class="line"># This is the 1st commit message:</span><br><span class="line">update1 </span><br><span class="line"> # This is the commit message #2:</span><br><span class="line"> update2 </span><br><span class="line"> # This is the commit message #3:</span><br><span class="line"> update3</span><br><span class="line"> # Please enter the commit message for your changes. Lines starting</span><br><span class="line"># with &apos;#&apos; will be ignored, and an empty message aborts the commit.</span><br><span class="line">#</span><br><span class="line"># Date:      Sun Apr 22 08:54:55 2018 +0800</span><br><span class="line">#</span><br><span class="line"># interactive rebase in progress; onto a9269a3</span><br><span class="line"># Last commands done (3 commands done):</span><br><span class="line">#    s a7186d8 update</span><br><span class="line">#    s 7b16b28 update6666</span><br><span class="line">#  No commands remaining.</span><br><span class="line"></span><br><span class="line">如果需要修改下提交信息，如果不需要直接保存退出即可。</span><br><span class="line"></span><br><span class="line"># This is a combination of 3 commits. </span><br><span class="line"></span><br><span class="line">合并提交测试</span><br><span class="line"></span><br><span class="line"># Please enter the commit message for your changes. Lines starting </span><br><span class="line"></span><br><span class="line"># with &apos;#&apos; will be ignored, and an empty message aborts the commit. </span><br><span class="line"></span><br><span class="line"># </span><br><span class="line"></span><br><span class="line"># Date:      Sun Apr 22 08:54:55 2018 +0800 </span><br><span class="line"></span><br><span class="line"># </span><br><span class="line"></span><br><span class="line"># interactive rebase in progress; onto a9269a3 </span><br><span class="line"></span><br><span class="line"># Last commands done (3 commands done): </span><br><span class="line"></span><br><span class="line">#    s a7186d8 update </span><br><span class="line"></span><br><span class="line">#    s 7b16b28 update6666 </span><br><span class="line"></span><br><span class="line">#  No commands remaining.</span><br></pre></td></tr></table></figure>
+<p>此时我们已经完成了将两个提交合并为一个的处理，可以通过git log查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">commit 4a51759fae9bbd84904029473fe09f8a77f143ed</span><br><span class="line">Author: pan </span><br><span class="line">Date:   Sun Apr 22 08:54:55 2018 +0800    合并提交测试</span><br></pre></td></tr></table></figure>
+<p>-————————————————- <strong>2020/7/29 更新</strong>-——————————————————————</p>
+<p>有几点需要特别强调下：</p>
+<p>比如当前的提交顺序是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Update 1    // 最老的提交</span><br><span class="line">Update 2</span><br><span class="line">Update 3    // 最新的提交</span><br></pre></td></tr></table></figure>
+<p>1. 不能对Update1 执行 <strong>squash</strong> 或者是 <strong>fixup</strong>  操作，原因上面已经说过了，squash 操作需要与之前的提交合并，但是很明显在合并的这三个提交中，Update 1没有之前的提交；fixup 与 squash 类似，也需要与之前的提交合并，只是会丢弃 comment message。如果此时你对Update 1执行了上述两种操作，git 会报：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">error: cannot &apos;fixup&apos; without a previous commit</span><br><span class="line">You can fix this with &apos;git rebase --edit-todo&apos; and then run &apos;git rebase --continue&apos;.</span><br><span class="line">Or you can abort the rebase with &apos;git rebase --abort&apos;.</span><br></pre></td></tr></table></figure>
+<p>诸如此类的错误。</p>
+<ol>
+<li>如果只是想合并这三个提交，个人觉得在选择合并策略时，最优的合并方式应该是：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r Update1     // 应用这次提交，但是需要重新编辑Comment message</span><br><span class="line">f Update2     // 丢弃Update2的Comment Message, 与Update1合并</span><br><span class="line">f Update3     // 丢弃Update3的Comment Message，与Update2合并</span><br></pre></td></tr></table></figure>
+<p>这样只需要在接下来重新编辑下合并后的Comment Message就可以了，不会出现像上面原文作者那样一大堆的 comment message, 事实上既然是合并操作，那单条Commit的 Message肯定有很多是不需要的。</p>
+<p>总结</p>
+<p>注意本文仅仅介绍了我遇到的多个提交合并的问题，关于git rebase用法，建议参考Git Community Book 中文版-rebase和参考资料中的介绍。</p>
+<p>多数情况下git rebase仅限在本地使用，也就是在提交到远程分支之前。</p>
+<p>参考链接</p>
+<p>1. StackOverFlow: <a href="https://stackoverflow.com/questions/11972384/git-push-remote-rejected-change-closed" target="_blank" rel="noopener">Git push remote rejected {change ### closed}</a></p>
+<ol>
+<li>简书：<a href="https://www.jianshu.com/p/29bb983ec48a" target="_blank" rel="noopener">Git 合并多个Commit提交</a></li>
+</ol>
+<p>本文转自 <a href="https://www.cnblogs.com/yongdaimi/p/12583189.html" target="_blank" rel="noopener">https://www.cnblogs.com/yongdaimi/p/12583189.html</a>，如有侵权，请联系删除。</p>
+
+    </div>
+
+    
+    
+    
+
+	
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Snow</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://behappy00.github.io/2023/10/02/Gerrit-remote-rejected-HEAD-refs-for-master-change-closed-的问题-夜行过客/" title="Gerrit: remote rejected HEAD->refs/for/master (change closed)  的问题 - 夜行过客 ">https://behappy00.github.io/2023/10/02/Gerrit-remote-rejected-HEAD-refs-for-master-change-closed-的问题-夜行过客/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/转载/" rel="tag"># 转载</a>
+            
+              <a href="/tags/github/" rel="tag"># github</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2023/10/02/Failed-to-connect-to-github-com-port-443-Connection-refused/" rel="next" title="Failed to connect to github.com port 443: Connection refused ">
+                  <i class="fa fa-chevron-left"></i> Failed to connect to github.com port 443: Connection refused 
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2023/10/02/GitHub网页版删除分支-github-删除分支/" rel="prev" title="GitHub网页版删除分支_github 删除分支">
+                  GitHub网页版删除分支_github 删除分支 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+		
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-错误现象"><span class="nav-number">1.</span> <span class="nav-text">一. 错误现象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-解决办法"><span class="nav-number">2.</span> <span class="nav-text">二. 解决办法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-扩展阅读（Git-合并多个Commit-提交）"><span class="nav-number">3.</span> <span class="nav-text">三. 扩展阅读（Git 合并多个Commit 提交）</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Snow</p>
+  <div class="site-description" itemprop="description">计算机 Hiter</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+	 <!-- 添加近期文章 -->
+	 
+	   <div class="links-of-blogroll motion-element links-of-blogroll-block">
+		 <div class="links-of-blogroll-title">
+		   <!-- modify icon to fire by szw -->
+		   <i class="fa fa-history fa-" aria-hidden="true"></i>
+		   近期文章
+		 </div>
+		 <ul class="links-of-blogroll-list">
+		   
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown使用TOC自动生成导航栏/" title="Markdown使用TOC自动生成导航栏" target="_blank">Markdown使用TOC自动生成导航栏</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown让文字居中和带颜色/" title="markdown让文字居中和带颜色" target="_blank">markdown让文字居中和带颜色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/markdown-文本内跳转-生成目录/" title="markdown 文本内跳转,生成目录" target="_blank">markdown 文本内跳转,生成目录</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown-前景色、背景色/" title="Markdown 前景色、背景色" target="_blank">Markdown 前景色、背景色</a>
+			 </li>
+		   
+			 <li>
+			   <a href="/2023/10/02/Markdown-图片设置（大小，居中）/" title="Markdown-图片设置（大小，居中）" target="_blank">Markdown-图片设置（大小，居中）</a>
+			 </li>
+		   
+		 </ul>
+	   </div>
+	 
+	  
+	  <!-- 添加网易云播放歌曲 -->
+	  <div id="music163player">
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=5457006033&auto=0&height=90"></iframe>
+		</iframe>
+	  </div>
+  
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Snow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">493k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:29</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="我的第 undefined 位朋友，">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="历经 undefined 次回眸才与你相遇">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--
+
+<script>
+  $(document).ready(function () {
+    $(".header-inner").animate({padding: "25px 0 25px"}, 1000);
+  });
+</script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+  <script>
+    function timer() {
+      var ages = moment.preciseDiff(moment(),moment(20190628,"YYYYMMDD"));
+      ages = ages.replace(/years?/, "年");
+      ages = ages.replace(/months?/, "月");
+      ages = ages.replace(/days?/, "天");
+      ages = ages.replace(/hours?/, "小时");
+      ages = ages.replace(/minutes?/, "分");
+      ages = ages.replace(/seconds?/, "秒");
+      ages = ages.replace(/\d+/g, '<span style="color:#1094e8">$&</span>');
+      div.innerHTML = `我已在此等候你 ${ages}`;
+    }
+    var div = document.createElement("div");
+    //插入到copyright之后
+    var copyright = document.querySelector(".copyright");
+    document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+    timer();
+    setInterval("timer()",1000)
+  </script>
+-->
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'nClDgsEbJJCRM7oMK99qaGCi-MdYXbMMI',
+    appKey: 'IHpqCV0C6qKHHw7TnYT4gHHl',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-CN' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  
+  <!--页面点击出现富强民主文明和谐-->
+ <script type="text/javascript" src="/js/words-click.js"></script > 
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <!--
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+  -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true,"scale":0.05},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
+
